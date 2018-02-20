@@ -32,21 +32,3 @@
 </div>
 
 
-<script type="text/javascript">
-	//
-	$(function() {
-	 $("#btneliminar").click( function (){
-      
-    var total =$('#subtotalfinal').text();
-    total = total.replace('.', '');
-    total = total.replace('.', '');
-    total = total.replace('$', '');
-    total = total.replace(' ', '');
-
-    //alert(total);
-    location="eliminar_leitura.php?id="+<?php echo $id_assoc?>+"&subtotal="+total;
-  });
-	});
-
-	
-</script>

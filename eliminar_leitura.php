@@ -4,8 +4,8 @@ include('conn/conn.php');
 include('functions/functions.php');
 include('functions/validaLogin.php');
 
-$id_leitura = $_GET['id'];
-$subtotal_anterior = $_GET['subtotal'];
+$id_leitura = $_POST['id'];
+$subtotal_anterior = $_POST['subtotal'];
 
 $sql_per = "
 	SELECT
@@ -169,11 +169,11 @@ while ($result_lec2=@mysql_fetch_assoc($query_lec2))
 						'0'
 						)";
 
-      $dominio = 'lectura.php';
 
       if(@mysql_query($sql_insert_historico) )
 		{
-		exit("<script>alert('Lectura Borrada correctamente');window.location='".$dominio."'</script>");
+	
+			exit(utf8_encode(1));
 		}
 		else
 		{

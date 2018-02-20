@@ -59,39 +59,34 @@ $rst_ult_id=@mysql_fetch_assoc($query_ult_id);
 
 
 //
-$sql_maq = "
-		SELECT
-			vw_maquinas.id_maquina,
-			vw_maquinas.codigo,
-			vw_maquinas.numero,
-			vw_maquinas.id_jogo,
-			vw_maquinas.interface,
-			vw_maquinas.porc_maquina,
-			vw_maquinas.maq_socio,
-			leitura_por_maquina.valor_entrada,
-			leitura_por_maquina.valor_saida,
-			'' AS entrada_nova,
-			'' AS saida_nova,
-			vw_maquinas.entrada_oficial AS valor_entrada_total,
-			vw_maquinas.saida_oficial AS valor_saida_total,
-			leitura_por_maquina.id_leitura,
-			vw_maquinas.ordem_leitura,
-			'normal' AS STATUS
-		FROM
-			`vw_maquinas`
-		INNER JOIN leitura_por_maquina ON vw_maquinas.id_maquina = leitura_por_maquina.id_maquina
-		WHERE
-			vw_maquinas.id_maquina IS NOT NULL
-		AND 
-			vw_maquinas.id_local = '".$id_assoc."'
-			AND 
-			leitura_por_maquina.id_leitura = '".$id_leitura."'
-		GROUP BY
-			vw_maquinas.id_maquina
-		ORDER BY
-			ordem_leitura,
-			numero				
-	";
+$sql_maq = "SELECT
+	leitura_por_maquina.id_maquina,
+	maquinas.numero,
+	leitura_por_maquina.id_jogo,
+	leitura_por_maquina.num_disp as interface,
+	leitura_por_maquina.pct_esp_maq as porc_maquina,
+	leitura_por_maquina.pct_maq_socio as maq_socio,
+	leitura_por_maquina.valor_entrada,
+	leitura_por_maquina.valor_saida,
+	'' AS entrada_nova,
+	'' AS saida_nova,
+	leitura_por_maquina.entrada_oficial_atual AS valor_entrada_total,
+	leitura_por_maquina.saida_oficial_atual AS valor_saida_total,
+	leitura_por_maquina.id_leitura,
+	leitura_por_maquina.ordem_leitura,
+	'normal' AS STATUS
+FROM
+	leitura_por_maquina
+INNER JOIN maquinas ON leitura_por_maquina.id_maquina = maquinas.id_maquina
+WHERE
+	leitura_por_maquina.id_maquina IS NOT NULL
+AND leitura_por_maquina.id_local = '".$id_assoc."'
+AND leitura_por_maquina.id_leitura = '".$id_leitura."'
+GROUP BY
+	maquinas.id_maquina
+ORDER BY
+	ordem_leitura,
+	numero";
 $query_maq=@mysql_query($sql_maq);
 $NumMaq = mysql_num_rows($query_maq);
 
@@ -219,6 +214,7 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
             <div class="col-xs-12 col-lg-6">
               <?php include("inc/buttons-guardar-lectura.php"); // btns paneles ?>
               <?php include("inc/modals/modal-actions-lectura-edit.php"); // modal para agregar contenido ?>
+              <?php include("inc/modals/modal-actions-lectura-alert.php"); ?>
             </div>
           </div>
 
@@ -296,7 +292,8 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 									$valor= $result_maq['valor_entrada'];
 
 								
-
+									//echo $valor . "//<br>";
+									
 
 									$valor_entrada_actual= $entradaAtual - $entrada;
 
@@ -519,7 +516,7 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 													
 
 											
-												echo number_format($valor); 
+												echo number_format($valor,0,"","."); 
 												
 											?>
                                             
@@ -576,7 +573,7 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 												
 
 											
-												echo number_format($salida); 
+												echo number_format($salida,0,"","."); 
 												
 											?>                                    
                                     
@@ -1159,7 +1156,8 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 		//declara bruto e premio dessa maquina
 		var bruto = $('#'+id+'_bruto').text();
 		var premio = $('#'+id+'_premio').text();
-		var totalDifMaq = $('#totalDifMaq_'+id).val();	
+		var totalDifMaq = $('#totalDifMaq_'+id).val();
+
 		
 		//limpa valor
 		bruto = bruto.replace('.', '');
@@ -1167,6 +1165,7 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 		
 		premio = premio.replace('.', '');
 		premio = premio.replace('.', '');
+		
 		
 		//calcula SubTotal
 		var subTotMaq = eval(bruto) - eval(premio) - eval(totalDifMaq);
@@ -1542,7 +1541,14 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 		if(json>0)
 			{
 				$("#lc_nome").val("");
-				location="ver-informe-lectura.php?id="+json;
+						
+	
+				$('#massaction-modal').modal('hide');
+				$('#modal-alert').modal({});
+				
+				
+				//alert("funcionou");
+				//location="ver-informe-lectura.php?id="+json;
 			}
 			else
 			{
@@ -1693,6 +1699,12 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 	{
 		$('#total_final').text("-" + $('#hd_total_gasto').val());	
 	}
+	
+	//
+	$('#btnOk').click( function ()
+	{
+		location="ver-informe-lectura.php?id="+<?=$id_leitura?>;	
+	});
 	
 		
 </script>

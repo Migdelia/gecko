@@ -98,7 +98,7 @@ include('functions/validaLogin.php');
                               <div class="input-group">
                                 <input type="password" id="addon1" class="form-control"  placeholder="<?php echo _('Senha') ?>" value="<?php echo _('123456') ?>" disabled>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#edit-password"><?php echo _('Insertar clave') ?><div class="ripple-container"></div></button>
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#edit-password"><?php echo _('Cambiar clave') ?><div class="ripple-container"></div></button>
                                 </span>
                               </div>
                             </div>

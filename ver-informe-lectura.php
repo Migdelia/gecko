@@ -264,6 +264,7 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
             <div class="col-xs-12 col-lg-9">
               <?php include("inc/buttons-info-lecturas.php"); // btns paneles ?>
                <?php include("inc/modals/modal-select-periodo3.php"); // modal para Eliminar  contenido ?>
+               <?php include("inc/modals/modal-actions-lectura-alert-eliminar.php"); // modal para Eliminar  contenido ?>
               
              <?php  include("inc/modals/modal-select-periodo.php"); // modal para agregar contenido  ?>
 
@@ -942,3 +943,39 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
 </div>
 </div>
 </body>
+</html>
+
+<script type="text/javascript">
+	//
+	$(function() {
+	 $("#btneliminar").click( function (){
+      
+    var total =$('#subtotalfinal').text();
+    total = total.replace('.', '');
+    total = total.replace('.', '');
+    total = total.replace('$', '');
+    total = total.replace(' ', '');
+
+    var id_loc = "<?=$id_assoc?>";
+
+    
+    $.post('eliminar_leitura.php',{id:id_loc,subtotal:total },function(json){
+    //location="eliminar_leitura.php?id="+<?php echo $id_assoc?>+"&subtotal="+total;
+
+    if(json>0)
+	{
+	$('#select-periodo3').modal('hide');
+	$('#modal-alert').modal({});
+     }
+       });
+	});
+
+	});
+
+	$('#btnOk').click( function ()
+	{
+		location="lectura.php";	
+	});
+
+
+</script>
