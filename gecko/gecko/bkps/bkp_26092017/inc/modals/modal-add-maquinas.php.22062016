@@ -1,0 +1,381 @@
+<?php $modal_item = "Maquina" // ingresar la palabra clave de cada modal ?>
+<div id="add-modal-<?php echo $modal_item ?>s" class="modal fade" tabindex="-1" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h5><?php echo $modal_item ?></h5>
+      </div>
+      <div class="modal-body">
+      	<p><strong>Ingrese los datos de la nueva maquina.</strong></p>      
+        <form class="form-horizontal" method="post" action="functions/addMaquina.php" target="_parent">
+          <div class="row">
+            <div class="col-xs-6 col-md-6">
+              <label for="input_num<?php echo $modal_item ?>" class="control-label"><?php echo _('Número de máquina') ?></label>
+              <div class="row form-group">
+                <label for="input_num<?php echo $modal_item ?>" class="control-label"><?php echo _('Número de máquina') ?></label>
+                <input type="text" class="form-control" id="inputAdd_num_<?php echo $modal_item ?>" name="inputAdd_num_<?php echo $modal_item ?>" placeholder="<?php echo _('Número de máquina') ?>" value="<?php echo $res_maq['numero'] ?>">
+              </div>
+              
+              
+              
+              <?php
+			  	//monsta lista de locais
+				$sql_loc = "
+					SELECT
+						id_local,
+						nome
+					FROM
+						`local`
+					WHERE
+						excluido = 'N'
+					ORDER BY
+						nome";	
+				
+				
+				$query_loc=@mysql_query($sql_loc);			
+			  ?>
+              
+              
+              <label for="input_mod<?php echo $modal_item ?>" class="control-label"><?php echo _('Local') ?></label>                     
+              <div class="row form-group">
+                <label for="input_mod<?php echo $modal_item ?>" class="control-label"><?php echo _('Local') ?></label>
+                <input type="hidden" id="inputAdd_local_<?php echo $modal_item ?>" name="inputAdd_local_<?php echo $modal_item ?>" value="<?php echo $res_maq['id_local'] ?>" >
+                <a href="#" data-target="#" data-toggle="dropdown" aria-expanded="false" id="selectAdd_local_<?php echo $modal_item ?>" name="selectAdd_local_<?php echo $modal_item ?>" class="btn dropdown-btn"><?php echo $res_maq['nome'] ?><div class="ripple-container"></div></a>
+                <a href="#" data-target="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><div class="ripple-container"></div></a>
+                <ul class="dropdown-menu">
+                
+                <?php
+					//
+					while($res_loc=@mysql_fetch_assoc($query_loc)) 
+					{
+						echo "<li>";
+						echo "<a href='#' id='local_".$res_loc['id_local']."' class='mass-act' onclick='atribuiValorAdd(this);'>". $res_loc['nome'] ."</a>";
+						echo "</li>";
+						echo "<li class='divider'></li>";
+					}
+				?>          
+                </ul>
+              </div>
+      
+              
+              
+              <label for="input_obsm<?php echo $modal_item ?>" class="control-label"><?php echo _('Ordem Leitura') ?></label>
+              <div class="row form-group">
+                <label for="input_obsm<?php echo $modal_item ?>" class="control-label"><?php echo _('Ordem Leitura') ?></label>
+                <input type="text" class="form-control" id="inputAdd_ordem_<?php echo $modal_item ?>" name="inputAdd_ordem_<?php echo $modal_item ?>" placeholder="<?php echo _('Ordem Leitura') ?>" value="<?php echo $res_maq['ordem_leitura'] ?>">
+              </div>               
+              
+              
+              
+              <?php
+			  	//monsta lista de dispositivos de seguranca
+				$sql_disp = "
+					SELECT
+						id_interface,
+						numero
+					FROM
+						interface
+					WHERE
+						id_maquina = 0
+					AND
+						excluido = 'N'
+					ORDER BY
+						numero";	
+				
+				
+				$query_disp=@mysql_query($sql_disp);				
+			  ?>              
+              
+              <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo _('Disp de Seguridad') ?></label>
+              <div class="row form-group">
+                <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo _('Disp de Seguridad') ?></label>
+                <input type="hidden" id="inputAdd_disp_<?php echo $modal_item ?>" name="inputAdd_disp_<?php echo $modal_item ?>" value="<?php echo $res_maq['interface'] ?>" >
+                <a href="#" data-target="#" data-toggle="dropdown" aria-expanded="false" id="selectAdd_disp_<?php echo $modal_item ?>" name="selectAdd_disp_<?php echo $modal_item ?>" class="btn dropdown-btn"><?php echo $res_maq['interface'] ?><div class="ripple-container"></div></a>
+                <a href="#" data-target="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><div class="ripple-container"></div></a>
+                <ul class="dropdown-menu">
+					<?php
+                        //
+                        while($res_disp=@mysql_fetch_assoc($query_disp)) 
+                        {
+                            echo "<li>";
+                            echo "<a href='#' id='disp_".$res_disp['id_interface']."' class='mass-act' onClick='atribuiValorAdd(this);'>". $res_disp['numero'] ."</a>";
+                            echo "</li>";
+							echo "<li class='divider'></li>";
+                        }
+                    ?>  
+                </ul>
+              </div> 
+              
+              
+              <label for="input_obs<?php echo $modal_item ?>" class="control-label"><?php echo _('Entrada Oficial') ?></label>             
+              <div class="row form-group">
+                <label for="input_obs<?php echo $modal_item ?>" class="control-label"><?php echo _('Entrada Oficial') ?></label>
+                <input type="text" class="form-control" id="inputAdd_entrada_<?php echo $modal_item ?>" name="inputAdd_entrada_<?php echo $modal_item ?>" placeholder="<?php echo _('Entrada Oficial') ?>" value="0">
+              </div>
+              
+              <label for="input_obs<?php echo $modal_item ?>" class="control-label"><?php echo _('Saida Oficial') ?></label>
+              <div class="row form-group">
+                <label for="input_obs<?php echo $modal_item ?>" class="control-label"><?php echo _('Saida Oficial') ?></label>
+                <input type="text" class="form-control" id="inputAdd_saida_<?php echo $modal_item ?>" name="inputAdd_saida_<?php echo $modal_item ?>" placeholder="<?php echo _('Saida Oficial') ?>" value="0">
+              </div>
+              
+              <div class="row form-group">
+                <h6><?php echo _('Registros especiales') ?></h6>
+              </div>
+              
+
+              <div class="row form-group">
+                <div class="checkbox">
+                  <?php echo _('Maquina Parceiro');
+				  	//
+					if($res_maq['parceiro'] == 1)
+					{
+				  		echo "<label><input id='checkAdd_parce' name='checkAdd_parce' type='checkbox' checked><span class='checkbox-material'></span></label>";
+					}
+					else
+					{
+						echo "<label><input id='checkAdd_parce' name='checkAdd_parce' type='checkbox'><span class='checkbox-material'></span></label>";	
+					}
+				  ?>
+                </div>
+              </div>               
+              
+              <div class="row form-group">
+                <div class="checkbox">
+                  <?php echo _('Maquina Socio &nbsp; &nbsp;&nbsp;');
+				  	//
+					if($res_maq['maq_socio'] == "true")
+					{
+				  		echo "<label><input id='checkAdd_maquina_socio' name='checkAdd_maquina_socio' type='checkbox' checked><span class='checkbox-material'></span></label>";
+					}
+					else
+					{
+						echo "<label><input id='checkAdd_maquina_socio' name='checkAdd_maquina_socio' type='checkbox'><span class='checkbox-material'></span></label>";	
+					}				  
+				  ?>
+                </div>
+              </div>              
+              
+              <label for="input_num<?php echo $modal_item ?>" class="control-label"><?php echo _('% Socio') ?></label>              
+              <div class="row form-group">
+                <label for="input_num<?php echo $modal_item ?>" class="control-label"><?php echo _('% Socio') ?></label>
+                <input type="text" class="form-control" id="inputAdd_pctSocio_<?php echo $modal_item ?>" name="inputAdd_pctSocio_<?php echo $modal_item ?>" placeholder="<?php echo _('% Socio') ?>" value="<?php echo $res_maq['porc_socio'] ?>" >
+              </div>
+              
+              <label for="input_num<?php echo $modal_item ?>" class="control-label"><?php echo _('% Especial') ?></label>
+              <div class="row form-group">
+                <label for="input_num<?php echo $modal_item ?>" class="control-label"><?php echo _('% Especial') ?></label>
+                <input type="text" class="form-control" id="inputAdd_pctEspecial_<?php echo $modal_item ?>" name="inputAdd_pctEspecial_<?php echo $modal_item ?>" placeholder="<?php echo _('% Especial') ?>" value="<?php echo $res_maq['porc_maquina'] ?>">
+              </div>              
+              
+              
+                                                                                        
+            </div>
+            <div class="col-xs-6 col-md-6">
+              <div class="row form-group">
+                <h6><?php echo _('Perifericos') ?></h6>
+              </div>
+
+              <label for="input_gabinete<?php echo $modal_item ?>" class="control-label"><?php echo "Gabinete" ?></label>
+              <div class="row form-group">
+                <label for="input_gabinete<?php echo $modal_item ?>" class="control-label"><?php echo "Gabinete" ?></label>
+                <input type="hidden" id="inputAdd_gab_<?php echo $modal_item ?>" name="inputAdd_gab_<?php echo $modal_item ?>" value="0" >
+                <a href="#" data-target="#" data-toggle="dropdown" aria-expanded="false" id="selectAdd_gab_<?php echo $modal_item ?>" name="selectAdd_gab_<?php echo $modal_item ?>" class="btn dropdown-btn"><div class="ripple-container"></div></a>
+                <a href="#" data-target="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><div class="ripple-container"></div></a>
+                <ul class="dropdown-menu">
+                
+                <?php
+                        $sql_lista_gab = "
+                            SELECT
+                                descricao
+                            FROM
+                                tipo_maquina
+                            ";
+                        $query_lista_gab=@mysql_query($sql_lista_gab);
+                        
+                        //
+                        while($res_lista_gab=@mysql_fetch_assoc($query_lista_gab)) 
+                        {
+                            echo "<li>";
+                            echo "<a href='#' id='gab_".$res_lista_gab['id_tipo_maquina']."' class='mass-act' onClick='atribuiValorAdd(this);'>".$res_lista_gab['descricao']."</a>";
+                            echo "</li>";
+                            echo "<li class='divider'></li>";			
+                        }		
+                        
+                ?>      
+                </ul>
+              </div>
+
+              <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo "Placa Madre" ?></label>
+              <div class="row form-group">
+                <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo "Placa Madre" ?></label>
+                <input type="hidden" id="inputAdd_placa_<?php echo $modal_item ?>" name="inputAdd_placa_<?php echo $modal_item ?>" value="0" >
+                <a href="#" data-target="#" data-toggle="dropdown" aria-expanded="false" id="selectAdd_placa_<?php echo $modal_item ?>" name="selectAdd_placa_<?php echo $modal_item ?>" class="btn dropdown-btn"><div class="ripple-container"></div></a>
+                <a href="#" data-target="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><div class="ripple-container"></div></a>
+                <ul class="dropdown-menu">
+                
+                <?php
+                        $sql_lista_placa = "
+                            SELECT
+                                serie
+                            FROM
+                                placa_mae
+                            ";
+                        $query_lista_placa=@mysql_query($sql_lista_placa);
+                        
+                        //
+                        while($res_lista_placa=@mysql_fetch_assoc($query_lista_placa)) 
+                        {
+                            echo "<li>";
+                            echo "<a href='#' id='placa_".$res_lista_placa['id_placa']."' class='mass-act' onClick='atribuiValorAdd(this);'>".$res_lista_placa['serie']."</a>";		
+                            echo "</li>";
+                            echo "<li class='divider'></li>";			
+                        }		
+                        
+                ?>      
+                </ul>
+              </div>
+              
+              <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo "Billeteros" ?></label>
+              <div class="row form-group">
+                <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo "Billeteros" ?></label>
+                <input type="hidden" id="inputAdd_bil_<?php echo $modal_item ?>" name="inputAdd_bil_<?php echo $modal_item ?>" value="0" >
+                <a href="#" data-target="#" data-toggle="dropdown" aria-expanded="false" id="selectAdd_bil_<?php echo $modal_item ?>" name="selectAdd_bil_<?php echo $modal_item ?>" class="btn dropdown-btn"><div class="ripple-container"></div></a>
+                <a href="#" data-target="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><div class="ripple-container"></div></a>
+                <ul class="dropdown-menu">
+                
+                <?php
+                        $sql_lista_bil = "
+                            SELECT
+                                serie
+                            FROM
+                                bilheteiros
+                            ";
+                        $query_lista_bil=@mysql_query($sql_lista_bil);
+                        
+                        //
+                        while($res_lista_bil=@mysql_fetch_assoc($query_lista_bil)) 
+                        {
+                            echo "<li>";
+                            echo "<a href='#' id='bil_".$res_lista_bil['id_bilheteiro']."' class='mass-act' onClick='atribuiValorAdd(this);'>".$res_lista_bil['serie']."</a>";
+                            echo "</li>";
+                            echo "<li class='divider'></li>";			
+                        }		
+                        
+                ?>      
+                </ul>
+              </div>
+                         
+              <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo "Pendrives" ?></label>
+              <div class="row form-group">
+                <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo "Pendrives" ?></label>
+                <input type="hidden" id="inputAdd_pen_<?php echo $modal_item ?>" name="inputAdd_pen_<?php echo $modal_item ?>" value="0" >
+                <a href="#" data-target="#" data-toggle="dropdown" aria-expanded="false" id="selectAdd_pen_<?php echo $modal_item ?>" name="selectAdd_pen_<?php echo $modal_item ?>" class="btn dropdown-btn"><div class="ripple-container"></div></a>
+                <a href="#" data-target="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><div class="ripple-container"></div></a>
+                <ul class="dropdown-menu">
+                
+                <?php
+                        $sql_lista_pen = "
+                            SELECT
+                                serie
+                            FROM
+                                pendrives
+                            ";
+                        $query_lista_pen=@mysql_query($sql_lista_pen);
+                        
+                        //
+                        while($res_lista_pen=@mysql_fetch_assoc($query_lista_pen)) 
+                        {
+                            echo "<li>";
+                            echo "<a href='#' id='pen_".$res_lista_bil['id_bilheteiro']."' class='mass-act' onClick='atribuiValorAdd(this);'>".$res_lista_pen['serie']."</a>";
+                            echo "</li>";
+                            echo "<li class='divider'></li>";			
+                        }		
+                        
+                ?>      
+                </ul>
+              </div>
+                           
+              <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo "Monitores" ?></label>
+              <div class="row form-group">
+                <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo "Monitores" ?></label>
+                <input type="hidden" id="inputAdd_mon_<?php echo $modal_item ?>" name="inputAdd_mon_<?php echo $modal_item ?>" value="0" >
+                <a href="#" data-target="#" data-toggle="dropdown" aria-expanded="false" id="selectAdd_mon_<?php echo $modal_item ?>" name="selectAdd_mon_<?php echo $modal_item ?>" class="btn dropdown-btn"><div class="ripple-container"></div></a>
+                <a href="#" data-target="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><div class="ripple-container"></div></a>
+                <ul class="dropdown-menu">
+                
+                <?php
+                        $sql_lista_mon = "
+                            SELECT
+                                serie
+                            FROM
+                                monitores
+                            ";
+                        $query_lista_mon=@mysql_query($sql_lista_mon);
+                        
+                        //
+                        while($res_lista_mon=@mysql_fetch_assoc($query_lista_mon)) 
+                        {
+                            echo "<li>";
+                            echo "<a id='mon_".$res_lista_chapa['id_monitor']." href='#' class='mass-act' onclick='atribuiValorAdd(this);'>".$res_lista_mon['serie']."</a>";
+                            echo "</li>";
+                            echo "<li class='divider'></li>";			
+                        }		
+                        
+                ?>      
+                </ul>
+              </div>    
+
+              <label for="input_interface<?php echo $modal_item ?>" class="control-label"><?php echo "Chapas" ?></label>
+              <div class="row form-group">
+                <div class="checkbox">
+                
+                	<?php
+						//consulta modelos de chapas
+						$sqlChapas = "SELECT * FROM modelos_chapa";
+						$queryChapa=@mysql_query($sqlChapas);
+						
+						//
+						while($resChapa=@mysql_fetch_assoc($queryChapa))
+						{
+							echo "<label>";
+							echo "<input id='checkAdd_chapa_".$resChapa['codigo']."' name='checkAdd_chapa_".$resChapa['codigo']."' type='checkbox'>";
+							echo "<span class='checkbox-material'>".$resChapa['codigo']."</span>";
+							echo "</label>";
+						}
+					?>                                      
+                </div>
+                </ul>
+              </div>                                                                       
+            </div>
+          </div>
+          <div class="row form-group">
+          	<div class="col-xs-10">
+            	<label for="input_resp<?php echo $modal_item ?>" class="control-label"><?php echo _('Observacion maquina') ?></label>
+            	<input type="text" class="form-control" id="inputAdd_obs_<?php echo $modal_item ?>" name="inputAdd_obs_<?php echo $modal_item ?>" placeholder="<?php echo _('Observacion maquina') ?>" value="<?php echo $res_maq['obs'] ?>">
+            </div>
+          </div>   
+          <div class="row form-group">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-sm btn-raised col-xs-12 col-md-5 right"><?php echo _('Crear Nueva Máquina') ?></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+	//
+	function atribuiValorAdd(obj)
+	{
+		//
+		var tpCombo = obj.id.split("_");
+		tpCombo = tpCombo[0];
+		
+		$('#selectAdd_'+tpCombo+'_Maquina').text(obj.text);
+		$('#inputAdd_'+tpCombo+'_Maquina').attr("value", obj.text);	
+	}
+</script>

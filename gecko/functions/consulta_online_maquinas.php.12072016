@@ -1,0 +1,98 @@
+<?php
+session_start();
+include('../conn/conn.php');
+include('functions.php');
+//include('validaLogin.php');
+
+$idLocal = $_POST['id'];
+//$idLocal = 133;
+$return = "";
+
+//busca dados do disp
+$sql_maq = "
+	SELECT
+		id_maquina,
+		numero,
+		id_jogo,
+		interface,
+		entrada_oficial,
+		saida_oficial,
+		nome,
+		id_local			
+	FROM
+		vw_maquinas
+	WHERE
+		excluido = 'N'
+	AND
+		id_local = " . $idLocal . "
+	AND
+		((id_jogo > 0 AND id_jogo < 10) or (id_jogo > 19 AND id_jogo < 40))		
+	ORDER BY
+		numero";
+$query_maq=@mysql_query($sql_maq);
+
+
+//include('../conn/connIntegration.php');
+
+
+
+//
+while($res_maq=@mysql_fetch_assoc($query_maq)) 
+{
+	include('../conn/conn.php');
+	//consulta a ultima leitura dessa maquina
+	$sql_leit_maq = "SELECT entrada_oficial, saida_oficial FROM maquinas WHERE id_maquina = " . $res_maq['id_maquina'];
+	$query_leit_maq=@mysql_query($sql_leit_maq);
+	$res_leit_maq=@mysql_fetch_assoc($query_leit_maq);
+	
+	
+	
+	include('../conn/connIntegration.php');
+	
+	//consulta dados
+	$sql_statistic = "SELECT id, creditIn, creditOut, moneyIn, moneyOut, issueDate, getCredits, upTime FROM vw_info WHERE id = " . $res_maq['interface'];
+	$query_statistic=@mysql_query($sql_statistic);
+	$res_statistic=@mysql_fetch_assoc($query_statistic);
+	
+	//echo "numero: " . $res_maq['numero'] . " - Entrada: " . $res_leit_maq['entrada_oficial'] . "//" . $res_statistic['creditIn'] . "<br />";	
+		
+		
+	if($res_statistic['creditIn'] == 0)
+	{
+		//
+		$entrada = ($res_statistic['moneyIn'] * 10) - $res_leit_maq['entrada_oficial'];
+		$saida = ($res_statistic['moneyOut'] * 10) - $res_leit_maq['saida_oficial'];
+
+	}
+	else
+	{
+		//
+		$entrada = ($res_statistic['creditIn'] * 10) - $res_leit_maq['entrada_oficial'];
+		$saida = ($res_statistic['creditOut'] * 10) - $res_leit_maq['saida_oficial'];
+	}
+		
+	
+	//calcula lucro
+	$lucro = ($entrada - $saida - ($res_statistic['getCredits'] *10));	
+
+	
+	
+	
+	$return .= $res_maq['numero'] . ",";
+	$return .= $res_maq['id_jogo'] . ",";
+	$return .= $res_maq['interface'] . ",";
+	$return .= number_format($entrada,0,"",".") . ",";
+	$return .= number_format($saida,0,"",".") . ",";
+	$return .= date('H:i:s (d-m-Y)', strtotime($res_statistic['issueDate'])) . ",";
+	$return .= $res_maq['interface'] . ",";
+	$return .= $res_maq['nome'] . ",";
+	$return .= $res_maq['id_local'] . ",";
+	$return .= number_format(($res_statistic['getCredits']*10),0,"",".") . ",";
+	$return .= $res_statistic['uptime'] . ",";
+	$return .= number_format($lucro,0,"",".") . ";";
+}
+
+
+echo $return;
+
+?>

@@ -1,0 +1,15 @@
+@charset "iso-8859-1";
+/* CSS Document */
+<!-- 
+/* Tela de Login */
+*{margin:0;padding:0;}
+body{font-family:Georgia,serif;color:#3a3a3a;background:url(../img/login-page-bg.jpg) top center no-repeat #e45e00;}
+.clear{clear:both;}
+form{width:410px;margin:218px auto 0; margin-left:808px;}
+legend{display:none;}
+fieldset{border:0;}
+label{width:115px;text-align:right;float:left;margin:0 10px 0 0;padding:9px 0 0 0;font-size:16px;}
+input{width:168px;display:block; background-color: transparent; padding:7px;margin:0 0 10px 0;font-size:14px;color:#3a3a3a;font-family:Georgia,serif; border:0px;}
+input[type=checkbox]{width:20px;margin:0;display:inline-block;}
+#esq_senha{width:150px;margin:0;display:inline-block;;font-size:12px;margin:0px 0 0 80px;font-weight:bolder;text-decoration:underline;cursor:pointer;}
+-->

@@ -1,0 +1,1290 @@
+// url
+$assetPath: "../img"
+
+// colores
+$white: #FFF
+$texto: #838383
+$texto-dark: darken($texto, 10%)
+$gris-claro: #F0F0F0
+$gris-login: #DBDBDB
+$gris: #696969
+$purple: #2A3743
+$purple-light: #095570
+$blue-light: #0DA4E7
+$blue-dark: #007BB3
+$blue-gray: #4A6279
+$red: #FF3C09
+$green: #13C100
+//mixins
+.os300
+	font-family: 'OpenSans_light'
+	font-weight: 300
+.os400
+	font-family: 'OpenSans_regular'
+	font-weight: 400
+.os600
+	font-family: 'OpenSans_semibold'
+	font-weight: 600
+.os700
+	font-family: 'OpenSans_bold'
+	font-weight: 700
+
+//mediaqueries
+$phone-portrait: 320px
+$phone-landscape: 480px
+$tablet-width: 768px
+$desktop-width: 1024px
+$desktop-large-width: 1280px
+$phablet-height: 680px
+
+// mixins de mqs
+@mixin phoneport // < 320
+	@media (max-width: #{$phone-portrait})
+		@content
+@mixin phoneland // < 480
+	@media (max-width: #{$phone-landscape})
+		@content
+@mixin narrower767 // < 767
+	@media (max-width: #{$tablet-width - 1px})
+		@content
+@mixin landscape // < 600h
+	@media (max-height: #{$phablet-height})
+		@content
+@mixin wider768 // > 768
+	@media (min-width: #{$tablet-width})
+		@content
+@mixin tablet // 768 - 1023
+	@media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px})
+		@content
+@mixin desktopsm // 992 - 1024
+	@media (min-width: #{$desktop-width - 32px}) and (max-width: #{$desktop-width})
+		@content
+@mixin desktopmd // 1024 - 1279
+	@media (min-width: #{$desktop-width}) and (max-width: #{$desktop-large-width - 1px})
+		@content
+@mixin desktoplg // > 1280
+	@media (min-width: #{$desktop-large-width})
+		@content
+@mixin gap1280-1600 // 1280 - 1600
+	@media (min-width: #{$desktop-large-width}) and (max-width: 1600px)
+		@content
+
+@import sass-css3-mixins-master/css3-mixins
+
+// estilos
+body
+	background: $gris-claro url('#{$assetPath}/bg-innerpage.jpg') no-repeat center
+	background-size: cover
+	color: $texto
+	@extend .os400
+	font-size: 1rem
+	&.login
+		background: $gris-claro url('#{$assetPath}/bg-login.jpg') no-repeat center
+	&.innerpages
+		div[class^="innpage-"],
+		div[class*="innpage-"]
+			padding: 0
+			>.row
+				margin-bottom: 0
+			.sidebar
+				@media print
+					display: none
+				@include desktoplg
+					max-width: 18.5%
+				@include wider768
+					height: 90vh
+					padding: 0px
+				@include narrower767
+					padding: 0
+				&.closed
+					@include tablet
+						max-width: 7%
+					@include desktopsm
+						max-width: 5.5%
+					@include desktopmd
+						max-width: 6%
+					@include desktoplg
+						max-width: 5%
+			.inner-content
+				padding: 20px 0 10px
+				@include desktoplg
+					min-width: 80.5%
+					margin-left: 0.5%
+					margin-right: 0.5%
+					&.wider
+						min-width: 94%
+
+h1, h2, h3, h4, h5, h6
+	@extend .os600
+	color: $texto-dark
+
+p
+	@extend .os400
+	color: $texto-dark
+	font-size: 0.9rem
+
+strong
+	@extend .os700
+
+.body
+	height: 100vh //esto no tiene soporte full cross browser y puede ser necesario un ajuste de css y js
+.vhAttr
+	height: 80vh //esto no tiene soporte full cross browser y puede ser necesario un ajuste de css y js
+.modal
+	background-color: transparent
+	box-shadow: none
+	@media print
+		width: 100%
+.loading
+	font-size: 0.85rem
+	line-height: 1rem
+	margin: 10px
+.btn-activate
+	.item-active
+		&:before
+			color: $green
+			content: "\f205"
+	.item-deactive
+		&:before
+			color: lighten($gris, 15%)
+			content: "\f204"
+	[class^="item-"],
+	[class*="item-"]
+		display: inline-block
+		&:before
+			display: block
+			font-family: 'FontAwesome'
+			font-size: 1rem
+			height: 26px
+			width: 26px
+
+.log-wrap
+	.valign
+		margin: auto
+		@include narrower767
+			width: 90%
+			padding: 0
+		@include phoneport
+			width: 100%
+	.well.login-component
+		background-color: $gris-login
+		border: 1px solid #bec6cc
+		+border-radius($radius: 0px)
+		padding: 2rem 4rem 6rem
+		.logo-login
+			img
+				margin-bottom: 10px
+		@include phoneland
+			padding: 2rem 0.75rem 3rem!important
+			margin-top: 15px
+		@include narrower767
+			padding: 2rem 2.5rem 3rem
+			margin-top: 15px
+		@include desktopsm
+			padding: 1.5rem 2rem 2rem
+			.logo-login
+				max-width: 180px
+		@include landscape
+			.logo-login
+				max-width: 140px
+		@include desktoplg
+			max-width: 420px
+			margin: 15px auto
+		.form-group
+			margin: 0
+			label.control-label
+				display: none
+			input.form-control
+				background: $white
+				// border: 1px solid $white
+				border: none
+				box-shadow: inset 1px 1px 1px 0 $gris-login, inset -1px -1px 1px 0 $gris-login
+				margin: 15px 0 10px
+				padding: 0 5% 0 22.5%
+				width: 72.5%
+				+transition(all, .45s, ease-in-out)
+				@include phoneland
+					padding: 0 5% 0 30%
+					width: 65%
+				@include desktoplg
+					padding: 0 5% 0 25%
+					width: 70%
+				&:focus
+					// border: 1px solid $purple
+					border: none
+					box-shadow: inset 1px 1px 1px 0 rgba(42, 55, 67, 0.85), inset -1px -1px 1px 0 rgba(42, 55, 67, 0.85), 0 0 5px 1px rgba(0, 113, 145, 0.25)
+					+transition(all, .35s, ease-in-out)
+				&:-webkit-autofill
+					-webkit-box-shadow: 0 0 0 50px white inset
+					-webkit-text-fill-color: #555
+					padding: 0 5%
+					width: 90%
+				&#inputEmail
+					background: $white url('#{$assetPath}/user-input.png') no-repeat left center
+				&#inputPassword
+					background: $white url('#{$assetPath}/pass-input.png') no-repeat left center
+			&.has-error
+				input.form-control
+					background-color: #EFEFEF
+					box-shadow: inset 1px 1px 1px 0 #FF5722, inset -1px -1px 1px 0 #FF5722, 0 0 5px 1px rgba(255, 87, 34, 0.45) !important
+					&:-webkit-autofill
+						-webkit-box-shadow: 0 0 0 50px #EFEFEF inset
+				.col-xs-12
+					&:after
+						content: ""
+						background: url('#{$assetPath}/input-wrong.png') no-repeat left center
+						background-size: cover
+						display: block
+						height: 26px
+						width: 26px
+						position: absolute
+						margin-top: -11px
+						top: 50%
+						right: 21px
+			.forgot
+				color: $purple-light
+				float: left
+				@extend .os600
+				margin-top: 10px
+				+transition(all, .25s, ease-in-out)
+				&:hover
+					color: rgba(23, 62, 90, .45)
+					+transition(all, .4s, ease-in-out)
+		.btn
+			background: rgb(42, 55, 67)
+			color: $white
+			height: 45px
+			line-height: 45px
+			text-transform: capitalize
+			&:hover
+				background: rgba(23, 62, 90, .85)
+		&.sombra-cuadrada
+			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset
+			&:before,
+			&:after
+				content: ""
+				position: absolute
+				z-index: -2
+		&.sombra-cuadrada
+			box-shadow: 0 20px 15px -10px rgba(0, 0, 0, 0.5), 0 2px 2px rgba(0, 0, 0, 0.15), 0 0 40px rgba(0, 0, 0, 0.05) inset
+	.bottomfringe
+		background: rgba(42, 55, 67, 0.45)
+		display: block
+		height: 8%
+		position: absolute
+		left: 0
+		bottom: 0
+		width: 100%
+		@include narrower767
+			height: 7.5%
+		@include tablet
+			height: 5%
+		@include landscape
+			display: none
+
+.modal
+	@include tablet
+		width: 740px
+	@include desktopmd
+		width: 780px
+	@include desktoplg
+		width: 840px
+
+.modal-dialog
+	margin: 0 auto
+	@include wider768
+		width: 100%
+	.modal-content
+		*
+			text-transform: none
+		.modal-header
+			.close
+				&:focus
+					background: none
+		@include narrower767
+			padding: 0px
+		.form-horizontal
+			> .row
+				margin-right: -15px
+				margin-left: -15px
+		@media print
+			border: none
+	.modal-header
+		padding: 0
+		h1, h2, h3, h4, h5
+			font-size: 105%
+			margin: 0 15px 20px
+	.modal-body
+		padding: 0 15px
+		.table
+			tbody,
+			thead,
+			tfoot
+				tr
+					th
+						background: $gris-claro
+						@extend .os600
+						color: $texto
+					&:hover
+						th
+							background: darken($gris-claro, 3.5%)
+		.btn
+			background: rgb(42, 55, 67)
+			color: $white
+			height: 45px
+			line-height: 45px
+			margin: 0px
+			text-transform: capitalize
+			&:hover
+				background: rgba(23, 62, 90, .85)
+			&.send
+				margin-left: 15px
+			&.btn-sm
+				height: 35px
+				line-height: 35px
+				font-size: 0.85rem
+			@include wider768
+				float: right
+			@include narrower767
+				font-size: 1.1rem
+				margin: 0
+			@include phoneland
+				font-size: 1rem
+			@media print
+				display: none
+			&.dropdown-btn,
+			&.dropdown-toggle
+				float: left
+				background: $white
+				color: lighten($gris, 30%)
+				height: 36px
+				line-height: 36px
+				margin: 10px 0 5px
+				border-color: $gris-login
+				&:hover,
+				&:focus
+					background: lighten($gris, 50%)
+			&.dropdown-btn
+				text-align: left
+				padding: 0 4.5%
+				width: 74%
+				&:hover,
+				&:focus
+					background: $white
+	.form-group
+		margin: 5px 0 0
+		// &.row
+		// 	margin-top: 0px
+		// 	>div:first-of-type
+		// 		padding-left: 0
+		// 	label
+		// 		padding: 0
+		&.open
+			.dropdown-menu
+				margin-top: -12px
+		label.control-label
+			display: none
+			display: block\9
+			color: $gris
+			font-size: 1rem
+			margin: 0
+			text-align: left
+			width: 100%
+		input.form-control
+			background: $white
+			border: none
+			box-shadow: inset 1px 1px 1px 0 $gris-login, inset -1px -1px 1px 0 $gris-login
+			margin: 10px 0 5px
+			padding: 0 5%
+			width: 90%
+			+transition(all, .45s, ease-in-out)
+			@include wider768
+				height: 2.5rem
+			@include desktoplg
+				padding: 0 4.5%
+				width: 95%
+			&:focus
+				border: none
+				box-shadow: inset 1px 1px 1px 0 rgba(42, 55, 67, 0.85), inset -1px -1px 1px 0 rgba(42, 55, 67, 0.85), 0 0 5px 1px rgba(0, 113, 145, 0.25)
+				+transition(all, .35s, ease-in-out)
+
+#forgot-modal
+	overflow: hidden
+	.modal-dialog
+		@include wider768
+			width: 600px
+		.modal-body
+			padding: 0 15px
+			.logo-login
+				margin-bottom: 15px
+				@include narrower767
+					margin-bottom: 0
+					img
+						max-width: 120px
+						margin: auto
+
+.navbar-header
+	@include wider768
+		min-width: 25%
+	@include desktoplg
+		min-width: 350px
+		max-width: 350px
+	a.navbar-brand
+		img
+			@include narrower767
+				max-width: 220px
+			+transition(all, .45s, ease-in-out)
+			&:hover
+				opacity: .65
+				+transition(all, .35s, ease-in-out)
+
+.innerpages
+	.navbar
+		+border-radius($radius: 0px)
+		border: none
+		border-bottom: 1px solid darken($blue-dark, 4.5%)
+		margin-bottom: 0px
+		@include wider768
+			min-height: 10vh
+		.navbar-brand
+			height: auto
+		&.navbar-info
+			background: url('#{$assetPath}/bg-heading.jpg')
+			.container-fluid
+				@include wider768
+					padding-right: 0
+					padding-left: 0
+				.navbar-brand
+					margin-left: 0
+		.navbar-form
+			margin-top: 12px
+			padding-left: 0
+			.form-group
+				input.form-control
+					background: $white
+					color: $gris
+					border: none
+					box-shadow: inset 1px 1px 1px 0 $gris-login, inset -1px -1px 1px 0 $gris-login
+					height: 48px
+					margin: 12px 0 10px
+					padding: 0 15px
+					+transition(all, .45s, ease-in-out)
+					&::-webkit-input-placeholder
+						color: lighten($gris, 25%)
+					&:-moz-placeholder
+						color: lighten($gris, 25%)
+					&::-moz-placeholder
+						color: lighten($gris, 25%)
+					&:-ms-input-placeholder
+						color: lighten($gris, 25%)
+					@include desktopsm
+						min-width: 200px
+						margin-left: 35px
+					@include desktopmd
+						min-width: 220px
+					@media (min-width: #{$desktop-width}) and (max-width: #{$desktop-width + 70px})
+						min-width: 170px
+					@include desktoplg
+						min-width: 320px
+					@include gap1280-1600
+						min-width: 250px
+					&:focus
+						// border: 1px solid $purple
+						border: none
+						box-shadow: inset 1px 1px 1px 0 rgba(42, 55, 67, 0.85), inset -1px -1px 1px 0 rgba(42, 55, 67, 0.85), 0 0 5px 1px rgba(0, 113, 145, 0.25)
+						+transition(all, .35s, ease-in-out)
+				&:after
+					content: "\f002"
+					color: lighten($gris, 25%)
+					display: block
+					font-family: 'FontAwesome'
+					font-size: 1.4rem
+					height: 26px
+					width: 26px
+					position: absolute
+					margin-top: -15px
+					top: 50%
+					right: 10px
+		.timer
+			float: left
+			display: table
+			height: 97px
+			padding-left: 25px
+			> div
+				display: table-cell
+				vertical-align: middle
+			&:before
+				content: "\f017"
+				color: $white
+				display: block
+				font-family: 'FontAwesome'
+				font-size: 1.3rem
+				position: absolute
+				margin-top: -14px
+				margin-left: -25px
+				top: 50%
+			.text
+				text-transform: uppercase
+				@extend .os600
+			.digit
+				@extend .os700
+			@include desktopsm
+				display: none
+			@include desktopmd
+				margin-left: 30px
+				padding-left: 0
+				.text
+					display: none
+			@include desktoplg
+				margin-left: 100px
+			@include gap1280-1600
+				margin-left: 60px
+				padding-left: 0
+				.text
+					display: none
+		@include narrower767
+			.navbar-right
+				margin: 5px -15px 0
+				li
+					display: inline-block
+					width: 100%
+		.navbar-right
+			.dropdown,
+			.logout
+				a.dropdown-toggle,
+				a.btnoff
+					float: left
+					text-shadow: 1.5px 1px 0 darken($blue-dark, 15%)
+					+transition(all, .5s, ease-in-out)
+					@include narrower767
+						padding-left: 25px
+						padding-right: 25px
+						width: 100%
+						.caret
+							display: none
+					@include wider768
+						padding: 32px 40px
+						line-height: 32px
+						.text
+							display: none
+					@include tablet
+						padding: 32px 40px
+					@include desktopsm
+						padding: 34px 25px
+					@include desktopmd
+						padding: 34px 30px
+					@include desktoplg
+						padding: 32.5px 45px
+					.text
+						font-size: 1.1rem
+						line-height: 2rem
+						margin-left: 10px
+						float: left
+					.fa
+						float: left
+						font-size: 1.6rem
+						line-height: 2.15rem
+						text-shadow: 1.25px 0.75px 0 darken($blue-dark, 15%)
+					.caret
+						margin-left: 7.5px
+					&:hover
+						background: rgba(0,0,0,0.12)
+						+transition(all, .35s, ease-in-out)
+			.dropdown
+				&.language
+					a.dropdown-toggle
+						@include desktopsm
+							padding: 34px 25px
+						@include desktoplg
+							padding: 32.5px 35px
+				&.usermenu
+					background: darken($blue-dark, 4.5%)
+					a.dropdown-toggle
+						padding: 25px 45px 26px 20px
+						@include desktopmd
+							padding: 27px 45px 27px 20px
+						@include tablet
+							padding: 27px 40px 27px 15px
+						&:after
+							font-family: 'FontAwesome'
+							position: absolute
+							content: '\f078'
+							right: 15px
+							top: 28px
+							@include narrower767
+								right: 25px
+								top: 40px
+					.avatar
+						float: left
+						margin-right: 5%
+						width: 20%
+					.user
+						float: left
+						margin-top: 8px
+						width: 75%
+						white-space: nowrap
+						@include wider768
+							*
+								font-size: .85rem
+								line-height: 1rem
+								min-width: 170px
+						.username
+							text-transform: uppercase
+					ul.dropdown-menu
+						min-width: 282px
+						@include desktopmd
+							min-width: 294px
+						@include desktoplg
+							min-width: 293px
+						li > a
+							padding: 15px 25px
+
+		.dropdown-menu
+			padding: 0
+			li>a
+				font-size: 1rem
+				@extend .os600
+				&:hover
+					color: $blue-dark
+			.divider
+				margin: 0
+
+	.sidebar
+		background: $blue-light
+		*
+			text-shadow: 0.5px 1px 0px rgba(29, 56, 82, 0.45)
+		&.closed
+			@media print
+				display: none
+			@include wider768
+				.titlemenu
+					font-size: 0
+					line-height: 1.3rem
+					.arrow
+						&:after
+							text-align: center
+							width: 100%
+				.main-menu
+					a.btn
+						font-size: 0
+						color: $blue-light
+						&:after
+							display: none
+						i
+							color: $white
+							margin-right: 0
+							text-align: center
+							width: 100%
+					.panel-group
+						.panel-collapse
+							position: absolute
+							left: 100%
+							top: 1px
+							z-index: 10
+							.list-group
+								background: $blue-light
+								min-width: 210px
+								.list-group-item
+									display: table
+									height: auto
+									min-height: 52px
+									line-height: 1.2rem
+									padding-left: 35px
+									padding-right: 35px
+									min-width: 210px
+									width: auto
+									span
+										display: table-cell
+										vertical-align: middle
+										word-wrap: break-word
+		.titlemenu
+			color: $white
+			font-size: 1.2rem
+			text-transform: uppercase
+			@extend .os600
+			margin: 20px 15px
+			position: relative
+			.arrow
+				&:after
+					color: $white
+					cursor: pointer
+					display: block
+					font-family: 'FontAwesome'
+					font-size: 1.85rem
+					line-height: 1.85rem
+					height: 28px
+					width: 28px
+					position: absolute
+					top: 50%
+					right: 0
+					margin-top: -14px
+				&.right
+					&:after
+						content: "\f137"
+				&.left
+					&:after
+						content: "\f138"
+		.main-menu
+			margin: 0
+			width: 100%
+			.panel-group
+				.panel
+					&+.panel
+						background: transparent
+						margin: 0
+				.panel,
+				.panel:not([class*=panel-])
+					box-shadow: none
+					border: none
+					position: relative
+					.panel-heading
+						padding: 0
+						&.menu-item
+							a.btn
+								width: 100%
+								border-bottom: 0.85px solid $blue-dark
+								border-top: 1px solid $blue-light
+								border-right: none
+								border-left: none
+								&:focus,
+								&:active
+									border-top: 1px solid darken($blue-dark, 10%)
+					&.current
+						.panel-heading
+							a.btn
+								background: $blue-gray
+								&:after
+									content: "\f078"
+									right: 14px
+									margin-top: -28px
+				.collapse
+					&.in
+						background: transparent
+				.list-group
+					border-top: 1px solid darken($blue-light, 10%)
+					box-shadow: inset 0 2px 40px 4px rgba(10, 130, 183, 0.35), inset -1px 4px 2px -2px rgb(10, 130, 183), inset 0 3px 15px 2px rgba(0, 0, 0, 0.085)
+					.list-group-item
+						color: $white
+						font-size: 0.8rem
+						height: 46px
+						line-height: 46px
+						padding-left: 52px
+						text-transform: uppercase
+						@include narrower767
+							font-size: 0.95rem
+							height: 50px
+							line-height: 50px
+							padding-left: 52px
+						&.active,
+						&.active:hover
+							background: darken($blue-light, 10%)
+							@extend .os600
+						&:focus,
+						&:visited,
+						&:hover
+							outline: none
+							background: darken($blue-light, 5%)
+
+			.btn
+				$item-height: 54px
+				background: transparent
+				+border-radius($radius: 0px)
+				color: $white
+				height: $item-height
+				line-height: $item-height
+				padding: 0 15px
+				text-align: left
+				text-transform: uppercase
+				&:hover
+					background: lighten($blue-gray, 3%)
+				&.active,
+				&:active,
+				&:focus
+					background: $blue-gray
+				&.selected
+					background: $blue-gray
+					&.collapsed
+						&:after
+							content: "\f054"
+							margin-top: -24px
+							right: 10px
+					&:after
+						content: "\f078"
+						right: 14px
+						margin-top: -28px
+				&:after
+					content: "\f054"
+					color: $white
+					display: block
+					font-family: 'FontAwesome'
+					font-size: 1.4rem
+					height: 26px
+					width: 26px
+					position: absolute
+					margin-top: -24px
+					top: 50%
+					right: 5px
+					@include tablet
+						display: none
+					@include desktoplg
+						right: 10px
+					@include gap1280-1600
+						right: 7.5px
+					@include narrower767
+						right: 15px
+				&.btn-raised
+					&:not(.btn-link)
+						box-shadow: 0 2px 2px 0 rgba(0,0,0,.025),0 3px 1px -2px rgba(0,0,0,.1),0 3px 6px 0 rgba(0,0,0,0.1)
+						webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,.025),0 3px 1px -2px rgba(0,0,0,.1),0 3px 6px 0 rgba(0,0,0,0.1)
+				@include tablet
+					font-size: .86rem
+					padding-right: 35px
+				@include desktopmd
+					padding-right: 35px
+				i
+					margin-right: 15px
+					@include tablet
+						margin-right: 5px
+					@include gap1280-1600
+						margin-right: 5px
+				.fa.fa-desktop
+					font-size: 1.2rem
+				.cons.material-icons
+					font-size: 1.38rem
+				.store.material-icons
+					font-size: 1.45rem
+	.inner-content
+		.main-title
+			color: $blue-dark
+			font-size: 1.2rem
+			line-height: 1.2rem
+			margin: 0
+			@extend .os600
+			text-transform: uppercase
+			.fa-stack
+				height: 2.15em
+			@include tablet
+				margin-bottom: 10px
+			@include narrower767
+				margin-bottom: 15px
+		.button-wrap
+			display: inline-block
+			float: right
+			.btn
+				margin: 0 7.5px
+				.fa
+					font-size: 80%
+					line-height: 0.85rem
+				&:last-of-type
+					margin-right: 0px
+				@include gap1280-1600
+					margin: 0 2.5px
+					padding: 0 15px
+				@include desktopmd
+					margin: 0 1.5px
+					padding: 0 7.5px
+				@include tablet
+					margin: 0 2px
+					padding: 0 7.5px
+			@include narrower767
+				float: left
+				width: 100%
+				.btn
+					height: 45px
+					line-height: 45px
+					margin: 4px 0
+					width: 100%
+			@media print
+				display: none
+		.input-wrap
+			display: inline-block
+			width: 100%
+		form.white-form
+			.form-group
+				margin: 0px
+				input.form-control
+					background: $white
+					margin: 0px
+					&::-webkit-input-placeholder
+						color: lighten($gris, 25%)
+					&:-moz-placeholder
+						color: lighten($gris, 25%)
+					&::-moz-placeholder
+						color: lighten($gris, 25%)
+					&:-ms-input-placeholder
+						color: lighten($gris, 25%)
+
+	.btn-group
+		margin: 0px
+		&.white-btn
+			>.btn
+				background: $white
+				color: lighten($gris, 10%)
+				text-transform: uppercase
+				border: none
+				box-shadow: 1px 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)
+				&:hover,
+				&:focus
+					background: $white
+				&+.dropdown-toggle
+					background: $white
+					border: none
+					&:hover
+						background: lighten($gris, 50%)
+
+	.btn
+		background: $blue-light
+		border: 1px solid $blue-dark
+		color: $white
+		+border-radius(0px)
+		box-shadow: none
+		text-transform: none
+		&:not(.btn-link)
+			&:hover,
+			&:focus
+				background-color: $blue-dark
+		&.btn-sm
+			height: 28px
+			line-height: 28px
+			padding: 0 30px
+			@include desktopmd
+				margin: 0 0.5%
+				padding: 0 1%
+			@include tablet
+				width: 96%
+				margin: 2px 2%
+
+.table
+	>thead,
+	>tbody,
+	>tfoot
+		>tr
+			>th,
+			>td
+				color: lighten($gris, 10%)
+				font-size: 0.9rem
+				padding: 10px
+				vertical-align: middle
+				>a
+					color: $white
+					&.btn-activate
+						color: $texto
+						&:hover,
+						&:focus
+							color: darken($blue-dark, 5%)
+							text-decoration: none
+				div.checkbox
+					margin: 0px
+					>label
+						padding-left: 5px
+				@include desktoplg
+					padding: 7.5px 20px !important
+				@include gap1280-1600
+					padding: 7.5px 12px !important
+	>thead
+		>tr
+			>th
+				position: relative
+				border-bottom: none
+				&:before,
+				&:after
+					color: $white
+					display: block
+					font-family: 'FontAwesome'
+					font-size: 0.85rem
+					height: 12px
+					width: 12px
+					position: absolute
+					top: 50%
+					right: 5px
+				@include desktoplg
+					&:before,
+					&:after
+						right: 12.5px
+				@include gap1280-1600
+					&:before,
+					&:after
+						right: 5px
+				&:before
+					content: "\f106"
+					margin-top: -12.5px
+				&:after
+					content: "\f107"
+					margin-top: -5.5px
+				&:last-of-type
+					&:before,
+					&:after
+						display: none
+				&.sort-asc
+					&:before
+						display: none
+					&:after
+						content: "\f107"
+						margin-top: -7.5px
+				&.sort-desc
+					&:before
+						content: "\f106"
+						margin-top: -10.5px
+					&:after
+						display: none
+				&.sort-none
+					&:before,
+					&:after
+						display: none
+				.checkbox
+					.checkbox-material
+						.check
+							border: 2px solid rgba(255, 255, 255, 0.75)
+					input[type=checkbox]:checked+.checkbox-material
+						.check
+							color: $blue-light
+							border-color: $blue-light
+							&:before
+								color: rgb(208, 230, 240)
+			>th,
+			>td
+				color: $white
+				font-size: 0.85rem
+				background: $blue-dark
+				padding: 10px
+				vertical-align: middle
+				+border-radius(0px)
+				@extend .os600
+				text-shadow: 1px 1px 0 darken($blue-dark, 10%)
+				@include desktopmd
+					padding-right: 25px
+				@include tablet
+					padding-right: 20px
+				@include narrower767
+					padding-right: 24px
+	>tbody
+		>tr
+			>th,
+			>td
+				.btn
+					margin: 0 5px
+				.checkbox
+					.checkbox-material
+						.check
+							border: 2px solid rgba(0, 123, 179, 0.95)
+					input[type=checkbox]:checked+.checkbox-material
+						.check
+							color: $blue-light
+							border-color: $blue-light
+							&:before
+								color: $blue-light
+			.borded-row
+				border-top: 1px solid #CCC
+				border-right: 2px solid #CCC
+				border-left: 1px solid #CCC
+				color: $texto-dark
+			&:nth-child(even)
+				.borded-row
+					background: rgb(234, 234, 234)
+					&:hover
+						background: rgb(225, 225, 225)
+			&:nth-child(odd)
+				.borded-row
+					background: rgb(222, 222, 222)
+					&:hover
+						background: rgb(217, 217, 217)
+
+.panel,
+.panel:not([class*=panel-])
+	+border-radius(0px)
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,.025), 0 3px 6px 0 rgba(0,0,0,0.1)
+	webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,.025), 0 3px 6px 0 rgba(0,0,0,0.1)
+	border-color: $gris-login
+	> .panel-heading
+		background-color: $blue-light
+		border-color: $blue-dark
+		border-bottom: none
+		color: $white
+		+border-radius(0px)
+		text-transform: uppercase
+		.btn-group
+			@include narrower767
+				width: 50%
+			@include phoneland
+				margin-bottom: 10px
+				width: 100%
+			&.white-btn
+				>.btn
+					height: 2.1rem
+					line-height: 2.1rem
+					padding: 0px 15px
+					text-align: left
+					@include wider768
+						width: 210px
+						&.dropdown-toggle
+							width: 40px
+					@include narrower767
+						width: 85%
+						&.dropdown-toggle
+							width: 10%
+					@include phoneland
+						width: 90%
+					@include phoneport
+						width: 85%
+					&+.dropdown-menu
+						margin: 0px
+						padding: 0px
+						.divider
+							margin: 0
+						li > a
+							color: darken($gris, 15%)
+							font-size: .8rem
+							@extend .os300
+							padding: 10px 15px
+						@include wider768
+							width: 210px
+						@include narrower767
+							width: 100%
+		form.white-form
+			@include narrower767
+				width: 42%
+				.form-group
+					width: 94%
+					input.form-control
+						width: 84%
+			@include wider768
+				.form-group
+					width: 245px
+					input.form-control
+						width: 210px
+			@include phoneland
+				width: 100%
+				.form-group
+					width: 100%
+					input.form-control
+						width: 92%
+			@include phoneport
+				.form-group
+					input.form-control
+						width: 85%
+			.form-group
+				input.form-control
+					color: $gris
+					font-size: .9rem
+					height: 1.4rem
+					line-height: 1.4rem
+					padding: 5px 15px
+					box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)
+					text-transform: uppercase
+					&:focus
+						border: none
+						box-shadow: 0 2px 2px 0 rgba(0,0,0,.24),0 1px 5px 0 rgba(0,0,0,.3)
+						+transition(all, .35s, ease-in-out)
+					&::-webkit-input-placeholder
+						font-size: .9rem
+						color: lighten($gris, 25%)
+					&:-moz-placeholder
+						font-size: .9rem
+						color: lighten($gris, 25%)
+					&::-moz-placeholder
+						font-size: .9rem
+						color: lighten($gris, 25%)
+					&:-ms-input-placeholder
+						font-size: .9rem
+						color: lighten($gris, 25%)
+				&:after
+					content: "\f002"
+					color: lighten($gris, 25%)
+					display: block
+					font-family: 'FontAwesome'
+					font-size: 1rem
+					height: 22px
+					width: 22px
+					position: absolute
+					margin-top: -15px
+					top: 50%
+					right: 5px
+					@include phoneport
+						right: 10px
+	> .panel-body
+		padding: 0px
+		> div
+			padding: 0px
+	> .panel-heading,
+	> .panel-body
+		@media print
+			display: none
+
+.validateScreen
+	.panel-body
+		padding-top: 25px!important
+		padding-bottom: 25px!important
+		min-height: 400px
+.validate
+	$valWidth: 68%
+	.val-input
+		.form-group
+			margin: 10px 0 10px
+			display: inline-block
+			.form-control
+				float: left
+				color: $gris
+				font-size: .9rem
+				height: 2rem
+				line-height: 2rem
+				padding: 5px 1%
+				margin: 0 2% 0 0
+				border: none
+				box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)
+				width: $valWidth / 8
+				&:focus
+					border: none
+					box-shadow: 0 2px 2px 0 rgba(0,0,0,.24),0 1px 5px 0 rgba(0,0,0,.3)
+					+transition(all, .35s, ease-in-out)
+				&::-webkit-input-placeholder
+					font-size: .9rem
+					color: lighten($gris, 25%)
+				&:-moz-placeholder
+					font-size: .9rem
+					color: lighten($gris, 25%)
+				&::-moz-placeholder
+					font-size: .9rem
+					color: lighten($gris, 25%)
+				&:-ms-input-placeholder
+					font-size: .9rem
+					color: lighten($gris, 25%)
+
+.dashboard
+	>.row
+		margin: 0
+	.panel
+		.panel-heading
+			.fa, .material-icons
+				float: left
+				margin-right: 7.5px
+			.fa
+				line-height: 1.3rem
+			.material-icons
+				font-size: 1.35rem
+				line-height: 1.35rem
+		.panel-body
+			height: auto
+		&.first,
+		&.second
+			margin-bottom: 25px
+		&.third,
+		&.fourth
+			margin-bottom: 0px
+	.graphitem,
+	.table
+		@include desktoplg
+			min-height: 350px
+	.graphitem
+		height: auto
+		margin: 0 auto
+		min-width: 100%
+	.table
+		margin-bottom: 0
+
+.map
+	background: $white
+	border: 8px solid lighten($gris-claro, 1.5%)
+	padding: 5px
+
+
+

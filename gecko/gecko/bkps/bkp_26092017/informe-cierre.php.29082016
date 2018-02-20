@@ -1,0 +1,148 @@
+<?php
+//Fechamento de sessao ao fechar o navegador
+session_start();
+include('conn/conn.php');
+include('functions/validaLogin.php');
+
+//consulta os fechamentos 
+$sql_fechamentos = "SELECT
+						fechamento.*,
+						logins.nome
+					FROM
+						fechamento
+					INNER JOIN
+						logins
+					ON
+						fechamento.id_login = logins.id_login
+					ORDER BY
+						id_fechamento DESC";
+$query_fechamento=@mysql_query($sql_fechamentos);
+
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gecko</title>
+  <?php include("inc/headings.php"); // se llaman todos los metatags, css y librerías js ?>
+</head>
+
+<body class="body innerpages">
+  <?php include("inc/commons.php"); // se declarán los directorios usados en los archivos y el lenguaje utilizado en la aplicación con su archivo .po  ?>
+  <?php $file_name = "cierre" // ingresar la palabra clave de cada modal ?>
+
+  <div class="container-fluid innpage-<?php echo $filenameID; ?>">
+    <div class="row">
+      <?php include("inc/navbar.php"); // primera sección de contenido, barra de navegación ?>
+    </div>
+    <div class="row">
+      <?php include("inc/sidebar.php"); // segunda sección de contenido, el menú lateral ?>
+      <div class="inner-content col-xs-12 col-sm-9">
+        <div class="page<?php echo $filenameID; ?>">
+            <div class="row">
+              <div class="col-xs-12 col-lg-6">
+                <h3 class="main-title">
+                  <span class="fa-stack fa-md">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-eye fa-stack-1x fa-inverse"></i>
+                  </span>
+                  <?php echo _('Cierres') ?>
+                </h3>
+              </div>
+              <div class="col-xs-12 col-lg-6">
+                <?php include("inc/buttons-cierre.php"); // btns paneles ?>
+                <?php include("inc/modals/modal-add-cierre.php"); // modal para agregar contenido ?>
+              </div>
+            </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+
+
+
+              <div class="panel">
+                <div class="panel-heading">
+                  <div class="input-wrap">
+                    <!-- dropdown de selects -->
+                    <div class="btn-group white-btn">
+                    <?php include("inc/dropdown-informe.php"); // btns acciones másivas ?>
+                    </div>
+                    <!-- input formulario de busqueda -->
+                    <form id="table-1" class="white-form right">
+                      <div class="form-group">
+                        <input type="text" class="form-control col-md-8" placeholder="<?php echo _('Búsqueda') ?>">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table id="datatable1" class="table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th class="left-align">
+                            <?php echo _('ID Cierre') ?>
+                          </th>
+                          <th class="left-align">
+                            <?php echo _('Fecha') ?>
+                          </th>
+                          <th class="left-align">
+                            <?php echo _('Fecha') ?>
+                          </th>
+                          <th class="left-align">
+                            <?php echo _('Responsable') ?>
+                          </th>                          
+                          <th class="left-align">&nbsp;
+                          	
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      
+						<?php
+							//
+							while($res_fechamento=@mysql_fetch_assoc($query_fechamento)) 
+							{
+						?>
+                              <tr>
+                                <td class="left-align">
+                                    <?php echo $res_fechamento['id_fechamento']; ?>
+                                </td>
+                                <td class="left-align">
+                                    <?php echo date("d-m-Y", strtotime($res_fechamento['data_fechamento'])); ?>
+                                </td>
+                                <td class="left-align">
+                                
+                                	<?php
+										//consulta leitura desse fechamento
+										$sql_leit = "SELECT semana, data_fechamento FROM leitura WHERE id_fechamento =  " . $res_fechamento['id_fechamento'] . " LIMIT 1";
+										$query_leit=@mysql_query($sql_leit);
+										$res_leit=@mysql_fetch_assoc($query_leit);
+										
+										echo "Semana: " . $res_leit['semana'] . " / " . date("M-Y", strtotime($res_fechamento['data_fechamento']));
+									?>
+                                </td>
+                                <td class="left-align">
+                                    <?php echo $res_fechamento['nome']; ?>
+                                </td>                            
+                                <td class="right-align">
+                                  <a href="#" class="btn btn-default" role="button" style="color: white" data-toggle="modal" data-target="#download-informe-cierre-modal"> <?php echo _('Descargar') ?></a>
+                                  <a href="ver-informe-cierre.php?id=<?php echo $res_fechamento['id_fechamento']; ?>" class="btn btn-default" role="button" style="color: white"><?php echo _('Ver') ?></a>
+                                </td>
+                              </tr>                        
+                        <?php							
+							}
+						?>                      
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>

@@ -1,0 +1,201 @@
+<?php
+//Fechamento de sessao ao fechar o navegador
+session_start();
+include('conn/conn.php');
+include('functions/validaLogin.php');
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gecko</title>
+  <?php include("inc/headings.php"); // se llaman todos los metatags, css y librerías js ?>
+</head>
+
+
+
+<body class="body innerpages">
+  <?php include("inc/commons.php"); // se declarán los directorios usados en los archivos y el lenguaje utilizado en la aplicación con su archivo .po  ?>
+  <?php $file_name = "mapa-local" // ingresar la palabra clave de cada modal ?>
+  
+
+
+  <div class="container-fluid innpage-<?php echo $filenameID; ?>">
+    <div class="row">
+      <?php include("inc/navbar.php"); // primera sección de contenido, barra de navegación ?>
+    </div>
+    
+
+    <div class="row">
+      <?php include("inc/sidebar.php"); // segunda sección de contenido, el menú lateral ?>
+      
+
+      <div class="inner-content col-xs-12 col-sm-9">
+        <div class="page<?php echo $filenameID; ?>">
+          <div class="row">
+            <div class="col-xs-12 col-lg-6">
+              <h3 class="main-title">
+                <span class="fa-stack fa-md">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-building-o fa-stack-1x fa-inverse"></i>
+                </span>
+                <?php echo _('Locales') ?>
+              </h3>
+            </div>
+            <div class="col-xs-12 col-lg-6">
+              <!-- <?php include("inc/buttons.php"); // btns paneles ?>
+              <?php include("inc/modals/modal-add-" . $file_name . ".php"); // modal para agregar contenido ?> -->
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="panel">
+                <div class="panel-heading">
+                  <div class="input-wrap">
+                    <!-- dropdown de selects -->
+                    <div class="btn-group white-btn">
+
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a href="#" class="mass-act" data-toggle="modal" data-target="#massaction-modal">Action 1</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                          <a href="#" class="mass-act" data-toggle="modal" data-target="#massaction-modal">Action 2</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                          <a href="#" class="mass-act" data-toggle="modal" data-target="#massaction-modal">Action 3</a>
+                        </li>
+                      </ul>
+
+                      <div id="massaction-modal" class="modal fade" tabindex="-1" style="display: none;">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                              <h5>Confirma que quiere Ejecutar la acción</h5>
+                            </div>
+                            <div class="modal-body">
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos fugit tempora perferendis officia nihil aspernatur vel in dolorum voluptatibus necessitatibus atque.</p>
+                              <div class="row form-group">
+                                <div class="col-xs-12">
+                                  <button type="submit" class="btn send btn-sm btn-raised col-xs-12 col-md-4 right">Confirmar</button>
+                                  <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-raised col-xs-12 col-md-4 right">Cancelar</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>                      </div>
+                      <!-- input formulario de busqueda -->
+                      <form id="table-1" class="white-form right">
+                        <div class="form-group is-empty">
+                          <input type="text" class="form-control col-md-8" placeholder="Búsqueda">
+                          <span class="material-input"></span></div>
+                        </form>
+                      </div>
+                    </div>
+
+                    <br>
+                    <br>
+
+
+                    <div class="panel-body">
+                      <div class="col-xs-12 col-md-9">
+                        <div class="row">
+                        
+                        <?php
+							//consulta locais integrados
+							$sql_locais_int = "
+								SELECT
+									*
+								FROM
+									locais_integrados
+								";	
+								
+							$query_locais_int=@mysql_query($sql_locais_int);
+							
+							//
+							while($res_locais_int=@mysql_fetch_assoc($query_locais_int)) 
+							{
+								
+								//consulta dados do local
+								$sql_dados_local = "
+									SELECT
+										nome,
+										nome_cidade
+									FROM 
+										vw_local
+									WHERE
+										id_local = ".$res_locais_int['id_local'];
+								$query_dados_local=@mysql_query($sql_dados_local);
+								$res_dados_local=@mysql_fetch_assoc($query_dados_local);
+								
+
+						?>
+                              
+                              <div class="col-xs-12 col-md-3">
+                                <div class="well">
+                                  <div class="text-center"> <img src="img/greenball.png" alt=""> Online</div>
+                                  <div class="text-center"><a href="#" data-toggle="modal" data-target="#maquinasPorLocal-modal"><i class="material-icons large">store</i></a>
+                                 </div>
+                                  <div class="text-center"><strong><?php echo $res_dados_local['nome'] ?></strong></div>
+                                  <div class="text-center"><?php echo $res_dados_local['nome_cidade'] ?></div>
+                                  <div class="text-center">Saldo: <?php echo "$" ?></div>
+                                  <div class="text-center">Cajas Abiertas: <?php echo "3"?></div>
+                                </div>
+                              </div>                        
+                        
+                        <?php
+							}												
+						?>
+                        
+
+                        </div>
+
+
+
+						<!--- OUTRA LINHA 
+                        <div class="row">
+                          <div class="col-xs-12 col-md-3">
+                            <div class="well">
+
+                                <div class="text-center"> <img src="img/greenball.png" alt=""> Online</div>
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <a href=""><i class="material-icons large">store</i></a>
+                                  </div>
+                                </div>
+                                <div class="text-center">Fantastic</div>
+                                <div class="text-center">Santiago</div>
+                                <div class="text-center">Saldo: <?php echo rand(0,9999) ?></div>
+                                <div class="text-center">Cajas Abiertas: <?php echo rand(0,100)?></div>
+                              </div>
+
+                          </div>
+                        </div>
+                        --->
+
+
+                      </div>
+
+                      <div class="col-xs-12 col-md-3">
+                        <div class="map">
+                          <iframe src="https://www.google.com/maps/d/embed?mid=1IHCfmm5uw43ZuppPK79XMTDmnvs" width="100%" height="650px" frameborder="0" style="border:0" allowfullscreen=""></iframe>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <?php include("inc/modals/modal-view-" . $file_name . ".php"); // modal para ver detalles contenido ?>
+      </body>
+      </html>

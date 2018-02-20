@@ -1,0 +1,98 @@
+<?php $modal_item = "Lectura" // ingresar la palabra clave de cada modal ?>
+<div id="select-periodo" class="modal fade" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class=" fa fa-times"></i></button>
+        <h5><i class="fa fa-filter"></i> <?php echo _('Elegir periodo de ') . $modal_item ?></h5>
+      </div>
+      <div class="modal-body">
+
+        <form id="formInfoLeitura" class="form-horizontal" method="post" action="detalle-local.php">
+          <div class="row">
+          	<div class="col-xs-12 col-md-12">
+                <div class="row">              
+                  <label for="tags">Local</label>
+                  <select multiple id="local_leitura" name="local_leitura" type="text" class="form-control col-xs-6" placeholder="Locales">
+                      <?php
+                        //limita acesso usuario <> master
+                        if($_SESSION['usr_nivel'] == 1)
+                        {
+                            $whr = " AND 1 = 1";
+                        }
+                        else
+                        {
+                            $whr = " AND (`local`.id_login = " . $_SESSION['id_login'] . " OR `local`.id_gerente = " . $_SESSION['id_login'] . ")";
+                        }			
+                                    
+                      
+                        //busca locais ativos
+                        $sql_locais = "SELECT id_local, nome FROM local WHERE excluido = 'N' " . $whr . " ORDER BY nome";
+                        $query_locais=@mysql_query($sql_locais);
+                        
+						//Todos
+						echo "<option value='0'>Todos</option>";
+						
+						
+						//
+                        while($res_locais=@mysql_fetch_assoc($query_locais)) 
+                        {
+                            echo "<option value=".$res_locais['id_local'].">".$res_locais['nome']."</option>";
+                        }						
+                      ?>
+                  
+                  </select>
+                </div>          
+            </div>                       
+        </div>
+          <div class="row">
+          	<div class="col-xs-12 col-md-6">
+                <div class="row">              
+                  <label for="tags">Fecha inicio</label>
+                  <input type='text' id='dataInicio' name='dataInicio' size='23' placeholder="dd-mm-aaaa" value="<?php echo date("d-m-Y"); ?>" readonly>
+                </div>          
+            </div>
+          	<div class="col-xs-12 col-md-6">
+                <div class="row">
+                  <label for="tags">Fecha final</label>
+                  <input type='text' id='dataFinal' name='dataFinal' size='23' placeholder="dd-mm-aaaa" value="<?php echo date("d-m-Y"); ?>" readonly>
+                </div>             
+            </div>
+            <div class="col-xs-12">
+            	<div class="row form-group">
+             		<a id="btnRecarregar" type="submit" class="btn btn-sm btn-raised col-xs-12 col-md-5 right"><?php echo _('Siguiente') ?></a>
+           		</div>
+            </div>                          
+        </div>              
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+    //
+	$(document).ready(function() {
+        $('select').select2();
+    });	
+
+	//
+	$(function() {
+		$("#dataInicio").datepicker({dateFormat: 'dd-mm-yy'});
+		$("#dataFinal").datepicker({dateFormat: 'dd-mm-yy'});		
+	});		
+	
+	//
+	$("#btnRecarregar").click( function ()
+	{
+		//pegar data inicio 
+		dtInicio = $("#dataInicio").val();
+		dtFim = $("#dataFinal").val();
+		idLocal = $("#local_leitura").val();
+
+
+		//
+		//location="informe-promedio-maquinas.php?semIni="+semIni+"&mesIni="+mesIni+"&anoIni="+anoIni+"&semFim="+semFim+"&mesFim="+mesFim+"&anoFim="+anoFim;
+		location="informe-promedio-maquinas.php?dtInicio="+dtInicio+"&dtFinal="+dtFim+"&idLocal="+idLocal;
+	});	
+</script>

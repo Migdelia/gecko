@@ -1,0 +1,66 @@
+<?php
+
+include "bd.php";	
+
+$id_loc = $_GET['c'];
+$lis_plaq_sist = $_GET['a'];
+$qtd_inter = $_GET['b'];
+$qtd_inter = $qtd_inter + 1;
+
+$inter = explode("-", $lis_plaq_sist);
+
+$i = 1;
+$lst_interface = "";
+while($i < $qtd_inter)
+{
+	$plaq = str_replace(";", "", $inter[$i]);
+	if($lst_interface == "")
+	{
+		$lst_interface .= " id = " . $plaq;
+	}
+	else
+	{
+		$lst_interface .= " OR id = " . $plaq;
+	}
+	
+	$i++;
+}
+
+echo $id_loc;
+
+$pesquisa = "SELECT * FROM Machine WHERE " . $lst_interface;
+$query_maquinas=@mysql_query($pesquisa);
+//$resultado=@mysql_fetch_assoc($query_maquinas);
+
+$list_int_atu = "";
+$cont = 0;
+while($resultado=@mysql_fetch_assoc($query_maquinas)) 
+{
+	$list_int_atu .= $resultado["id"]."/".$resultado["mIn"]."/".$resultado["mOut"].";";
+	$cont++;
+}
+
+	echo "Importado dados de: " . $cont . " maquinas com SUCESSO!";
+
+
+echo "
+<form id='exporta_info' name='exporta_info' method='post' action='http://www.calasys.com.br/calabaza/leitura_rua.php?id=".$id_loc."' enctype='multipart/form-data' onsubmit='return false;'>
+";
+?>
+
+<input type="hidden" name="infos" id="infos" value="<?=$list_int_atu;?>">
+
+
+</form>
+
+<script type="text/javascript" charset="utf-8">
+
+		setTimeout(function(){document.exporta_info.submit();},3000);
+		
+		/*
+		function enviaForm()
+		{
+			document.exporta_info.submit();
+		}
+		*/
+</script>

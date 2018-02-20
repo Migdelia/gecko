@@ -1,0 +1,8 @@
+<?php
+
+$conexao = mysql_connect("192.168.1.26","root","999865");
+mysql_select_db("leitura");
+
+
+?>
+

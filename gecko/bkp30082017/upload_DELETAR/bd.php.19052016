@@ -1,0 +1,8 @@
+<?php
+
+$conexao = mysql_connect("186.103.169.11","web","webPw14379");
+mysql_select_db("machines");
+
+
+?>
+

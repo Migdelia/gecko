@@ -1,0 +1,59 @@
+<?php
+//define o tipo de acesso
+$acesso = 'remoto';
+
+
+
+//Configuraçoes do sistema
+ini_set('zlib.output_compression',1);
+setlocale(LC_CTYPE,"pt_BR");
+date_default_timezone_set( "America/Sao_Paulo" );
+$charset = "utf-8";
+header("Content-Type: text/html; charset=".$charset, true);
+
+
+
+//Conexao e Link Utilizado para inserir a folha de estilo no e-mail
+if ($acesso=='remoto') {
+	$lnk = "localhost";
+	$mail_from = "sistema@calabazachile.com";
+	$host = "localhost";
+	$user = "root";
+	$pass = "12345678";
+	$dbas = "calabaza";
+	$dominio = 'http://localhost/gecko';	
+
+}else if($acesso=='localhost') {
+	$lnk = "/geckoChile";
+	$mail_from = "sistema@calabazachile.com";
+	$host = "127.0.0.1";
+	$user = "root";
+	$pass = "";
+	$dbas = "calabaza";
+	$dominio = 'http://localhost/geckoChile/';	
+
+}else{
+
+	$lnk = "/calabaza";
+	$mail_from = "eafrade@gmail.com";
+	$host = "127.0.0.1";
+	$user = "root";
+	$pass = "999865";
+	$dbas = "calabaza";
+	$dominio = 'http://localhost/calabaza/';	
+
+}
+
+
+
+//Conexao com o Banco
+
+if (!$conecta = @mysql_connect($host, $user, $pass) ) 
+{
+	exit("<script>alert('Ha ocurrido un problema al acceder a la información.\\Entre en contacto con el administrador del sistema');window.location='".$dominio."'</script>");
+
+}
+else if (!@mysql_select_db($dbas,$conecta)) {
+	exit("<script>alert('Ha ocurrido un problema al acceder a la información.\\Entre en contacto con el administrador del sistema');window.location='".$dominio."'</script>");
+}
+?>

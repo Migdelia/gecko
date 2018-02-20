@@ -1,0 +1,27 @@
+<?php
+session_start();
+include('../conn/connIntegration.php');
+include('functions.php');
+//include('validaLogin.php');
+
+$idMaq = $_POST['id'];
+$return = "";
+
+
+
+//consulta dados
+$sql_bill = "SELECT value, date FROM lastBills WHERE id = " . $idMaq . " ORDER BY date DESC";
+$query_bill=@mysql_query($sql_bill);
+
+//
+while($res_bill=@mysql_fetch_assoc($query_bill)) 
+{
+	$return .= $res_bill['value'] . ",";
+	$return .= date('H:i:s (d-m-Y)', strtotime($res_bill['date'])) . ";";
+}
+
+
+//$return = $sql_statistic;
+echo $return;
+
+?>

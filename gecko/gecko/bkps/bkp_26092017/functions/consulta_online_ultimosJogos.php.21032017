@@ -1,0 +1,41 @@
+<?php
+session_start();
+include('../conn/connIntegration.php');
+include('functions.php');
+//include('validaLogin.php');
+
+$idMaq = $_POST['id'];
+$return = "";
+
+
+
+//consulta dados
+$sql_game = "SELECT * FROM lastGames WHERE id = " . $idMaq . " ORDER BY `index` DESC";
+$query_game=@mysql_query($sql_game);
+
+//
+while($res_game=@mysql_fetch_assoc($query_game)) 
+{
+	$return .= $res_game["symbols"];
+	$return .= $res_game["creditsBefore"] . ";";//15
+	$return .= $res_game["creditsAfter"] . ";";//16
+	$return .= $res_game["totalWin"] . ";";//17
+	$return .= $res_game["winReels"] . ";";//18
+	$return .= $res_game["winBonus1"] . ";";//19
+	$return .= $res_game["winBonus2"] . ";";//20
+	$return .= $res_game["winBonus3"] . ";";//21
+	$return .= $res_game["acumuladoPaid"] . ";";//22
+	$return .= $res_game["jackpotPaid"] . ";";//23
+	$return .= $res_game["acumuladoPaid"] . ";";//24	
+	$return .= $res_game["linesBet"] . ";";//25
+	$return .= $res_game["totalBet"] . ";";//26	
+	$return .= $res_game["linesGain"];//27		
+	$return .= "/";
+}
+
+
+
+//$return = $sql_statistic;
+echo $return;
+
+?>

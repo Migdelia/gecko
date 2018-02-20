@@ -1,0 +1,4 @@
+<div class="button-wrap">
+        <!--- <a id="expexc" class="btn"><?php echo _('Exportar Excel') ?></a> --->
+        <a id="exppdf" class="btn"><?php echo _('Imprimir / PDF') ?></a>
+</div>

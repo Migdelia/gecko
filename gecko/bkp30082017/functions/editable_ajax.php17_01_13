@@ -1,0 +1,155 @@
+<?php
+session_start();
+include('../conn/conn.php');
+include('../functions/functions.php');
+include('../functions/lg_validador.php');
+
+//Preparando os campos para a atualizaçao
+$erro="";
+$all_ok=true;
+
+foreach($_POST as $chave=>$valor) {
+	$_POST[$chave] = mysql_real_escape_string(RetirarAcentos($valor));
+	if ( ($chave=='')||($valor=='') ) {
+		$all_ok = false;
+		$erro.= "Erro na atualizaçao\\n";
+	}
+}
+
+//Validando os campos
+if ($all_ok)
+{
+	if ($_POST['table']=='regiao')
+	{
+		$_POST['value'] = $_POST['value'];
+	}elseif ($_POST['table']=='local')
+	{
+		switch (strtolower($_POST['id']))
+		{
+			case "rut":
+				if( RUT($_POST['value']) )
+				{
+					$_POST['value'] = preg_replace('/[^0-9]/i', '', $_POST['value']);
+				}else
+				{
+					$erro.= "RUT invalido\\n";
+				}
+			break;
+		
+			case "operador":
+				$_POST['id'] = 'id_login';
+				$_POST['value'] = preg_replace('/[^0-9]/i', '', $_POST['value']);
+			break;
+		
+		}
+	}elseif ($_POST['table']=='maquinas')
+	{
+		switch (strtolower($_POST['id']))
+		{
+			case "codigo":
+				$_POST['value'] = RetirarAcentos($_POST['value']);
+			break;
+		
+			case "numero":
+				$_POST['value'] = preg_replace('/[^0-9]/i', '', $_POST['value']);
+			break;
+		
+			case "nome":
+				$_POST['id']='id_local';
+				$_POST['value'] = str_replace(' ','',$_POST['value']);
+			break;
+		}
+	}elseif ($_POST['table']=='interface')
+	{
+		switch (strtolower($_POST['id'])) {
+			case "interface":
+				$_POST['id'] = 'id_maquina';
+				$int = $_POST['value'];				
+				$_POST['value']= (int)$_POST['row_id'];
+				$_POST['row_id']=$int;
+				
+				$upd_cmd = "UPDATE ".$_POST['table']." SET ".$_POST['id']."='0' WHERE ".$_POST['id']."='".($_POST['value'])."'";												
+				if (!@mysql_query($upd_cmd) ) 
+				{
+					$erro.= "Erro ao desvincular interface\\nEntre em contato com o Administrador.";
+					echo "<script language='javascript'>alert('".$erro."');</script>";
+				}
+				
+			break;
+		}
+	}elseif ($_POST['table']=='logins')
+	{
+		switch (strtolower($_POST['id'])) {
+			case "email":
+				$conta = "^[a-zA-Z0-9\._-]+@";
+				$domino = "[a-zA-Z0-9\._-]+.";
+				$extensao = "([a-zA-Z]{2,4})$";
+				$pattern = $conta.$domino.$extensao;
+				$mail_valido=false;
+				$_POST['value']=strtolower($_POST['value']);
+				
+				if (!ereg($pattern, $_POST['value'])) {
+					$erro.="E-Mail Invalido\\n";
+				}
+			break;
+		
+			case "usuario":
+				$_POST['value']=str_replace(' ','',$_POST['value']);
+			break;
+		
+			case "nivel":
+				$_POST['id']='id_nivel';
+				$_POST['value']=str_replace(' ','',$_POST['value']);
+			break;
+		}
+	}elseif ($_POST['table']=='bla')
+	{
+		switch (strtolower($_POST['id'])) {
+			case "email":
+				$conta = "^[a-zA-Z0-9\._-]+@";
+				$domino = "[a-zA-Z0-9\._-]+.";
+				$extensao = "([a-zA-Z]{2,4})$";
+				$pattern = $conta.$domino.$extensao;
+				$mail_valido=false;
+				$_POST['value']=strtolower($_POST['value']);
+				
+				if (!ereg($pattern, $_POST['value'])) {
+					$erro.="E-Mail Invalido\\n";
+				}
+			break;
+		
+			case "usuario":
+				$_POST['value']=str_replace(' ','',$_POST['value']);
+			break;
+		
+			case "nivel":
+				$_POST['id']='id_nivel';
+				$_POST['value']=str_replace(' ','',$_POST['value']);
+			break;
+		
+			case "rut":
+				if( RUT($_POST['value']) )
+				{
+					$_POST['value'] = preg_replace('/[^0-9]/i', '', $_POST['value']);
+				}else{
+					$erro.= "RUT invalido\\n";
+				}
+			break;
+		}
+	}
+}
+
+//Gravando os dados
+if ($erro=='') {
+	$upd_cmd = "UPDATE ".$_POST['table']." SET ".$_POST['id']."='".($_POST['value'])."' WHERE ".$_POST['mkey']."='".$int."'";	
+	if (@mysql_query($upd_cmd) ) {
+		//Retirada a mensagem “cadastro alterado com sucesso” para cada alteraçao. Solicitado por e-mail em 11/01
+		echo "<script language='javascript'>alert('Atualizado com sucesso!.');location.reload()</script>";
+	}else{
+		$erro.= "Erro na atualizaçao\\nEntre em contato com o Administrador.";
+		echo "<script language='javascript'>alert('".$erro."');</script>";
+	}
+}else{
+	echo "<script language='javascript'>alert('".$erro."');</script>";
+}
+?>

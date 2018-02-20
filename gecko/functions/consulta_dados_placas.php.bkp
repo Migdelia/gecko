@@ -1,0 +1,32 @@
+<?php
+session_start();
+include('../conn/conn.php');
+include('functions.php');
+include('validaLogin.php');
+
+//
+$idModelo = $_POST['id'];	
+
+//
+$return = "";
+
+//consulta modelo placa
+$sql_modPlaca = "
+	SELECT
+		id_modelo,
+		descricao				
+	FROM
+		modelos_placa_mae
+	WHERE
+		id_modelo = " . $idModelo;
+$query_modPlaca=@mysql_query($sql_modPlaca);
+$res_modPlaca=@mysql_fetch_assoc($query_modPlaca);
+
+//echo $sql_disp;
+$return .= $res_modPlaca['id_modelo'] . ",";
+$return .= $res_modPlaca['descricao'] . ",";
+
+
+echo $return;
+
+?>

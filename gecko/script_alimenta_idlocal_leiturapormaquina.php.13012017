@@ -1,0 +1,56 @@
+<?php
+session_start();
+include('conn/conn.php');
+include('functions/validaLogin.php');
+
+//script para alimentar campo de local id na tabela de leitura por maquina.
+
+	
+	//consulta o id da maquina.
+	$sql_listaLeitMaq = "SELECT
+							id_leit_maq,		
+							id_maquina
+						FROM
+							leitura_por_maquina
+						ORDER BY
+							id_leit_maq			
+						";	
+						
+						
+	$query_listaLeitMaq=@mysql_query($sql_listaLeitMaq);
+	
+	$flag = 0;
+	
+	while($result_listaLeitMaq=@mysql_fetch_assoc($query_listaLeitMaq))
+	{
+		//consulta o local dessa maquina.
+		$sql_local = "SELECT id_local FROM maquinas WHERE id_maquina = " . $result_listaLeitMaq['id_maquina'];
+		$query_local=@mysql_query($sql_local);
+		
+		$result_local=@mysql_fetch_assoc($query_local);
+		
+		
+		//atualizar o id do local na tabela leitura por maquina.
+		$sql_update = "UPDATE leitura_por_maquina SET id_local = " . $result_local['id_local'] . " WHERE id_leit_maq = " . $result_listaLeitMaq['id_leit_maq'];
+		
+		if(@mysql_query($sql_update) )
+		{
+			$flag=1;
+		}
+		else
+		{
+			$flag= 0;
+		}
+	}					
+
+
+if($flag == 0)
+{
+	echo "ERRO!";	
+}
+else
+{
+	echo "Terminou";	
+}
+
+?>

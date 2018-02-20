@@ -1,0 +1,23 @@
+<div class="button-wrap">
+        
+        <a href="#" class="btn" data-toggle="modal" data-target="#select-periodo" id="perido-leitura"><?php echo _('Selecionar Período') ?></a>
+        
+        <!--- <a id="expexc" class="btn"><?php echo _('Exportar Excel') ?></a> --->
+        <a id="exppdf" class="btn"><?php echo _('Imprimir / PDF') ?></a>
+        
+        <?php
+		/*
+        //verifica se nao é administrador
+        if($_SESSION['usr_nivel'] <> 9)
+        {        
+        ?>
+			
+            <a href="#" class="btn" data-toggle="modal" data-target="#add-modal-Lectura">
+                <i class="fa fa-plus"></i>
+                <?php echo _('Crear Lectura')?>
+            </a>
+        
+        <?php
+		}*/
+		?>        
+</div>

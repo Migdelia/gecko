@@ -1,0 +1,21 @@
+* { margin: 0; padding: 0; }
+
+body {
+	
+	font: 100% Trebuchet MS, Verdana, Arial, Tahoma;
+	background-color: #ffffff;
+	color: #000000;
+}
+
+ul { 
+
+	list-style: none; 
+}
+
+p { 
+
+margin-bottom: 10px; 
+
+}
+
+

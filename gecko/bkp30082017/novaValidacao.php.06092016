@@ -1,0 +1,495 @@
+<?php
+
+session_start();
+
+include('conn/conn.php');
+
+include('functions/functions.php');
+
+
+
+
+/* verificacao teste*/
+
+if($_SESSION['nome'] == "")
+{
+
+		
+	//direcionar para tela de login (qr)
+	include('functions/lg_validador_qr.php');
+}
+else
+{
+	//declara senha QR
+	$senhaQR = $_GET['s'];
+	$codVer = $_GET['v'];
+	
+	//verifica se ingresso pelo leitor de codigo QR
+	if($senhaQR == NULL)
+	{
+		include('functions/lg_validador.php');	
+	}
+	else
+	{
+		$arraySenha = (explode("-",$senhaQR));
+	}
+}
+
+
+
+
+
+/*
+if($_GET['key1'] <> "")
+{
+	echo "mandar validar direto! <br />";
+	echo $_GET['key1'] . "<br />";
+	echo $_GET['key2'] . "<br />";
+	
+}*/
+
+
+//header('Location: https://www.ggcsys.com.br');
+
+
+
+
+
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	<meta name="url" content="http://www.sogesp.com.br/">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+	<meta name="descrição" content="validacion" />
+
+	<meta name="robots" content="noindex,nofollow">
+
+	<title>Calabaza Validacion</title>
+
+    
+
+	<script type="text/javascript" language="javascript" src="js/jquery.js"></script>
+
+	<script type="text/javascript" language="javascript" src="js/functions.js"></script>
+
+	<script type="text/javascript" language="javascript" src="js/jquery.dimensions.js"></script>
+
+	<script type="text/javascript" language="javascript" src="js/jquery.positionBy.js"></script>
+
+	<script type="text/javascript" language="javascript" src="js/jquery.jdMenu.js"></script>
+
+	<script type="text/javascript" language="javascript" src="js/jquery-ui-1.8.3.js"></script>
+
+	<script type="text/javascript" language="javascript" src="js/media/jquery.ui.datepicker-pt-BR.js"></script>
+
+	<script type="text/javascript" language="javascript" src="js/jquery.price_format.1.0.js"></script>
+
+    <script type="text/javascript" src="js/media/jquery.jeditable.datepicker.js"></script>
+
+	<script type="text/javascript" language="javascript" src="js/ajax.js"></script>
+
+    
+
+	<script type="text/javascript" charset="utf-8">
+
+    
+
+		jQuery(document).ready( function( $ ) {
+
+			$('#btn_valida').click(function(){
+				
+				
+				//abri gif de espera.
+
+				$('#mask').fadeIn("slow");
+
+				$('#espera').fadeIn("slow");
+
+				
+				var nomeUsuario = $('#username').attr("value");
+				//concatena campos para unificar na senha 1
+				
+
+				var key1 = $('#senha1').attr("value");
+
+				var key1 = key1 + $('#senha2').attr("value");
+
+				var key1 = key1 + $('#senha3').attr("value");
+
+				var key1 = key1 + $('#senha4').attr("value");
+
+				var key1 = key1 + $('#senha5').attr("value");
+
+				var key1 = key1 + $('#senha6').attr("value");
+
+				var key1 = key1 + $('#senha7').attr("value");
+
+				var key1 = key1 + $('#senha8').attr("value");
+
+				var key1 = key1 + $('#senha9').attr("value");
+
+				var key1 = key1 + $('#senha10').attr("value");
+
+				var key1 = key1 + $('#senha11').attr("value");
+
+				
+
+				
+
+				//concatena campos para unificar na senha 2
+
+				var key2 = $('#senha12').attr("value");
+
+				var key2 = key2 + $('#senha13').attr("value");
+
+				var key2 = key2 + $('#senha14').attr("value");
+
+				var key2 = key2 + $('#senha15').attr("value");
+
+				var key2 = key2 + $('#senha16').attr("value");
+
+				var key2 = key2 + $('#senha17').attr("value");
+
+				var key2 = key2 + $('#senha18').attr("value");
+
+				var key2 = key2 + $('#senha19').attr("value");
+
+				var key2 = key2 + $('#senha20').attr("value");
+
+				var key2 = key2 + $('#senha21').attr("value");
+
+				var key2 = key2 + $('#senha22').attr("value");
+
+				
+				var key1 = key1.toUpperCase();
+				var key2 = key2.toUpperCase();
+				
+				var verCod = <?php echo $codVer ?>
+
+				
+
+				$.ajax(
+				{								
+					type: "POST", // Defino o método de envio POST / GET
+					url: 'validaMaquina.php', // Informo a URL que será pesquisada.
+					data: 'senha1='+key1+'&senha2='+key2+'&nameUsuario='+nomeUsuario+'&verCod='+verCod,
+					success: function(html)
+					{
+						var codVal = html;
+
+						$('#espera').fadeOut("slow");
+						$('#mask').fadeOut("slow");
+						
+
+						if(codVal == "false")
+						{
+							$("#resultValidacao").html("Codigo Invalido!");
+						}
+						else if(codVal == "server")
+						{
+							$("#resultValidacao").html("Server Error!");	
+						}
+						else
+						{
+							$("#resultValidacao").html(codVal);	
+						}
+					}
+				});	
+				
+			});
+			
+			$("input[type='text']").keypress( function() {
+				var txtAtual = this.value;
+				var qtdCarac = txtAtual.length;
+				qtdCarac = qtdCarac + 1;
+				if(qtdCarac > 3)
+				{
+					var objId = this.id;
+					var res = objId.substr(5);
+					var novoObjId = "senha" + (eval(res) + 1);
+					document.getElementById(novoObjId).focus();
+				}
+			});
+		});
+
+		/*
+		function verCarac(obj)
+		{
+			var txtAtual = obj.value;
+			var qtdCarac = txtAtual.length;
+			qtdCarac = qtdCarac + 1;
+			if(qtdCarac > 3)
+			{
+				var objId = obj.id;
+				var res = objId.substr(5);
+				var novoObjId = "senha" + (eval(res) + 1);
+				document.getElementById(novoObjId).focus();
+			}	
+		}
+		*/
+			
+
+
+
+	
+
+    </script>        
+
+    
+
+	<style type="text/css">
+
+		/*demo page css*/
+
+		@import "css/media/themes/smoothness/<?=$theme?>";
+
+		#tabs{ font-size: 12px;margin: 10px;}
+
+		.demoHeaders { margin-top: 2em; }
+
+		#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+
+		#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+
+		ul#icons {margin: 0; padding: 0;}
+
+		ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+
+		ul#icons span.ui-icon {float: left; margin: 0 4px;}
+
+		b {color:#FF0000;}
+
+		#ui-datepicker-div {font-size:13px}
+
+		input {
+
+			height:35px;
+
+			text-align:center;
+
+			-moz-border-radius: 7px;
+
+			-webkit-border-radius: 7px;
+
+			border-radius: 7px;
+
+			border: 1px solid #000000;
+
+			padding: 0 4px 0 4px;
+
+		}	
+
+		
+
+		#centro {
+
+			width:auto;
+
+			height:100px;
+
+			position:absolute;
+
+			top:40%;
+
+			left:35%;
+
+			margin-top:-50px;
+
+			margin-left:-50px;
+
+		}	
+
+	</style>	
+
+
+
+	<link rel="stylesheet" href="css/jquery.jdMenu.css" type="text/css" />
+
+	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    
+    <!---<link href="css/estilos.css" rel="stylesheet" type="text/css" />--->
+
+
+
+	<noscript>
+
+		<meta http-equiv="REFRESH" content="0;url=http://www.inscricaofacil.com.br/nojavascript.html" />
+
+	</noscript>
+
+</head>
+
+<body background="img/lobby.jpg">
+
+	<?php
+		echo menu_builder();
+		
+		
+		if($senhaQR == NULL)
+		{
+	?>
+
+<div id="centro" style="text-align:center;">
+
+
+		<input type="hidden" id="username" name="username" value="<?php echo $_SESSION['nome'];?>"  />
+		
+		<table rules="all" style="border:3px solid; border-color:#FFF;">
+        	<tr bgcolor="#fb0404" height="50">
+            	<td style="color:#FFF; border:3px solid;">
+					Senha1:                	
+                </td>
+            	<td style="color:#FFF; border:3px solid;">
+                    <input type="text" id="senha1" name="senha1" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha2" name="senha2" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha3" name="senha3" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha4" name="senha4" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha5" name="senha5" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha6" name="senha6" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha7" name="senha7" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha8" name="senha8" size="6" maxlength="4" style="text-transform:uppercase"/>                	
+                </td>
+            </tr>
+			<tr bgcolor="#00a651" height="50">
+            	<td style="color:#FFF; border:3px solid;">
+					Senha2:                	
+                </td>            
+            	<td style="color:#FFF; border:3px solid;">
+            
+                    <input type="text" id="senha9" name="senha9" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha10" name="senha10" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha11" name="senha11" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha12" name="senha12" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha13" name="senha13" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha14" name="senha14" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha15" name="senha15" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha16" name="senha16" size="6" maxlength="4" style="text-transform:uppercase"/>                	
+                </td>
+            </tr>
+			<tr bgcolor="#0623fa" height="50">
+            	<td style="color:#FFF; border:3px solid;">
+					Senha3:                	
+                </td>            
+            	<td style="color:#FFF; border:3px solid;">
+            
+            
+                    <input type="text" id="senha17" name="senha17" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha18" name="senha18" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha19" name="senha19" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha20" name="senha20" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha21" name="senha21" size="6" maxlength="4" style="text-transform:uppercase"/>
+            
+                    <input type="text" id="senha22" name="senha22" size="6" maxlength="4" style="text-transform:uppercase"/>                	
+                </td>
+            </tr>                  
+        </table>
+        <br />
+       	<input type="button" id="btn_valida" name="btn_valida" value="Validar" />  
+
+
+
+    <br />
+
+   	<br />
+
+    <div id="resultValidacao" style="width:auto;text-align:center;"></div>
+
+</div>       	
+
+
+<?php
+		}
+		else
+		{
+?>
+
+
+<div id="centro" style="text-align:center;">
+
+
+		<input type="hidden" id="username" name="username" value="<?php echo $_SESSION['nome'];?>"  />
+		
+		<table rules="all" style="border:3px solid; border-color:#FFF;">
+        	<tr bgcolor="#999999" height="50">
+            	<td style="color:#FFF; border:3px solid;">
+					Senha QR:                	
+                </td>
+            	<td style="color:#FFF; border:3px solid;">
+                
+                	<?php
+						
+						//declara contador
+						$numCampo = 1;
+						foreach ($arraySenha as $value) 
+						{
+							echo "<input type='text' id='senha".$numCampo."' name='senha".$numCampo."' value='".$value."' size='6' maxlength='4' style='text-transform:uppercase'/>";
+							$numCampo++;
+						}
+					
+					?>
+     	
+                </td>
+            </tr>
+        </table>
+        <br />
+       	<input type="button" id="btn_valida" name="btn_valida" value="Validar" />  
+
+
+
+    <br />
+
+   	<br />
+
+    <div id="resultValidacao" style="width:auto;text-align:center;"></div>
+
+</div> 
+
+
+<?php
+		}
+?>
+
+
+<br />
+
+<br />
+
+    <div id="mask" style="width:100%; height:100%; background-color:#000; display:none; filter:alpha(opacity=80); opacity:0.8; z-index:0;"></div>
+
+    <div id="espera" style="position:absolute; background-color:#FFF; width:200px;height:85px;border-radius:10px;display:none; left:40%; top:40%;" align="center">
+
+        <br />
+
+        <img src="img/loading2.gif" />
+
+    </div>
+
+</body>
+
+</html>
+

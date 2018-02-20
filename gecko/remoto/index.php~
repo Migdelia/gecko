@@ -1,0 +1,41 @@
+<?php
+include "bd.php";
+
+$pesquisa = "SELECT * FROM Reading";
+$resultado = mysql_query($pesquisa);
+		 
+if ($resultado){
+
+	//$pesquisa = "SELECT * FROM Machine WHERE id = " . $idMaquina;
+		
+	//$resultado = mysql_query($pesquisa);
+		
+	$array_de_conteudo = mysql_fetch_array($resultado);
+		
+	$linhas = mysql_num_rows($resultado);
+		
+	if ($resultado)
+	{
+			
+		print "Maquina " . $array_de_conteudo["id"] . "<br /><br />";
+					
+		//$cont_import++;
+					
+		//monta lista de plaquinhas atualizadas com suas respectivas entrada e saida
+		//$list_int_atu .= $array_de_conteudo["id"]."/".$moneyIn."/".$moneyOut.";";
+					
+		mysql_close($conexao);
+		
+		mysql_free_result($resultado);
+		
+	}else{
+		mysql_close($conexao);
+	}
+}else{
+	die (mysql_error("ERRO"));
+}
+
+
+echo "teste";
+
+?>

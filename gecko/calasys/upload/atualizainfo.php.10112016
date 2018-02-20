@@ -1,0 +1,79 @@
+<?php
+/*
+//verifica se o usuario tem acesso a esse modulo
+session_start();
+include('../conn/conn.php');
+include('../functions/functions.php');
+include('../functions/lg_validador_qrLeitura.php');
+*/
+
+$id_disp = $_GET['xx'];
+$entrada = $_GET['yy'];
+$saida = $_GET['zz'];
+
+/*
+//
+$host = "localhost";
+$user = "root";
+$pass = "cala*999865";
+$dbas = "dongle_SysDongleV2";
+
+//
+if(!$conecta = @mysql_connect($host, $user, $pass) ) 
+{
+	echo "Erro conexao Dongle <br />";
+}
+else if (!@mysql_select_db($dbas,$conecta)) 
+{
+	echo "erro DB <br />";
+}
+*/
+
+include('../conn/connDongle.php');
+
+//buscar se o valor de entrada e saida dessa dongle é menor que o atual
+$sql_leitura = "SELECT creditIn, creditOut FROM StreetDongle WHERE MachineId = " . $id_disp;
+$query_leitura=@mysql_query($sql_leitura);
+$res_leitura=@mysql_fetch_assoc($query_leitura);
+
+
+//verifica se a entrada nova é maior
+if($entrada >= $res_leitura['creditIn'] and $saida >= $res_leitura['creditOut'])
+{
+	//atualiza entrada e saida
+	$sql_up = "UPDATE 
+					StreetDongle
+				SET
+					creditIn = '".$entrada."',
+					creditOut = '".$saida."'
+				WHERE
+					MachineId = '".$id_disp."'";
+	
+	//		
+	if(@mysql_query($sql_up) )
+	{
+		$retorno=1;
+	}
+	else
+	{
+		$retorno= 0;
+	}						
+}
+else
+{
+	//
+	$retorno = 0;	
+}
+
+
+//
+if($retorno == 1)
+{
+	include("../gecko/inc/modals/modal-confrm-actions.php");
+}
+else
+{
+	echo "Erro!";	
+}
+	
+?>

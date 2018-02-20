@@ -1,0 +1,542 @@
+# Copyright (C) 2015 Gecko
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: _s 1.0.0\n"
+"POT-Creation-Date: 2015-12-10\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_PT\n"
+"X-Generator: Poedit 1.8.6\n"
+
+# login.php
+msgid "Correo electrónico"
+msgstr ""
+
+# login.php
+msgid "Contraseña"
+msgstr ""
+
+# login.php
+msgid "Olvidé mi contraseña"
+msgstr ""
+
+# login.php
+msgid "Ingresa"
+msgstr ""
+
+# login.php
+msgid "Ingrese su correo electrónico, para enviar una nueva contraseña."
+msgstr ""
+
+# login.php
+msgid "Enviar contraseña"
+msgstr ""
+
+# navbar.php
+msgid "Búsqueda"
+msgstr ""
+
+# navbar.php
+msgid "Tiempo de expiración: "
+msgstr ""
+
+# navbar.php
+msgid "Idioma"
+msgstr ""
+
+# navbar.php
+msgid "Español"
+msgstr ""
+
+# navbar.php
+msgid "Inglés"
+msgstr ""
+
+# navbar.php
+msgid "Portugués"
+msgstr ""
+
+# navbar.php
+msgid "Usuario: "
+msgstr ""
+
+# navbar.php
+msgid "Estructura"
+msgstr ""
+
+# navbar.php
+msgid "Operaciones"
+msgstr ""
+
+# navbar.php
+msgid "Informes"
+msgstr ""
+
+# navbar.php
+msgid "Sistema"
+msgstr ""
+
+# navbar.php
+msgid "Consulta"
+msgstr ""
+
+# navbar.php
+msgid "Cerrar Sesión"
+msgstr ""
+
+# panel.php
+msgid "Máquinas sin lectura"
+msgstr ""
+
+# panel.php
+msgid "Ingreso por local de la última semana"
+msgstr ""
+
+# panel.php
+msgid "Locales integrados"
+msgstr ""
+
+# panel.php
+msgid "Promedio de máquinas última semana"
+msgstr ""
+
+# panel.php
+msgid "Ver"
+msgstr ""
+
+# panel.php
+msgid "Nº de la máquina"
+msgstr ""
+
+# panel.php
+msgid "Nombre del Local"
+msgstr ""
+
+# panel.php
+msgid "Última Lectura"
+msgstr ""
+
+# panel.php
+msgid "Acciones"
+msgstr ""
+
+# panel.php
+msgid "Locales"
+msgstr ""
+
+# panel.php
+msgid "En línea"
+msgstr ""
+
+# lectura.php
+msgid "Lectura"
+msgstr ""
+
+# lectura.php
+msgid "Exportar Excel"
+msgstr ""
+
+# lectura.php
+msgid "Exportar PDF"
+msgstr ""
+
+# lectura.php
+msgid "Agregar nueva lectura"
+msgstr ""
+
+# lectura.php
+msgid "Acción masiva"
+msgstr ""
+
+# lectura.php
+msgid "ID Lectura"
+msgstr ""
+
+# lectura.php
+msgid "Data"
+msgstr ""
+
+# lectura.php
+msgid "Nombre"
+msgstr ""
+
+# lectura.php
+msgid "Usuario"
+msgstr ""
+
+# lectura.php
+msgid "Fecha"
+msgstr ""
+
+# lectura.php
+msgid "Semana"
+msgstr ""
+
+# lectura.php
+msgid "Editar"
+msgstr ""
+
+# sidebar.php
+msgid "Menú"
+msgstr ""
+
+# sidebar.php
+msgid "Inicio"
+msgstr ""
+
+# sidebar.php
+msgid "Estructura"
+msgstr ""
+
+# sidebar.php
+msgid "Ciudades"
+msgstr ""
+
+# sidebar.php
+msgid "Máquinas"
+msgstr ""
+
+# sidebar.php
+msgid "Dispositivos de seguridad"
+msgstr ""
+
+# sidebar.php
+msgid "Juegos"
+msgstr ""
+
+# sidebar.php
+msgid "Operaciones"
+msgstr ""
+
+# sidebar.php
+msgid "Lectura"
+msgstr ""
+
+# sidebar.php
+msgid "Cierre"
+msgstr ""
+
+# sidebar.php
+msgid "Informaciones"
+msgstr ""
+
+# sidebar.php
+msgid "Lecturas"
+msgstr ""
+
+# sidebar.php
+msgid "Cierres"
+msgstr ""
+
+# sidebar.php
+msgid "Informes"
+msgstr ""
+
+# sidebar.php
+msgid "Operadores"
+msgstr ""
+
+# sidebar.php
+msgid "Sistema"
+msgstr ""
+
+# sidebar.php
+msgid "Usuarios"
+msgstr ""
+
+# sidebar.php
+msgid "Niveles"
+msgstr ""
+
+# sidebar.php
+msgid "Financiero"
+msgstr ""
+
+# sidebar.php
+msgid "Consultas"
+msgstr ""
+
+# sidebar.php
+msgid "Dispositivo de seguridad"
+msgstr ""
+
+# sidebar.php
+msgid "Soporte"
+msgstr ""
+
+# sidebar.php
+msgid "Locales integrados"
+msgstr ""
+
+# locales.php
+msgid "Operador"
+msgstr ""
+
+# locales.php
+msgid "Gerente"
+msgstr ""
+
+# locales.php
+msgid "Tipo"
+msgstr ""
+
+# maquinas.php
+msgid "Local"
+msgstr ""
+
+# maquinas.php
+msgid "Interface"
+msgstr ""
+
+# maquinas.php
+msgid "Responsable"
+msgstr ""
+
+# ciudades.php
+msgid "Cargando Resultados"
+msgstr ""
+
+# modal-actions.php
+msgid "Confirma que quiere Ejecutar la acción"
+msgstr ""
+
+# modal-actions.php
+msgid "Cancelar"
+msgstr ""
+
+# modal-actions.php
+msgid "Confirmar"
+msgstr ""
+
+# modal
+msgid "Agregar Nueva "
+msgstr ""
+
+# modal
+msgid "Ingresa "
+msgstr ""
+
+# modal
+msgid "Editar "
+msgstr ""
+
+# modal
+msgid "Tipo de local"
+msgstr ""
+
+# modal
+msgid "Nombre Operador"
+msgstr ""
+
+# modal
+msgid "Porcentual local"
+msgstr ""
+
+# modal
+msgid "Comisión Gerente"
+msgstr ""
+
+# modal
+msgid "Comisión Operador"
+msgstr ""
+
+# modal.php
+msgid "Crear Nueva Máquina"
+msgstr ""
+
+# modal.php
+msgid "Número de máquina"
+msgstr ""
+
+# modal.php
+msgid "Modelo máquina"
+msgstr ""
+
+# modal.php
+msgid "Registros especiales"
+msgstr ""
+
+# modal.php
+msgid "Máquina % especial"
+msgstr ""
+
+# modal.php
+msgid "Máquina de socio"
+msgstr ""
+
+# modal.php
+msgid "Observaciones de máquina"
+msgstr ""
+
+# modal.php
+msgid "Código"
+msgstr ""
+
+# modal.php
+msgid "Número"
+msgstr ""
+
+# modal.php
+msgid "ID local"
+msgstr ""
+
+# modal.php
+msgid "Juego"
+msgstr ""
+
+# modal.php
+msgid "Por máquina esp"
+msgstr ""
+
+# modal.php
+msgid "Porcentaje socio"
+msgstr ""
+
+# modal.php
+msgid "Click para editar"
+msgstr ""
+
+# modal.php
+msgid "Máquina socio"
+msgstr ""
+
+# modal.php
+msgid "Entrada oficial"
+msgstr ""
+
+# modal.php
+msgid "Salida oficial"
+msgstr ""
+
+# modal.php
+msgid "Editar lectura oficial"
+msgstr ""
+
+# modal.php
+msgid "Imprimir"
+msgstr ""
+
+# modal.php
+msgid "Agregar usuario"
+msgstr ""
+
+# modal.php
+msgid "Nombre de usuario"
+msgstr ""
+
+# modal.php
+msgid "Login de usuario"
+msgstr ""
+
+# modal.php
+msgid "Contraseña de usuario"
+msgstr ""
+
+# modal.php
+msgid "Nivel de usuario"
+msgstr ""
+
+# modal.php
+msgid "Email de usuario"
+msgstr ""
+
+# modal.php
+msgid "ID de usuario"
+msgstr ""
+
+# modal.php
+msgid "Nueva contraseña"
+msgstr ""
+
+# modal.php
+msgid "Exclusión"
+msgstr ""
+
+# modal.php
+msgid "Crear nuevo usuario"
+msgstr ""
+
+# modal.php
+msgid "Resetear Contraseña"
+msgstr ""
+
+# usuarios.php
+msgid "Nivel"
+msgstr ""
+
+# modal.php
+msgid "Seleccionar local"
+msgstr ""
+
+# modal.php
+msgid "Buscar local"
+msgstr ""
+
+# modal.php
+msgid "Siguiente"
+msgstr ""
+
+# modal.php
+msgid "Fecha lectura"
+msgstr ""
+
+# seccion-validar.php
+msgid "Validación"
+msgstr ""
+
+# seccion-validar.php
+msgid "Validar"
+msgstr ""
+
+# seccion-validar.php
+msgid "Código Inválido"
+msgstr ""
+
+# seccion-validar.php
+msgid "Cargando Información"
+msgstr ""
+
+# dispositivos.php
+msgid "ID de la Máquina"
+msgstr ""
+
+# dispositivos.php
+msgid "ID del juego"
+msgstr ""
+
+# dispositivos.php
+msgid "Periodo"
+msgstr ""
+
+# dispositivos.php
+msgid "Fecha de Expiración"
+msgstr ""
+
+# dispositivos.php
+msgid "Última Actualización"
+msgstr ""
+
+# niveles.php
+msgid "Activador"
+msgstr ""
+
+# niveles.php
+msgid "Master"
+msgstr ""
+
+# niveles.php
+msgid "Administrador"
+msgstr ""
+
+# niveles.php
+msgid "Todos"
+msgstr ""
+
+# .php
+msgid ""
+msgstr ""
