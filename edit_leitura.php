@@ -140,9 +140,31 @@ while ($i <= $var['qtd'])
 $query_lec1 = @mysql_query($sql_leitura);
 $result_lec1=@mysql_fetch_assoc($query_lec1);
 
-$lectura1 =$result_lec1['id_leitura'];
+$lectura1 = $result_lec1['id_leitura'];
 
 
+
+//
+//adiciona registro na tabela leitura  * alterado 06042017
+$sql_upd_obs = "UPDATE 
+				leitura 
+			SET
+				observacao = '".$var['obs']."'
+			WHERE
+				id_leitura = " . $id_leit_ins;
+						
+
+if(@mysql_query($sql_upd_obs) )
+{
+	//echo (utf8_encode('Leitura cadastrada com sucesso!'));
+}else{
+	exit(utf8_encode("Usuario restrito para esta operação."));
+}
+
+
+
+
+//
 if ($lectura1 == $id_leit_ins) {
 	
 	$sql_upd_maquina= "UPDATE 

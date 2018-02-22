@@ -870,15 +870,31 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
                     <table class="table  table-hover">
                       <thead>
                         <tr>
-                        
+                          <th class="left-align sort-asc">
+                            <a><?php echo _('Observaciones') ?></a>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-
                           
                           <td>
-                          	
+                          
+                          	<?php
+								//
+								$sql_obs = "SELECT
+												observacao
+											FROM
+												leitura
+											WHERE
+												id_leitura = " . $id_leitura;
+
+								$query_obs = @mysql_query($sql_obs);
+								$result_obs=@mysql_fetch_assoc($query_obs);												
+												
+							?>
+                          
+                          	<textarea id="obs" name="obs" rows="4" cols="50"><?php echo $result_obs['observacao']; ?></textarea>
 						  </td>
                         </tr>
                       </tbody>
