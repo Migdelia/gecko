@@ -163,7 +163,7 @@
                                      
             </div>
             
-            <!--- separa coluna --->
+            <!--- separa coluna -->
             
             <div class="col-xs-12 col-md-6">
             
@@ -220,13 +220,12 @@
             
             
             
-             <!---
-            
+             <!--    
               <label for="input_operador<?php echo $modal_item ?>" class="control-label"><?php echo _('Operador') ?></label>
               <div class="row form-group">
                 <label for="input_operador<?php echo $modal_item ?>" class="control-label"><?php echo _('Operador') ?></label>
                 <input type="text" class="form-control" id="edit_ope_<?php echo $modal_item ?>" name="edit_ope_<?php echo $modal_item ?>" placeholder="Operador" value="">
-              </div>--->
+              </div>-->
               
               
               
@@ -397,7 +396,7 @@
                 <label for="input_tipo<?php echo $modal_item ?>" class="control-label"><?php echo _('Status') ?></label>
                 <input type="text" class="form-control" id="edit_status_<?php echo $modal_item ?>" name="edit_status_<?php echo $modal_item ?>" placeholder="Status" value="">
               </div> 
-              --->                               
+              -->                               
                                         
             </div>
           </div>

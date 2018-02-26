@@ -253,7 +253,7 @@ include('functions/validaLogin.php');
 			"oPaginate": {
 						  "sFirst":    "Primera",
 						  "sPrevious": "Anterior",
-						  "sNext":     "Seguiente",
+						  "sNext":     "Siguiente",
 						  "sLast":     "Última"
 					}
 		},	

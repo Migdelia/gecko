@@ -178,7 +178,7 @@ $limitRegistros = mysql_num_rows($query_jg);
 			"oPaginate": {
 						  "sFirst":    "Primera",
 						  "sPrevious": "Anterior",
-						  "sNext":     "Seguiente",
+						  "sNext":     "Siguiente",
 						  "sLast":     "Última"
 					}
 		},	

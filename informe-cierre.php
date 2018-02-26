@@ -145,6 +145,9 @@ $query_fechamento=@mysql_query($sql_fechamentos);
                           </th>
                           <th class="left-align">
                             <?php echo _('Responsable') ?>
+                          </th> 
+                          <th class="left-align">
+                            <?php echo _('$') ?>
                           </th>                          
                           <th class="left-align"><?php echo _('Acciones') ?>
                           </th>
@@ -177,6 +180,17 @@ $query_fechamento=@mysql_query($sql_fechamentos);
                                 </td>
                                 <td class="left-align">
                                     <?php echo $res_fechamento['nome']; ?>
+                                </td>
+                                 <td class="left-align">
+                                    <?php  
+                                    if($res_fechamento['valor_total']<0){
+                            	    echo "$ <b style='color:red';>" . number_format($res_fechamento['valor_total'],0,"","."); "</b>";
+
+                                    }else{
+                            	      echo "$ " . number_format($res_fechamento['valor_total'],0,"","."); 
+
+                                    }
+                                    ?>
                                 </td>                            
                                 <td class="right-align">
                                   <!--- <a href="#" class="btn btn-default" role="button" style="color: white" data-toggle="modal" data-target="#download-informe-cierre-modal"> <?php echo _('Descargar') ?></a> -->
@@ -219,14 +233,14 @@ $query_fechamento=@mysql_query($sql_fechamentos);
 			"oPaginate": {
 						  "sFirst":    "Primera",
 						  "sPrevious": "Anterior",
-						  "sNext":     "Seguiente",
+						  "sNext":     "Siguiente",
 						  "sLast":     "Última"
 					}
 		},		
 		aoColumnDefs:[
 			{
 			'bSortable' : false,
-			'aTargets' : [ 4 ]
+			'aTargets' : [ 5 ]
 			//'aTargets' : [ 0, 6 ]
 			}
 		],	
@@ -234,6 +248,7 @@ $query_fechamento=@mysql_query($sql_fechamentos);
 		  //{ "bSearchable": false },
 		  null,
 		  null,		  
+		  null,
 		  null,
 		  null,
 		  { "bSearchable": false }
@@ -246,7 +261,7 @@ $query_fechamento=@mysql_query($sql_fechamentos);
 			 	className: 'btn btn-exp',
 				text: 'Exportar PDF',
                 exportOptions: {
-                    columns: [ 0, 1, 2, 3 ]
+                    columns: [ 0, 1, 2, 3, 4 ]
                 },
 				
 			},
@@ -255,7 +270,7 @@ $query_fechamento=@mysql_query($sql_fechamentos);
 				className: 'btn btn-exp',
 				text: 'Exportar Excel',
                 exportOptions: {
-                    columns: [ 0, 1, 2, 3 ]
+                    columns: [ 0, 1, 2, 3, 4 ]
                 },			
 			}
 		]

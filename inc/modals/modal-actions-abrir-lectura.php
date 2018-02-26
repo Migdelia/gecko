@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class=" fa fa-times"></i></button>
-        <h5><i class="fa fa-plus"></i> <?php echo _('Estas seguro que quiere crear esta lectura?') ?></h5>
+        <h5><i class="fa fa-plus"></i> <?php echo _('Estas seguro que quiere Abrir esta lectura?') ?></h5>
       </div>
       <div class="modal-body">
         <p>
@@ -82,7 +82,7 @@
         </p>
         <div class="row form-group">
           <div class="col-xs-12">
-            <button id="confAcao" type="submit" class="btn send btn-sm btn-raised col-xs-12 col-md-4 right"><?php echo _('Confirmar') ?></button>
+            <button id="btnabrir" type="submit" class="btn send btn-sm btn-raised col-xs-12 col-md-4 right"><?php echo _('Confirmar') ?></button>
             <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-raised col-xs-12 col-md-4 right"><?php echo _('Cancelar') ?></button>  
             
           </div>

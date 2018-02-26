@@ -23,7 +23,8 @@ $sql_leit = "
 		nome,
 		semana,
 		fat_bruto as lucro,
-		data_fechamento
+		data_fechamento,
+		observacao
 	FROM
 		vw_leitura_info
 	WHERE
@@ -142,10 +143,29 @@ $limitRegistros = mysql_num_rows($query_leit);
                             <td class="center-align"><?php echo date("d-m-Y", strtotime($res_leit['data'])); ?></td>
                             <td class="center-align"><?php echo $res_leit['nome']; ?></td>
                             <td class="center-align">Semana: <?php echo $res_leit['semana'] . " de " . date("M-Y", strtotime($res_leit['data_fechamento'])); ?> </td>
-                            <td class="center-align"><?php echo "$ " . number_format($res_leit['lucro'],0,"",".") ?></td>
-                            <td class="center-align">
+                            <td class="center-align"><?php 
+                            if($res_leit['lucro']<0){
+                            	echo "$ <b style='color:red';>" . number_format($res_leit['lucro'],0,"","."); "</b>";
+
+                            }else{
+                            	 echo "$ " . number_format($res_leit['lucro'],0,"","."); 
+
+                            }
+							?>
+							</td>
+                            <td >
                               <!--- <a href="#" class="btn btn-sm" data-toggle="modal" data-target="#edit-modal-<?php echo $filenameID ?>"><?php echo _('Editar') ?></a> -->
                               <a href="ver-informe-lectura.php?id=<?php echo $res_leit['numero']; ?>" class="btn btn-sm" title="Ver"><i class="fa fa-eye"></i></a>
+                            <?php 
+                            	if($res_leit['observacao'] != null ){
+
+                            	  echo "<i class='fa fa-weixin' title='Lectura contiene observaciones'></i>";  
+
+                                   }else{
+
+                                   	
+                                  }
+                            	?>	
                             </td>
                           </tr>
                           
@@ -210,7 +230,7 @@ $limitRegistros = mysql_num_rows($query_leit);
 			"oPaginate": {
 						  "sFirst":    "Primera",
 						  "sPrevious": "Anterior",
-						  "sNext":     "Seguiente",
+						  "sNext":     "Siguiente",
 						  "sLast":     "Última"
 					}
 		},		

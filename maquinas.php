@@ -238,7 +238,7 @@ $limitRegistros = mysql_num_rows($query_maq);
                           <td>&nbsp; </td>
                         </tr>                        
                     </table>
-                    --->                       
+                    -->                       
                       
                     </div>
                   </div>
@@ -569,7 +569,7 @@ alert("Disp: " + dispositivo);
 			"oPaginate": {
 						  "sFirst":    "Primera",
 						  "sPrevious": "Anterior",
-						  "sNext":     "Seguiente",
+						  "sNext":     "Siguiente",
 						  "sLast":     "Última"
 					}
 		},		

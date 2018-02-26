@@ -205,7 +205,7 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
                 </span>
                 <?php
                 	
-					echo "(".$result_loc['nome'].")";
+					 echo "<a href='ver-informe-lectura.php?id=$id_leitura'  title='Volver a la lectura'><i class='fa fa-arrow-circle-left' style='font-size:30px;'></i></a> (".$result_loc['nome'].")";
 					
 					
 				?>

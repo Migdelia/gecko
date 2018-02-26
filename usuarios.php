@@ -238,7 +238,7 @@ $limitRegistros = mysql_num_rows($query_usr);
                               <td>&nbsp; </td>
                             </tr>                        
                       </table>
-                      --->
+                      -->
                       
                     </div>
                     </form>
@@ -275,7 +275,7 @@ $limitRegistros = mysql_num_rows($query_usr);
 			"oPaginate": {
 						  "sFirst":    "Primera",
 						  "sPrevious": "Anterior",
-						  "sNext":     "Seguiente",
+						  "sNext":     "Siguiente",
 						  "sLast":     "Última"
 					}
 		},			

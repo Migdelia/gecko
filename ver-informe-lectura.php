@@ -263,14 +263,15 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
           
             <div class="col-xs-12 col-lg-9">
               <?php include("inc/buttons-info-lecturas.php"); // btns paneles ?>
+                <?php include("inc/modals/modal-select-periodo.php"); // modal para Editar  contenido  ?>
                <?php include("inc/modals/modal-select-periodo3.php"); // modal para Eliminar  contenido ?>
-               <?php include("inc/modals/modal-actions-lectura-alert-eliminar.php"); // modal para Eliminar  contenido ?>
-              
-             <?php  include("inc/modals/modal-select-periodo.php"); // modal para agregar contenido  ?>
-
-              <?php include("inc/modals/modal-select-periodo2.php"); // modal para Editar  contenido  ?>
-
-              <?php include("inc/modals/modal-add-gastos-leitura-feita.php"); // modal para editar contenido ?>
+               <?php include("inc/modals/modal-editar-config-lectura.php"); // modal para Eliminar  contenido ?>
+            
+				
+             
+		
+                <?php include("inc/modals/modal-actions-lectura-alert-eliminar.php"); // modal para Eliminar  contenido ?>
+            
             </div>
           </div>
       </div>
@@ -557,13 +558,87 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
                                         <td class="left-align">
                                         	<strong><?php echo $result_maq['numero'] . "</strong><br><span style='font-size:10px;'>(".$result_maq['interface'].")</span><br><img src='images/".$result_maq['id_jogo'].".png' width='40px;' class='imgPrint' ><span class='txt_jogo'>" . $result_maq['jogo'] . "</span>"; ?>
                                         </td>
-                                        <td class="left-align"><strong><u>$ <?php echo number_format($result_maq['ent_oficial'],0,"","."); ?></u></strong><br>$ <?php echo number_format($ult_ent,0,"","."); ?></td>
-                                        <td class="left-align">$<?php echo number_format($bruto,0,"","."); ?></td>
-                                        <td class="left-align"><strong><u>$ <?php echo number_format($result_maq['sai_oficial'],0,"","."); ?></u></strong><br>$ <?php echo number_format($ult_sai,0,"","."); ?></td>
-                                        <td class="left-align">$ <?php echo number_format($premio,0,"","."); ?></td>
-                                        <td class="left-align"><strong>$ <?php echo number_format($subTotal,0,"","."); ?></strong></td>
-                                        <td class="left-align">$ <?php echo number_format($pctLocal,0,"","."); ?></td>
-                                        <td class="left-align"><strong>$ <?php echo number_format($pctPropria,0,"","."); ?></strong></td>
+                                        <td class="left-align"><u>
+                                        	<?php
+                                        	if ($result_maq['ent_oficial']<0) {
+                                        		
+                                        		echo "$ <b style='color:red';>". number_format($result_maq['ent_oficial'],0,"","."); "</b>";
+                                        	}else{
+                                        		echo "<strong> $". number_format($result_maq['ent_oficial'],0,"","."). "</strong>";
+
+                                        	} 
+                                        	echo "<br></u>";
+                                        	if ($ult_ent<0) {
+                                        		
+                                        		echo"$ <b style='color:red';>". number_format($ult_ent,0,"","."); "</b>";
+                                        	}else{
+                                        		
+                                        		echo "$". number_format($ult_ent,0,"","."); 
+                                        	} 
+                                        	?>
+                                        </td>
+                                        <td class="left-align">$<?php 
+                                        if ($bruto<0) {
+
+                                        	echo "<b style='color:red';>". number_format($bruto,0,"","."); "</b>";
+                                        } else{
+
+                                        	echo number_format($bruto,0,"","."); 
+
+                                        }
+
+                                        ?></td>
+                                        <td class="left-align"><u> <?php
+                                        if ($result_maq['sai_oficial']<0) {
+
+                                        	echo "<b style='color:red';>".number_format($result_maq['sai_oficial'],0,"","."); "</b>";
+                                        }else{
+
+                                        	echo "<strong> $ ". number_format($result_maq['sai_oficial'],0,"",".") . "</strong>";
+                                        }
+                                        echo "</u><br>";
+                                        if ($ult_sai<0) {
+                                        	echo "$ <b style='color:red';>".number_format($ult_sai,0,"",".")."</b>";
+                                        }else{
+                                        	echo "$". number_format($ult_sai,0,"",".");
+
+                                        }
+
+                                          ?></td>
+
+                                        <td class="left-align"><?php
+                                        if ($premio<0) {
+                                        	echo " $ <b style='color:red';>".number_format($premio,0,"",".")."</b>";
+                                        }else{
+
+                                        	echo "$". number_format($premio,0,"","."); 
+
+                                        }
+
+                                         ?></td>
+                                        <td class="left-align"><?php 
+                                        if ($subTotal<0) {
+                                        echo " $ <b style='color:red';>".number_format($subTotal,0,"","."). "</b>";
+                                        }else{
+
+                                        	echo "$ <strong>".number_format($subTotal,0,"",".")."</strong>";
+                                        }
+                                       ?></td>
+                                        <td class="left-align"><?php 
+                                        if ($pctLocal<0) {
+                                        	 echo " $ <b style='color:red';>".number_format($pctLocal,0,"","."). "</b>";
+                                        }else{
+                                        	echo "$".number_format($pctLocal,0,"",".");
+                                        }
+                                        ?></td>
+                                        <td class="left-align"><strong><?php 
+                                        if ($pctPropria<0) {
+                                        	 echo " $ <b style='color:red';>".number_format($pctPropria,0,"","."). "</b>";
+                                        }else{
+
+                                        	echo "$ ".number_format($pctPropria,0,"",".");
+                                        }
+                                         ?></td>
                                       </tr>
                                 <?php	
 										//verifica se tem diferenca
@@ -587,9 +662,25 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
                                       <tr>
                                         <td class="left-align" style="color: white"><strong><?php echo number_format($i,0,"","."); ?> Maquinas</strong></td>
                                         <td class="left-align" style="color: white">&nbsp;</td>
-                                        <td class="left-align" style="color: white">$ <?php echo number_format($totalBruto,0,"","."); ?></td>
+                                        <td class="left-align" style="color: white"><?php
+                                        if ($totalBruto<0) {
+                                        	echo " $ <b style='color:red';>".number_format($totalBruto,0,"","."). "</b>";
+                                        }else{
+
+                                        	echo "$ ".number_format($totalBruto,0,"",".");
+                                        }
+                                        ?></td>
                                         <td class="left-align" style="color: white">&nbsp;</td>
-                                        <td class="left-align" style="color: white">$ <?php echo number_format($totalPremio,0,"","."); ?></td>
+                                        <td class="left-align" style="color: white"><?php
+                                        if ($totalPremio<0) {
+                                        	echo " $ <b style='color:red';>".number_format($totalPremio,0,"","."). "</b>";
+                                        }else{
+
+                                        	echo "$ ".number_format($totalPremio,0,"",".");
+                                        }
+
+                                       	
+                                      	?></td>
                                         
                                         <?php 
 											$subTotFinal = $totalBruto - $totalPremio - $totalDif;
@@ -600,9 +691,9 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
 										?>
                                         
                                         
-                                        <td id="subtotalfinal" class="left-align" style="color: white">$ <?php echo number_format(($subTotFinal),0,"","."); ?></td>
-                                        <td class="left-align" style="color: white">$ <?php echo number_format($totalLocal,0,"","."); ?></td>
-                                        <td class="left-align" style="color: white"><strong>$ <?php echo number_format($totalProprio,0,"","."); ?></strong></td>
+                                        <td id="subtotalfinal" class="left-align" style="color: white"><?php echo "$ ".number_format($subTotFinal,0,"","."); ?></td>
+                                        <td class="left-align" style="color: white"><?php echo "$ ".number_format($totalLocal,0,"","."); ?></td>
+                                        <td class="left-align" style="color: white"><?php echo "$<strong> ".number_format($totalProprio,0,"",".")."</strong>"; ?></td>
                                       </tr>                                   
                                 </tfoot>                                
                               </table>
@@ -632,15 +723,35 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
                               <tbody>
                                 <tr>
                                   <td class="left-align"><?php echo _('Total Entrada'); ?></td>
-                                  <td class="right-align">$ <?php echo number_format($totalBruto,0,"","."); ?></td>
+                                  <td class="right-align"> <?php  
+                                  if ($totalBruto<0) {
+                                         echo " $ <b style='color:red';>".number_format($totalBruto,0,"","."). "</b>";
+                                        }else{
+                                        	echo "$ ".number_format($totalBruto,0,"",".");
+                                        } ?></td>
                                 </tr>
                                 <tr>
                                   <td class="left-align"><?php echo _('Total Salida'); ?></td>
-                                  <td class="right-align">$ <?php echo number_format($totalPremio,0,"","."); ?></td>
+                                  <td class="right-align"><?php 
+                                  if ($totalPremio<0) {
+                                         echo " $ <b style='color:red';>".number_format($totalPremio,0,"","."). "</b>";
+                                        }else{
+                                        	echo "$ ".number_format($totalPremio,0,"",".");
+                                        }
+                                 ?></td>
                                 </tr>
                                 <tr>
                                   <td class="left-align"><?php echo _('Subtotal'); ?></td>
-                                  <td class="right-align">$ <?php echo number_format($totalBruto - $totalPremio - $totalDif,0,"","."); ?></td>
+                                  <td class="right-align"><?php 
+                                  if(($totalBruto - $totalPremio - $totalDif)<0){
+
+                                  	 echo " $ <b style='color:red';>".number_format($totalBruto - $totalPremio - $totalDif,0,"","."). "</b>";
+                                  }else{
+
+                                  	echo "$ ".number_format($totalBruto - $totalPremio - $totalDif,0,"",".");
+                                  }
+
+                                 ?></td>
                                 </tr>    
                                 
                                 <?php		
@@ -650,7 +761,14 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
                                                             
                                 <tr>
                                   <td class="left-align"><?php echo _('Total Local'); ?></td>
-                                  <td class="right-align">$ <?php echo number_format($totalLocal,0,"","."); ?></td>
+                                  <td class="right-align"> <?php
+                                  if ($totalLocal<0) {
+                                   echo " $ <b style='color:red';>".number_format($totalLocal,0,"","."). "</b>";
+                                  }else{
+                                  	echo "$ ".number_format($totalLocal,0,"",".");
+
+                                  }
+                                  ?></td>
                                 </tr>     
                                 
                                 <?php
@@ -661,7 +779,16 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
                                 <tr>
                                   <td class="left-align"><?php echo _('Total Gastos'); ?></td>
                                   <td class="right-align">
-                                  	$ <?php	echo number_format($totalGastos,0,"","."); ?>    
+                                  	<?php
+                                  	if ($totalGastos<0) {
+
+                                   echo " $ <b style='color:red';>".number_format($totalGastos,0,"","."). "</b>";
+                                  }else{
+
+                                  	echo "$ ".number_format($totalGastos,0,"",".");
+
+                                  }
+                                  ?>    
                                   </td>
                                 </tr>                               
                               
@@ -686,15 +813,42 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
 								?>
                                     <tr>
                                       <td class="left-align"><?php echo _('Total Sala'); ?></td>
-                                      <td class="right-align">$ <?php echo number_format($totalSala,0,"","."); ?></td>
+                                      <td class="right-align"> <?php 
+                                      if ($totalSala<0) {
+                                  		
+                                       echo " $ <b style='color:red';>".number_format($totalSala,0,"","."). "</b>";
+                                      }else{
+
+                                       echo "$ ".number_format($totalSala,0,"",".");
+
+                                      }
+                                     ?></td>
                                     </tr> 
                                     <tr>
                                       <td class="left-align"><?php echo _('Comisión'); ?></td>
-                                      <td class="right-align">$ <?php echo number_format($comGerente,0,"","."); ?></td>
+                                      <td class="right-align"><?php 
+                                      if ($comGerente<0) {
+                                  		
+                                       echo " $ <b style='color:red';>".number_format($comGerente,0,"","."). "</b>";
+                                      }else{
+
+                                       echo "$ ".number_format($comGerente,0,"",".");
+
+                                      }
+                                     ?></td>
                                     </tr> 
                                     <tr>
                                       <td class="left-align"><?php echo _('Total Socio'); ?></td>
-                                      <td class="right-align">$ <?php echo number_format($totalSocio,0,"","."); ?></td>
+                                      <td class="right-align"> <?php 
+                                      if ($totalSocio<0) {
+                                  		
+                                       echo " $ <b style='color:red';>".number_format($totalSocio,0,"","."). "</b>";
+                                      }else{
+
+                                       echo "$ ".number_format($totalSocio,0,"",".");
+
+                                      }
+                                     ?></td>
                                     </tr>
                                                                          
                                                                     
@@ -729,7 +883,13 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
 
                                 <tr>
                                   <td class="left-align"><?php echo _('TOTAL'); ?></td>
-                                  <td class="right-align"><strong>$ <?php echo number_format($totalFinal,0,"","."); ?></strong></td>
+                                  <td class="right-align"><strong> <?php 
+                                  if ($totalFinal<0) {
+                                         echo " $ <b style='color:red';>".number_format($totalFinal,0,"","."). "</b>";
+                                        }else{
+                                        	echo "$ ".number_format($totalFinal,0,"",".");
+                                        }
+                                 ?></strong></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -964,9 +1124,9 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
 
     if(json>0)
 	{
-	$('#select-periodo3').modal('hide');
-	$('#modal-alert').modal({});
-     }
+		$('#select-periodo3').modal('hide');
+		$('#modal-alert').modal({});
+    }
        });
 	});
 
@@ -976,6 +1136,12 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
 	{
 		location="lectura.php";	
 	});
+
+$('#exppdf').click( function() 
+	{
+		window.print() ; /// aquiiiii Erico		
+	});
+
 
 
 </script>

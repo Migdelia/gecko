@@ -332,7 +332,7 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
                               <div class="row">
                                 <?php echo _('General') ?>
                               </div>
-                            </th>--->
+                            </th>-->
                             <th class="left-align" colspan="4">
                               <div class="row">
                                 <div class="col-xs-12" style="font-size:18px;">
@@ -689,7 +689,17 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
                                 <tr>
                                   <td class="left-align"><?php echo date("d-m-Y", strtotime($dados_leit['data']));?></td>
                                   <td class="left-align"><?php echo $dados_leit['nome'];?></td>
-                                  <td class="left-align">$ <?php echo number_format($vl_leitura,0,"","."); ?></td>
+                                  <td class="left-align"><?php 
+                                   if($vl_leitura<0){
+                            	    echo "$ <b style='color:red';>" . number_format($vl_leitura,0,"","."); "</b>";
+
+                                    }else{
+                            	      echo "$ " . number_format($vl_leitura,0,"","."); 
+
+                                    }
+                                    ?>
+                                   
+                                   </td>
                                   <td class="left-align">
 									  <?php
 									  	//
@@ -789,13 +799,30 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
                             <tr>
                               <td class="left-align"><?php echo date("d-m-Y", strtotime($res_fechamento['data_fechamento']));?></td>
                               <td class="left-align">Rendición de <strong>cierre</strong></td>
-                              <td class="left-align">$ <?php echo number_format($res_gastos_fecha['desconto'],0,"",".") ?></td>
+                              <td class="left-align"><?php 
+                               if($res_gastos_fecha['desconto']<0){
+                            	echo "$ <b style='color:red';>" . number_format($res_gastos_fecha['desconto'],0,"","."); "</b>";
+
+                               }else{
+                            	 echo "$ " . number_format($res_gastos_fecha['desconto'],0,"","."); 
+
+                               }
+
+                              ?></td>
                               <td class="left-align tdInvisible"><a id="ver_rendicao" class="btn btn-sm" target="_blank" title="Ver"><i class="fa fa-eye"></i></a></td>
                             </tr>
                             <tr>
                               <td class="left-align"><?php echo date("d-m-Y", strtotime($res_fechamento['data_fechamento']));?></td>
                               <td class="left-align">Comisión</td>
-                              <td class="left-align">$ <?php echo number_format($totalCom,0,"",".") ?></td>
+                              <td class="left-align"><?php 
+                               if ($totalCom<0) {
+                               echo "$ <b style='color:red';>" . number_format($totalCom,0,"","."); "</b>";
+                               }else{
+                            	 echo "$ " . number_format($totalCom,0,"","."); 
+
+                               }
+
+                               ?></td>
                               <td class="left-align tdInvisible"><a id="ver_comissao" class="btn btn-sm" target="_blank" title="Ver"><i class="fa fa-eye"></i></a></td>
                             </tr> 
                             
@@ -856,14 +883,21 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
                             <tr>
                               <td class="left-align"><?php echo date("d-m-Y", strtotime($res_fechamento['data_fechamento']));?></td>
                               <td class="left-align">20% Calabaza</td>
-                              <td class="left-align">$ <?php echo number_format($pctCalabaza,0,"",".") ?></td>
+                              <td class="left-align"><?php 
+                              	if($pctCalabaza<0){
+                            	echo "$ <b style='color:red';>" . number_format($pctCalabaza,0,"","."); "</b>";
+ 								}else{
+                            	 echo "$ " . number_format($pctCalabaza,0,"","."); 
+
+                            	}
+                             ?></td>
                               <td class="left-align tdInvisible">&nbsp;</a></td>
                             </tr>
                             <?php									
 								}
 							?>
                             
-                            <!- só mostra em caso de local com socio -->                                                                                    
+                            <!-- só mostra em caso de local com socio -->                                                                                    
                         </tbody>
                         
                         <?php
@@ -1094,8 +1128,16 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
                                                 echo "<td class='left-align'>";
                                                 echo $dados_comissao_leitura['nome'];
                                                 echo "</td>";
-                                                echo "<td class='left-align'>";					
-                                                echo "$ " . number_format($comissao_por_local,0,"",".");
+                                                echo "<td class='left-align'>";	
+                                                if($comissao_por_local<0){
+                            	               	echo "$ <b style='color:red';>" . number_format($comissao_por_local,0,"","."); "</b>";
+
+                            					}else{
+                            	 				echo "$ " . number_format($comissao_por_local,0,"","."); 
+
+                           						}
+				
+                                               
                                                 echo "</td>";
                                                 echo "</tr>";	
                                                 
@@ -1259,7 +1301,14 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
                                             echo $dados_detalhe_gastos_fat['descricao'];
                                             echo "</td>";
                                             echo "<td class='left-align'>";
-                                            echo "$ " . number_format($dados_detalhe_gastos_fat['valor_desconto'],0,"",".");
+                                            if($dados_detalhe_gastos_fat['valor_desconto']<0){
+                            	            echo "$ <b style='color:red';>" . number_format($dados_detalhe_gastos_fat['valor_desconto'],0,"","."); "</b>";
+
+                                            }else{
+                            				 echo "$ " . number_format($dados_detalhe_gastos_fat['valor_desconto'],0,"","."); 
+ 
+                            				}
+
                                             echo "</td>";
                                             echo "</tr>";	
                                             
@@ -1440,7 +1489,14 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
                                             echo $dados_detalhe_gastos_vale['descricao'];
                                             echo "</td>";
                                             echo "<td class='left-align'>";
-                                            echo "$ " . number_format($dados_detalhe_gastos_vale['valor_desconto'],0,"",".");
+                                            if($dados_detalhe_gastos_vale['valor_desconto']<0){
+                            	            echo "$ <b style='color:red';>" . number_format($dados_detalhe_gastos_vale['valor_desconto'],0,"","."); "</b>";
+
+                                            }else{
+                            	            echo "$ " . number_format($dados_detalhe_gastos_vale['valor_desconto'],0,"","."); 
+
+                           					 }
+
                                             echo "</td>";
                                             echo "</tr>";	
                                             
@@ -1521,7 +1577,7 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
 
             <!-- <div class="row"> -->
             
-            <!----
+            <!--
             <div class="col-xs-12 col-md-6">
               <div class="panel">
                 <div class="panel-heading">
@@ -1614,7 +1670,7 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
               </div>
             </div>
             
-            ---->
+            -->
           </div>
 
         </div>
@@ -1655,6 +1711,14 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
 		
 		$("#totalPagar").text(totalPagar);
 		
+		totalPagar = totalPagar.replace('.', '');
+		totalPagar = totalPagar.replace('.', '');
+
+		var id_fech = "<?=$id_fechamento?>";
+
+		$.post('functions/actualiza_valor_fechamento.php',{id:id_fech,pagar:totalPagar},function(json){
+			
+		  });	
 
 		//pega os valores 
 		docAdm = $("#hd_doc_adm").val();

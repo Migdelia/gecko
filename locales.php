@@ -238,7 +238,7 @@ $limitRegistros = mysql_num_rows($query_local);
                             <span class="material-input"></span>
                           </div>
                         </form>
-						--->
+						-->
                         <table id="tabelaMaq" class="table table-striped table-hover">
                           <thead>
                             <tr>                          
@@ -308,7 +308,7 @@ $limitRegistros = mysql_num_rows($query_local);
 			"oPaginate": {
 						  "sFirst":    "Primera",
 						  "sPrevious": "Anterior",
-						  "sNext":     "Seguiente",
+						  "sNext":     "Siguiente",
 						  "sLast":     "Última"
 					}
 		},	

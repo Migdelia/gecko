@@ -9,7 +9,7 @@
         <p>
         	<strong><span id="tpAcao">Local:</strong> <?php echo $result_loc['nome'];?></span>
             <br />
-        	
+        	<strong><span id="tpAcao">Fecha referencia:</strong> <?php echo $fechamento;?></span>
         </p>
 	
             <br />
