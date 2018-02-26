@@ -94,6 +94,7 @@ while($result_lec = mysql_fetch_array($query_maq))
 
 	}
 
+//echo $fechamento;
 
 $originalDate = $fechamento;
 $fechamento = date("d-m-Y", strtotime($originalDate));
@@ -127,7 +128,7 @@ $fechamento = date("d-m-Y", strtotime($originalDate));
           
                 <?php
       	        echo "<a href='ver-informe-lectura.php?id=$id_leitura'  title='Volver a la lectura'><i class='fa fa-arrow-circle-left' style='font-size:30px;'></i></a> (".$result_loc['nome'].")";
-					
+			          echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;fecha de cierre : $fechamento";		
       
 				       ?> 
               </h3>
@@ -381,7 +382,7 @@ $fechamento = date("d-m-Y", strtotime($originalDate));
                                  echo "<select disabled name='login' id='login' class='form-control'>";
                              
             
-                            		 $resultw = mysql_query("SELECT * FROM logins where excluido = 'N'  ");
+                            		 $resultw = mysql_query("SELECT * FROM logins where excluido = 'N'  AND id_nivel= '8' ");
                            				 while($roww = mysql_fetch_array($resultw))
                           				{
                				 			echo "<option value='".$roww["id_login"]."' ";
@@ -404,7 +405,7 @@ $fechamento = date("d-m-Y", strtotime($originalDate));
                                 echo "<select name='login' id='login' class='form-control'>";
                              
             
-                                 $resultw = mysql_query("SELECT * FROM logins where excluido = 'N'  ");
+                                 $resultw = mysql_query("SELECT * FROM logins where excluido = 'N' AND id_nivel= '8' ");
                                    while($roww = mysql_fetch_array($resultw))
                                   {
                             echo "<option value='".$roww["id_login"]."' ";
@@ -471,12 +472,12 @@ $fechamento = date("d-m-Y", strtotime($originalDate));
 					     </div>
 					     <div class="col-xs-12 col-md-6">
                 <div class="row">
-                  <label for="tags">Fecha de Cierre </label>
+                 
                       <?php if ($fechada==1){
-                              echo " <input type='text' id='datepicker' name='datepicker' size='23' placeholder='dd-mm-aaaa' value='$fechamento'  readonly disabled>";
-
+                           
                             }else{
-                              echo "<input type='text' id='datepicker' name='datepicker' size='23' placeholder='dd-mm-aaaa' value='$fechamento' onchange='verificaDia(this);' readonly ";
+                               echo " <label for='tags'>Fecha de Cierre </label>";
+                              echo "<input type='text' id='datepicker' name='datepicker' size='23' placeholder='dd-mm-aaaa' value='$fechamento' onchange='verificaDia(this);' readonly >";
                             }  
                             ?>
                  
