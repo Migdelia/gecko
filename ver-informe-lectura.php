@@ -264,13 +264,16 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
             <div class="col-xs-12 col-lg-9">
               <?php include("inc/buttons-info-lecturas.php"); // btns paneles ?>
                 <?php include("inc/modals/modal-select-periodo.php"); // modal para Editar  contenido  ?>
+				 <?php include("inc/modals/modal-actions-lectura-alert-eliminar.php"); // modal para Eliminar  contenido ?>
                <?php include("inc/modals/modal-select-periodo3.php"); // modal para Eliminar  contenido ?>
+
+               <?php include("inc/modals/modal-add-gastos-leitura-feita.php"); // modal para editar contenido ?>
                <?php include("inc/modals/modal-editar-config-lectura.php"); // modal para Eliminar  contenido ?>
             
 				
              
-		
-                <?php include("inc/modals/modal-actions-lectura-alert-eliminar.php"); // modal para Eliminar  contenido ?>
+			 
+                
             
             </div>
           </div>
@@ -1142,6 +1145,65 @@ $('#exppdf').click( function()
 		window.print() ; /// aquiiiii Erico		
 	});
 
+function excluiGasto(obj)
+	{
+		//
+		idGasto = obj.id.split('_');
+		idGasto = idGasto[1];
 
+		//
+		jQuery.ajax(
+		{
+			type: "POST", // Defino o método de envio POST / GET
+			url: 'remove_despesa_leitura_feita.php', // Informo a URL que será pesquisada.
+			data: 'id_desp='+idGasto,
+			//data: "cent_cust=cc&valor=vl&descricao=dc&tipo_doc=td&numero_doc=nd",
+			success: function(html)
+			{
+				window.location.reload(true);
+				/*
+				retorno = html.split("-");
+				if(retorno[0] == "true")
+				{
+					//
+					$('#ln_gasto_'+idGasto).remove();
+					
+					
+					//recalcular total de gasto 
+					var totalGastoAtual = $('#total_gastos').text();	
+					totalGastoAtual = totalGastoAtual.replace('.', '');
+					totalGastoAtual = totalGastoAtual.replace('.', '');	
+								
+					//				
+					totalGastoAtual = totalGastoAtual - retorno[1];
+					
+					//atribui novo total de gasto
+					totalGastoAtual = eval(totalGastoAtual).formatNumber(2,',','.');
+					totalGastoAtual = totalGastoAtual.replace(',00', '');					
+					$('#total_gastos').text(totalGastoAtual);	
+					
+					
+					//recalcula total
+					var vlFinalAtual = $('#total_final').text();
+					vlFinalAtual = vlFinalAtual.replace('.', '');
+					vlFinalAtual = vlFinalAtual.replace('.', '');					
+					
+					//calcula novo total
+					novoVlFinal = eval(vlFinalAtual) + eval(retorno[1]);	
+					
+					novoVlFinal = eval(novoVlFinal).formatNumber(2,',','.');
+					novoVlFinal = novoVlFinal.replace(',00', '');						
+					$('#total_final').text(novoVlFinal);				
+					
+				}
+				else
+				{
+					alert("Error!!");
+				}
+				
+				*/
+			}
+		});
+	}	
 
 </script>
