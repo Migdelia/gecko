@@ -707,8 +707,15 @@ $ultDevePago = $rst_deve['valor_recebido'];
                           <td class="right-align">$ <span id="total_local"><?php echo number_format($totalLocal,0,"",".");?></span></td>
                         </tr>
                         <tr>
-                          <td class="left-align"><?php echo _('Total'); ?></td>
-                          <td class="right-align"><strong>$ <span id="total_final"><?php echo number_format($totalFinal,0,"",".");?></span></strong></td>
+                          <td class="left-align"><?php echo _('Total '); ?></td>
+                          <td class="right-align"><strong>$ <span id="total_final"><?php 
+                         
+                          	echo number_format($totalFinal,0,"",".");
+                     
+                          ?>
+                      	</span>
+                      	</strong>
+                  		</td>
                         </tr>                        
                       </tbody>
                     </table>
@@ -757,7 +764,7 @@ $ultDevePago = $rst_deve['valor_recebido'];
 							echo "<tr id='ln_gasto_".$res_gastos_abertos['id_desconto']."'>";
 							echo "<td class='left-align'>".$res_gastos_abertos['descricao']."</td>";
 							echo "<td class='left-align'>".$res_gastos_abertos['tipo_doc']."</td>";
-							echo "<td class='right-align'>$ ".number_format($res_gastos_abertos['valor_desconto'],0,"",".")."</td>";
+							echo "<td class='right-align'>$<b style='color:red;'> ".number_format($res_gastos_abertos['valor_desconto'],0,"",".")."</b></td>";
 							echo "<td class='left-align'><a id='gasto_".$res_gastos_abertos['id_desconto']."' class='btn btn-sm' target='new' onClick='excluiGasto(this);'> Excluir </a></td>";
 							echo "</tr>";	
 							
@@ -769,49 +776,6 @@ $ultDevePago = $rst_deve['valor_recebido'];
                     </table>
                     
                   </div>
-
-				<!--- removido modulo deve NAO USA MAIS 
-                  <div class="table-responsive">
-                    <table  class="table  table-hover">
-                      <thead>
-                        <tr>
-                          <th class="left-align sort-asc">
-                            <a><?php echo _('Detalhes al deve') ?></a>
-                          </th>
-                          <th class="right-align">Subtotal</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td class="left-align"><?php echo _('Último pago'); ?></td>
-                          <td class="right-align">$ <span id="ult_pago"><?php echo number_format($ultDevePago,0,"","."); ?></span></td>
-                        </tr>
-                        <tr>
-                          <td class="left-align"><?php echo _('Saldo'); ?></td>
-                          <td class="right-align">$ <span id="saldo"><?php echo number_format($saldoDeve,0,"","."); ?></span></td>
-                        </tr>
-                        <tr>
-                          <td class="left-align"><?php echo _('Nuevo Deve'); ?></td>
-                          <td class="right-align"><strong>$ <span id="deve">0</span></strong></td>
-                        </tr>
-                        <tr>
-                          <td class="left-align"><?php echo _('Valor a abonar'); ?></td>
-                          <td class="right-align"><strong>$ <span id="abono">0</span></strong></td>
-                        </tr>
-                        <tr>
-                          <td class="left-align"><?php echo _('Nuevo Saldo'); ?></td>
-                          <td class="right-align"><strong>$ <span id="deve_atual"><?php echo number_format($saldoDeve,0,"","."); ?></span></strong></td>
-                        </tr>
-                        <tr>
-                          <td class="left-align"></td>
-                          <td class="right-align">
-                            <a href="#" class="btn btn-raised btn-sm" data-toggle="modal" data-target="#edit-modal-deve"><?php echo _('Editar'); ?></a>
-                          </td>
-                        </tr>                        
-                      </tbody>
-                    </table>
-                  </div>
-				-->
 
                   <div class="table-responsive">
                     <table class="table  table-hover">
@@ -975,15 +939,21 @@ $ultDevePago = $rst_deve['valor_recebido'];
 		
 		
 		//verificar se oo novo valor é maior que o da ultima leitura.
+		//verificar se oo novo valor é maior que o da ultima leitura.
 		if(eval(entNova) < eval(entAnt) || entNova == '')
 		{
 			$('#'+obj.id).focus();
+			$('#'+obj.id).css("background","#EDD3D5");
 			
 			//atribuir class de erro * pendente
 			//$('#'+obj.id).addClass("has-error");		
 			return false;		
-		} 		
-		
+		} 
+		else
+		{
+			//
+			$('#'+obj.id).css("background",'none');	
+		}			
 		//calcula bruto
 		var bruto = eval(entNova) - eval(entAnt);
 		
@@ -1096,15 +1066,20 @@ $ultDevePago = $rst_deve['valor_recebido'];
 		
 		
 		//verificar se oo novo valor é maior que o da ultima leitura.
-		if(eval(saiNova) < eval(saiAnt)  || saiNova == '')
+		if(eval(saiNova) < eval(saiAnt) || saiNova == '')
 		{
 			$('#'+obj.id).focus();
-			
+			$('#'+obj.id).css("background","#EDD3D5");
 			//atribuir class de erro * pendente
-			//$('#'+obj.id).addClass("has-error");			
-			return false;	
-		} 			
-			
+			//$('#'+obj.id).addClass("has-error");		
+			return false;		
+		}
+		else
+		{
+			//
+			$('#'+obj.id).css("background",'none');	
+		} 		
+		
 		
 		//calcula premio
 		var premio = eval(saiNova) - eval(saiAnt);
@@ -1149,6 +1124,18 @@ $ultDevePago = $rst_deve['valor_recebido'];
 		//calcula SubTotal
 		var subTotMaq = eval(bruto) - eval(premio) - eval(totalDifMaq);
 		
+		if(subTotMaq < 0)
+		{
+			//cambiar a rojo
+			$('#'+id+'_sub').css('color','red');
+		}
+		else
+		{
+			//cambiar a gris
+			$('#'+id+'_sub').css('color','Grey');
+		}
+		
+
 		//formata valor SubTotal
 		subTotMaq = eval(subTotMaq).formatNumber(2,',','.');
 		subTotMaq = subTotMaq.replace(',00', '');
@@ -1169,6 +1156,19 @@ $ultDevePago = $rst_deve['valor_recebido'];
 		
 		//calcula PctLocal
 		var pctLocal = ((eval(subTotalMaq) * eval(pctMaqLoc)) / 100);
+		
+		if(pctLocal < 0)
+		{
+			//cambiar a rojo
+			$('#'+id+'_pct_maq').css('color','red');
+			$('#'+id+'_tot_maq').css('color','red');
+		}
+		else
+		{
+			//cambiar a gris
+			$('#'+id+'_pct_maq').css('color','Grey');
+			$('#'+id+'_tot_maq').css('color','Grey');
+		}			
 		
 		//lucro 
 		var lucro = eval(subTotalMaq) - eval(pctLocal);
@@ -1215,10 +1215,23 @@ $ultDevePago = $rst_deve['valor_recebido'];
 		//alert(novoVl);
 		vlLocal = eval(valorAtualTotLoc) - eval(pctIndMaq) + eval(novoVl);		
 
+		if(vlLocal < 0)
+		{
+			//cambiar a rojo
+			$('#total_local').css('color','red');
+		}
+		else
+		{
+			//cambiar a gris
+			$('#total_local').css('color','grey');
+		}		
+	
 		
 		vlLocal = eval(vlLocal).formatNumber(2,',','.');
 		vlLocal = vlLocal.replace(',00', '');			
 		
+		
+	
 		$('#total_local').text(vlLocal);
 		$('#totalLocalFoot').text(vlLocal);
 		
@@ -1335,11 +1348,23 @@ $ultDevePago = $rst_deve['valor_recebido'];
 			var totalFinalSub =  eval(totalFinalEntrada) - eval(totalFinalSaida) - eval(totalDifFinal);
 		}
 		
-		
+		if(totalFinalSub < 0)
+		{
+			//cambiar a rojo
+			$('#sub_total').css('color','red');
+		}
+		else
+		{
+			//cambiar a gris
+			$('#sub_total').css('color','grey');
+		}	
+
 
 		totalFinalSub = eval(totalFinalSub).formatNumber(2,',','.');
 		totalFinalSub = totalFinalSub.replace(',00', '');		
 		
+	
+
 		
 		$('#sub_total').text(totalFinalSub);
 		$('#totalSubtotalFoot').text(totalFinalSub);
@@ -1356,6 +1381,9 @@ $ultDevePago = $rst_deve['valor_recebido'];
 		var totalLocal = $('#total_local').text();
 		var totalGastos = $('#total_gastos').text();
 		
+		$('#total_gastos').css('color','red');
+		$('#com_ope').css('color','red');
+
 		//
 		Subtotal = Subtotal.replace('.', '');
 		Subtotal = Subtotal.replace('.', '');	
@@ -1367,19 +1395,34 @@ $ultDevePago = $rst_deve['valor_recebido'];
 		totalGastos = totalGastos.replace('.', '');		
 		
 		var totalFinalFoot = eval(Subtotal) - eval(totalLocal);		
-		var totalFinal = eval(Subtotal) - eval(totalLocal) - eval(totalGastos);		
+		var totalFinal = eval(Subtotal) - eval(totalLocal) - eval(totalGastos);
+
+
+		if(totalFinal < 0)
+		{
+			//cambiar a rojo
+			$('#total_final').css('color','red');
+			$('#com_ope').css('color','red');
+		}
+		else
+		{
+			//cambiar a gris
+			$('#total_final').css('color','grey');
+			$('#com_ope').css('color','grey');
+		}	
+
 
 		totalFinal = eval(totalFinal).formatNumber(2,',','.');
 		totalFinal = totalFinal.replace(',00', '');
 		
 		totalFinalFoot = eval(totalFinalFoot).formatNumber(2,',','.');
-		totalFinalFoot = totalFinalFoot.replace(',00', '');		
+		totalFinalFoot = totalFinalFoot.replace(',00', '');	
+
+	   $('#total_gastos').css('color','red');
+	   $('#com_ope').css('color','red');
 
 		$('#total_final').text(totalFinal);	
 		$('#totalFinalFoot').text(totalFinalFoot);		
-		
-		
-		
 	}	
 	
 	
@@ -1603,6 +1646,7 @@ $ultDevePago = $rst_deve['valor_recebido'];
 		idDif = obj.id.split('_');
 		idDif = idDif[1];
 		
+
 		//
 		jQuery.ajax(
 		{
@@ -1612,10 +1656,12 @@ $ultDevePago = $rst_deve['valor_recebido'];
 			//data: "cent_cust=cc&valor=vl&descricao=dc&tipo_doc=td&numero_doc=nd",
 			success: function(html)
 			{
+				//window.location.reload(true);
+				//alert(html);
 				resposta = html.split("-");
 				if(resposta[0] == "true")
 				{
-					//
+					 //window.location.reload(true);
 					$('#ln_dif_'+obj.title).remove();
 					
 					
@@ -1644,32 +1690,42 @@ $ultDevePago = $rst_deve['valor_recebido'];
 					vlDifTotalizador = vlDifTotalizador.replace(',00', '');					
 					
 					$('#tot_vl_dif').text(vlDifTotalizador);									
-					
-					
-					
-					
-					
-					
+				
 					//atribui valor de diferenca ao total de dif dessa maquina. * aquiiii
 					var vlAntDifMaq = $('#totalDifMaq_'+obj.title).val();				
 					totDifMaq = eval(vlAntDifMaq) - eval(resposta[1]);
 					$('#totalDifMaq_'+obj.title).val(totDifMaq);						
 					
+					
+					$("#tot_dif_neg").text("0");
+				    $("#tot_vl_dif").text("0");	
 					//recalcula total dessa maquina
 					calcSub(obj.title);
 					calcPctMaq(obj.title);
-					calcTotalizadores(obj.title);					
+					calcTotalizadores(obj.title);
+
+					
 				}
 				else
 				{
+					
 					alert("Error!!");
 				}
 			}
-		});				
+		});	
+		
+		$("#tot_dif_neg").text("0");
+		$("#tot_vl_dif").text("0");	
+		//$("#tot_vl_dif").text("0");
+		//$("#tot_dif_neg").text("0");
+		
 	}	
 	
 	//
+	$('#total_gastos').css('color','red');
+	$('#com_ope').css('color','red');
 	$('#total_gastos').text($('#hd_total_gasto').val());
+
 	
 	//
 	if($('#hd_total_gasto').val() > 0)

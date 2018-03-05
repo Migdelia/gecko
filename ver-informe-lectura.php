@@ -105,7 +105,7 @@ else
 						leitura_por_maquina.id_maquina					
 						";	
 
-echo $sql_maquinas;
+//echo $sql_maquinas;
 
 }
 
@@ -783,14 +783,9 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
                                   <td class="left-align"><?php echo _('Total Gastos'); ?></td>
                                   <td class="right-align">
                                   	<?php
-                                  	if ($totalGastos<0) {
-
+                                  
                                    echo " $ <b style='color:red';>".number_format($totalGastos,0,"","."). "</b>";
-                                  }else{
-
-                                  	echo "$ ".number_format($totalGastos,0,"",".");
-
-                                  }
+                                  
                                   ?>    
                                   </td>
                                 </tr>                               
@@ -966,7 +961,7 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
                                     echo "<tr id='ln_gasto_".$res_gastos_abertos['id_desconto']."'>";
                                     echo "<td class='left-align'>".$res_gastos_abertos['descricao']."</td>";
                                     echo "<td class='left-align'>".$res_gastos_abertos['tipo_doc']."</td>";
-                                    echo "<td class='right-align'>$ ".number_format($res_gastos_abertos['valor_desconto'],0,"",".")."</td>";
+                                    echo "<td class='right-align'>$ <b style='color:red;'>".number_format($res_gastos_abertos['valor_desconto'],0,"",".")."</b></td>";
 									
 									//
 									if($result_id_local['fechada'] == 0)
@@ -1140,6 +1135,8 @@ $num_gastos_abertos = mysql_num_rows($query_gastos_abertos);
 		location="lectura.php";	
 	});
 
+	$('#total_gastos').css('color','red');
+	$('#com_ope').css('color','red');
 $('#exppdf').click( function() 
 	{
 		window.print() ; /// aquiiiii Erico		
@@ -1205,5 +1202,27 @@ function excluiGasto(obj)
 			}
 		});
 	}	
+
+function formataValor(obj)
+{
+	var vlNovo = obj.value;
+	
+	//limpa valor
+	vlNovo = vlNovo.replace('.', '');
+	vlNovo = vlNovo.replace('.', '');		
+	
+	//formata nova entrada
+	if(vlNovo == '')
+	{
+		vlNovo = 0;
+	}		
+	vlNovo = eval(vlNovo).formatNumber(2,',','.');
+	vlNovo = vlNovo.replace(',00', '');
+	
+	//atribui os valores novos
+	$('#'+obj.id).val(vlNovo);
+}
+
+
 
 </script>

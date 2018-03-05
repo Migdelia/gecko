@@ -102,7 +102,7 @@
 				idGasto = html.split('/');
 				
 				
-				$("#tableGastos tbody").append("<tr><td class='left-align'><div class='checkbox'><label><input type='checkbox' id='chk_desp_"+idGasto+"' name='checkGastos[]' title='"+vlGasto+"' value='"+idGasto+"' onClick='totalizadorGasto(this);'><span class='checkbox-material'><span class='check'></span></span></label></div></td><td class='left-align'>"+descricao+"</td><td class='left-align'>"+tpDoc+"</td><td class='left-align'>"+vlGasto+"</td><td class='left-align'><a href='#' class='btn btn-sm'>Excluir</a></td></tr>");
+				$("#tableGastos tbody").append("<tr><td class='left-align'><div class='checkbox'><label><input type='checkbox' id='chk_desp_"+idGasto+"' name='checkGastos[]' title='"+vlGasto+"' value='"+idGasto+"' onClick='totalizadorGasto(this);'><span class='checkbox-material'><span class='check'></span></span></label></div></td><td class='left-align'>"+descricao+"</td><td class='left-align'>"+tpDoc+"</td><td class='left-align'><b style='color:red;'>"+vlGasto+"</b></td><td class='left-align'><a href='#' class='btn btn-sm'>Excluir</a></td></tr>");
 				
 				//soma o total de gastos
 				var totalGastoFecha = $('#totalGastoFechamento').val();	

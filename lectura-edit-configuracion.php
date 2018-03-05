@@ -124,10 +124,12 @@ $fechamento = date("d-m-Y", strtotime($originalDate));
             <div class="col-xs-12 col-lg-6">
               <h3 class="main-title">
                 <span class="fa-stack fa-md">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-edit fa-stack-1x fa-inverse"></i>
                 </span>
           
                 <?php
-      	        echo "<a href='ver-informe-lectura.php?id=$id_leitura'  title='Volver a la lectura'><i class='fa fa-arrow-circle-left' style='font-size:30px;'></i></a> (".$result_loc['nome'].")";
+      	        echo "(".$result_loc['nome'].")";
 			          echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;fecha de cierre : $fechamento";		
       
 				       ?> 
@@ -136,7 +138,7 @@ $fechamento = date("d-m-Y", strtotime($originalDate));
             <div class="col-xs-12 col-lg-6">
 
               <?php  if ($fechada==1) {
-
+                echo "<a href='ver-informe-lectura.php?id=$id_leitura'  class='btn' title='Volver a la lectura'><i class='fa fa-arrow-circle-left' style='font-size:20px;'></i></a> ";
                 echo "<a href='#' class='btn' data-toggle='modal' data-target='#massaction-modal' title='Abrir Lectura'><i class='fa fa-lock' style='font-size:20px;'>  Abrir Lectura</i></a>";
                 include("inc/modals/modal-actions-abrir-lectura.php"); 
 

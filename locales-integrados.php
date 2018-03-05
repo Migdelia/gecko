@@ -136,7 +136,7 @@ session_start();
 													
 													
 													//bloquear administradores.
-													if($_SESSION['usr_nivel'] <> 9 and $_SESSION['usr_nivel'] <> 8 or $_SESSION['id_login'] == 30)
+													if($_SESSION['usr_nivel'] <> 8 or $_SESSION['id_login'] == 30)
 													{
 														echo "<td><a href='#' id='detalhe_".$res_dados_local['id_local']."' class='btn btn-sm' onClick='configLocal(this);'>Config</a></td>";		
 														

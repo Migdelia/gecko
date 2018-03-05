@@ -15,13 +15,13 @@ header("Content-Type: text/html; charset=".$charset, true);
 
 //Conexao e Link Utilizado para inserir a folha de estilo no e-mail
 if ($acesso=='remoto') {
-	$lnk = "localhost";
+	$lnk = "";
 	$mail_from = "sistema@calabazachile.com";
 	$host = "localhost";
 	$user = "root";
 	$pass = "12345678";
 	$dbas = "calabaza";
-	$dominio = 'http://localhost/gecko';	
+	$dominio = 'http://localhost/gecko/';	
 
 }else if($acesso=='localhost') {
 	$lnk = "/geckoChile";
@@ -50,10 +50,10 @@ if ($acesso=='remoto') {
 
 if (!$conecta = @mysql_connect($host, $user, $pass) ) 
 {
-	exit("<script>alert('Ha ocurrido un problema al acceder a la información.\\Entre en contacto con el administrador del sistema');window.location='".$dominio."'</script>");
+	exit("<script>alert('Occorreu um problema ao acessar as Informaçoes.\\nEntre em contato com o administrador do sistema');window.location='".$dominio."'</script>");
 
 }
 else if (!@mysql_select_db($dbas,$conecta)) {
-	exit("<script>alert('Ha ocurrido un problema al acceder a la información.\\Entre en contacto con el administrador del sistema');window.location='".$dominio."'</script>");
+	exit("<script>alert('Occorreu um problema ao acessar as Informaçoes.\\nEntre em contato com o administrador do sistema');window.location='".$dominio."'</script>");
 }
 ?>

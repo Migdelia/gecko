@@ -235,7 +235,7 @@
                 
                 
                 
-					<div class="table-responsive">
+					<div class="table-responsive" style="height:405px; overflow:auto;">
 						<table id="tabelaMaquinas" class="table table-striped table-hover">
 							<thead>
 								<tr>
@@ -250,7 +250,7 @@
                                    
                                    
                                                                    
-                                            <a href="" id="filtro_melhoresJogos" class="btn btn-sm" data-toggle="modal" data-target="#edit-modal-melhoresJogos"><i class="fa fa-filter"></i> <?php echo _('Filtro') ?></a> 
+                                            <!--<a href="" id="filtro_melhoresJogos" class="btn btn-sm" data-toggle="modal" data-target="#edit-modal-melhoresJogos"><i class="fa fa-filter"></i> <?php echo _('Filtro') ?></a> -->
     
                                         </div>
                                       </form>                                      
@@ -259,46 +259,35 @@
 							</thead>
 							<tbody>
 							<?php
-								/*
-								echo "<tr>";
-								echo "<td>
-										Calabaza Party
-									  </td>";
-								echo "</tr>";	
+							
+									//consulta jogos
+									$sql_mejores_juegos = "SELECT * FROM jogo LIMIT 7";
+									$qry_mejores_juegos=@mysql_query($sql_mejores_juegos);		
+
 								
-								echo "<tr>";
-								echo "<td>
-										Lady Lucky
-									  </td>";
-								echo "</tr>";	
-								
-								echo "<tr>";
-								echo "<td>
-										Magic Troll
-									  </td>";
-								echo "</tr>";	
-								
-								echo "<tr>";
-								echo "<td>
-										Magic Troll
-									  </td>";
-								echo "</tr>";	
-								
-								echo "<tr>";
-								echo "<td>
-										Magic Troll
-									  </td>";
-								echo "</tr>";																	
-									*/														
-								
+								//
+								while($rst_qry_mejores_juegos=@mysql_fetch_assoc($qry_mejores_juegos))
+								{
+
+									echo "<tr>";
+									echo "<td>";									
+									
+									//
+									echo "<img id='img_status_".$rst_qry_mejores_juegos['id_jogo']."' src='images/".$rst_qry_mejores_juegos['id_jogo'].".png' width='37px;' >";						
+									
+									echo " &nbsp; &nbsp; " . $rst_qry_mejores_juegos['nome'];
+									echo "</td>";
+										  
+								  
+									echo "</tr>";	
+									
+								}
 							?>                            
 							</tbody>
 						</table>
 					</div>
                     
-                    <div class="panel-body">
-                        <div id="melhores-jogos" class="graphitem"></div>
-                    </div>                    
+                   
                     
 				</div>
 			</div>

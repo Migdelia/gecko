@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
 
-        <form class="form-horizontal" method="post" action="lectura-detalle.edit.php">
+        <form id="formInfoLeitura" class="form-horizontal" method="post" action="lectura-detalle.edit.php">
           <div class="row">
           	
           	<div class="col-xs-12 col-md-12">

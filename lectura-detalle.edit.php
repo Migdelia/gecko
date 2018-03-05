@@ -91,7 +91,13 @@ $query_maq=@mysql_query($sql_maq);
 $NumMaq = mysql_num_rows($query_maq);
 
 
-//echo $sql_maq;
+$sql_id_local = "SELECT id_local, observacao, data, semana, data_fechamento, fechada, total_desconto, id_operador, id_gerente, pct_local, id_tipo_local, pct_operador, pct_gerente FROM leitura WHERE id_leitura = " . $id_leitura;
+$query_id_local=@mysql_query($sql_id_local);
+$result_id_local=@mysql_fetch_assoc($query_id_local);
+
+//echo $sql_id_local;
+
+
 
 //cria lista de plaquinhas desse local
 $sql_int = "
@@ -205,9 +211,9 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
                 </span>
                 <?php
                 	
-					 echo "<a href='ver-informe-lectura.php?id=$id_leitura'  title='Volver a la lectura'><i class='fa fa-arrow-circle-left' style='font-size:30px;'></i></a> (".$result_loc['nome'].")";
+					 echo "(".$result_loc['nome'].")";
 					
-					
+				
 				?>
               </h3>
             </div>
@@ -272,14 +278,7 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 							$vl_ids_maq = ""; 
 
 							//
-							$totalDifNeg = 0;
-							$totalDifPos = 0;
-							
-							$totalEntrada = 0;
-							$totalSaida = 0;
-							$totalSubTotal = 0;
-							$totalLocal = 0;
-							$totalFinal = 0;
+						
 						
 							while($result_maq=@mysql_fetch_assoc($query_maq)) 
 							{
@@ -581,11 +580,19 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
                                     </td>
                                     <input type="hidden" id="<?php echo $result_maq['id_maquina']?>_premio_ant" name="<?php echo $result_maq['id_maquina']?>_premio_ant" value="0">
                                 	<td class="center-align">
-                                    	<strong>$ 
+                                    	<strong>
                                         	<span id="<?php echo $result_maq['id_maquina']?>_sub">
 												<?php 
+												if ($subtotal<0) {
 													$subInd = $brutoInd - $premioInd;
+												echo " $ <b style='color:red';>".number_format($subtotal,0,"",".")."</b>";
+												}else{
+
 													echo number_format($subtotal,0,"",".");
+												}
+													
+
+													
 												?>
                                             </span>
                                         </strong>
@@ -619,13 +626,19 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 													$pctMaqInd = 0;
 												}
 
-												echo number_format($pctMaqInd,0,"",".");
+												if ($pctMaqInd<0) {
+													echo "<b style='color:red';>".number_format($pctMaqInd,0,"",".")."</b>";
+												}else{
+													echo number_format($pctMaqInd,0,"",".");
+												}
+												
 											?>
                                         </span>
                                     </td>
                                 	<td class="center-align">
                                     	<strong>
                                                 $
+
                                             <span id="<?php echo $result_maq['id_maquina']?>_tot_maq">
                                                 <?php
 												//verificar o tipo de local
@@ -651,8 +664,15 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 														//calcula percentual da maquina
 														$totMaqInd = 0;
 													}
-	
-													echo number_format($total,0,"",".");																																						
+														if ($total<0) {
+														
+														echo "<b style='color:red';>".number_format($total,0,"",".")."</b>";
+														}else{
+
+															echo number_format($total,0,"",".");
+														}
+
+																																																			
 												?>
                                             </span>
                                         </strong></td>
@@ -754,15 +774,41 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
                       <tbody>
                         <tr>
                           <td class="left-align"><?php echo _('Total Entrada'); ?></td>
-                          <td class="right-align">$ <span id="total_entrada"><?php echo number_format($totalEntrada,0,"",".");?></span></td>
+                          <td class="right-align">$<span id="total_entrada"><?php 
+                          if ($totalEntrada<0) {
+                          	echo " $ <b style='color:red';>".number_format($totalEntrada,0,"","."). "</b>";
+                          }else{
+                          	  echo number_format($totalEntrada,0,"",".");
+							}
+                          ?>
+                      	</span>
+                        </td>
                         </tr>
                         <tr>
                           <td class="left-align"><?php echo _('Total Salida'); ?></td>
-                          <td class="right-align">$ <span id="total_saida"><?php echo number_format($totalSaida,0,"",".");?></span></td>
+                          <td class="right-align">$ <span id="total_saida"><?php 
+                          if ($totalSaida<0) {
+                          	echo " <b style='color:red';>".number_format($totalSaida,0,"","."). "</b>";
+                          }else{
+                          	 echo number_format($totalSaida,0,"",".");
+                          }
+
+                          ?>
+                      	</span>
+                      	</td>
                         </tr>
                         <tr>
                           <td class="left-align"><?php echo _('Subtotal'); ?></td>
-                          <td class="right-align"><strong>$ <span id="sub_total"><?php echo number_format($totalSubTotal,0,"",".");?></span></strong></td>
+                          <td class="right-align"><strong>$ <span id="sub_total"><?php 
+                          if ($totalSubTotal<0) {
+                          	echo " <b style='color:red';>".number_format($totalSubTotal,0,"","."). "</b>";
+                          }else{
+                          	 echo number_format($totalSubTotal,0,"",".");
+                          }
+                         ?>
+                     	</span>
+                     	</strong>
+                 		</td>
                         </tr>
                         <tr>
                           <td class="left-align"><?php echo _('Total Gastos'); ?></td>
@@ -770,11 +816,29 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
                         </tr>                        
                         <tr>
                           <td class="left-align"><?php echo _('Total Local'); ?></td>
-                          <td class="right-align">$ <span id="total_local"><?php echo number_format($totalLocal,0,"",".");?></span></td>
+                          <td class="right-align">$ <span id="total_local"><?php 
+                          if ($totalLocal<0) {
+                          	echo " <b style='color:red';>".number_format($totalLocal,0,"","."). "</b>";
+                          }else{
+                          	echo number_format($totalLocal,0,"",".");
+                          }
+                          ?>
+                      	</span>
+                      	</td>
                         </tr>
                         <tr>
                           <td class="left-align"><?php echo _('Total'); ?></td>
-                          <td class="right-align"><strong>$ <span id="total_final"><?php echo number_format($totalFinal,0,"",".");?></span></strong></td>
+                          <td class="right-align"><strong>$<span id="total_final"><?php 
+                          if ($totalFinal<0) {
+                          echo "<b style='color:red';>".number_format($totalFinal,0,"","."). "</b>";
+                          }else{
+
+                          	 echo number_format($totalFinal,0,"",".");
+                          }
+                         ?>
+                     	</span>
+                     	</strong>
+                     	</td>
                         </tr>                        
                       </tbody>
                     </table>
@@ -823,8 +887,8 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 							echo "<tr id='ln_gasto_".$res_gastos_abertos['id_desconto']."'>";
 							echo "<td class='left-align'>".$res_gastos_abertos['descricao']."</td>";
 							echo "<td class='left-align'>".$res_gastos_abertos['tipo_doc']."</td>";
-							echo "<td class='right-align'>$ ".number_format($res_gastos_abertos['valor_desconto'],0,"",".")."</td>";
-							echo "<td class='left-align'><a id='gasto_".$res_gastos_abertos['id_desconto']."' class='btn btn-sm' target='new' onClick='excluiGasto(this);'> Excluir </a></td>";
+							echo "<td class='right-align'>$ <b style='color:red;'> ".number_format($res_gastos_abertos['valor_desconto'],0,"",".")."</b></td>";
+							echo "<td class='left-align' ><a id='gasto_".$res_gastos_abertos['id_desconto']."' class='btn btn-sm' target='new' onClick='excluiGasto(this);'> Excluir </a></td>";
 							echo "</tr>";	
 							
 							$totalGastos = $totalGastos + $res_gastos_abertos['valor_desconto'];
@@ -1013,12 +1077,17 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 		if(eval(entNova) < eval(entAnt) || entNova == '')
 		{
 			$('#'+obj.id).focus();
+			$('#'+obj.id).css("background","#EDD3D5");
 			
 			//atribuir class de erro * pendente
 			//$('#'+obj.id).addClass("has-error");		
 			return false;		
-		} 		
-		
+		} 
+		else
+		{
+			//
+			$('#'+obj.id).css("background",'none');	
+		}		
 		//calcula bruto
 		var bruto = eval(entNova) - eval(entAnt);
 		
@@ -1131,16 +1200,20 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 		
 		
 		//verificar se oo novo valor é maior que o da ultima leitura.
-		if(eval(saiNova) < eval(saiAnt)  || saiNova == '')
+		//verificar se oo novo valor é maior que o da ultima leitura.
+		if(eval(saiNova) < eval(saiAnt) || saiNova == '')
 		{
 			$('#'+obj.id).focus();
-			
+			$('#'+obj.id).css("background","#EDD3D5");
 			//atribuir class de erro * pendente
-			//$('#'+obj.id).addClass("has-error");			
-			return false;	
-		} 			
-			
-		
+			//$('#'+obj.id).addClass("has-error");		
+			return false;		
+		}
+		else
+		{
+			//
+			$('#'+obj.id).css("background",'none');	
+		} 		
 		//calcula premio
 		var premio = eval(saiNova) - eval(saiAnt);
 		
@@ -1186,6 +1259,18 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 		//calcula SubTotal
 		var subTotMaq = eval(bruto) - eval(premio) - eval(totalDifMaq);
 		
+		if(subTotMaq < 0)
+		{
+			//cambiar a rojo
+			$('#'+id+'_sub').css('color','red');
+		}
+		else
+		{
+			//cambiar a gris
+			$('#'+id+'_sub').css('color','Grey');
+		}
+		
+
 		//formata valor SubTotal
 		subTotMaq = eval(subTotMaq).formatNumber(2,',','.');
 		subTotMaq = subTotMaq.replace(',00', '');
@@ -1207,6 +1292,19 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 		//calcula PctLocal
 		var pctLocal = ((eval(subTotalMaq) * eval(pctMaqLoc)) / 100);
 		
+
+		if(pctLocal < 0)
+		{
+			//cambiar a rojo
+			$('#'+id+'_pct_maq').css('color','red');
+			$('#'+id+'_tot_maq').css('color','red');
+		}
+		else
+		{
+			//cambiar a gris
+			$('#'+id+'_pct_maq').css('color','Grey');
+			$('#'+id+'_tot_maq').css('color','Grey');
+		}		
 		//lucro 
 		var lucro = eval(subTotalMaq) - eval(pctLocal);
 		
@@ -1250,8 +1348,18 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 		//alert(valorAtualTotLoc);
 		//alert(pctIndMaq);
 		//alert(novoVl);
-		vlLocal = eval(valorAtualTotLoc) - eval(pctIndMaq) + eval(novoVl);		
+		vlLocal = eval(valorAtualTotLoc) - eval(pctIndMaq) + eval(novoVl);	
 
+		if(vlLocal < 0)
+		{
+			//cambiar a rojo
+			$('#total_local').css('color','red');
+		}
+		else
+		{
+			//cambiar a gris
+			$('#total_local').css('color','grey');
+		}		
 		
 		vlLocal = eval(vlLocal).formatNumber(2,',','.');
 		vlLocal = vlLocal.replace(',00', '');			
@@ -1372,7 +1480,18 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 			var totalFinalSub =  eval(totalFinalEntrada) - eval(totalFinalSaida) - eval(totalDifFinal);
 		}
 		
-		
+		if(totalFinalSub < 0)
+		{
+			//cambiar a rojo
+			$('#sub_total').css('color','red');
+		}
+		else
+		{
+			//cambiar a gris
+			$('#sub_total').css('color','grey');
+		}	
+
+
 
 		totalFinalSub = eval(totalFinalSub).formatNumber(2,',','.');
 		totalFinalSub = totalFinalSub.replace(',00', '');		
@@ -1392,7 +1511,10 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 		var Subtotal = $('#sub_total').text();
 		var totalLocal = $('#total_local').text();
 		var totalGastos = $('#total_gastos').text();
-		
+
+		$('#total_gastos').css('color','red');
+		$('#com_ope').css('color','red');
+
 		//
 		Subtotal = Subtotal.replace('.', '');
 		Subtotal = Subtotal.replace('.', '');	
@@ -1404,7 +1526,22 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 		totalGastos = totalGastos.replace('.', '');		
 		
 		var totalFinalFoot = eval(Subtotal) - eval(totalLocal);		
-		var totalFinal = eval(Subtotal) - eval(totalLocal) - eval(totalGastos);		
+		var totalFinal = eval(Subtotal) - eval(totalLocal) - eval(totalGastos);	
+
+
+		if(totalFinal < 0)
+		{
+			//cambiar a rojo
+			$('#total_final').css('color','red');
+			$('#com_ope').css('color','red');
+		}
+		else
+		{
+			//cambiar a gris
+			$('#total_final').css('color','grey');
+			$('#com_ope').css('color','grey');
+		}	
+
 
 		totalFinal = eval(totalFinal).formatNumber(2,',','.');
 		totalFinal = totalFinal.replace(',00', '');
@@ -1709,7 +1846,11 @@ while($result_ant=@mysql_fetch_assoc($query_datos_anterior))
 	
 	//
 	$('#total_gastos').text($('#hd_total_gasto').val());
-	
+
+
+
+	$('#total_gastos').css('color','red');
+	$('#com_ope').css('color','red');
 	//
 	if($('#hd_total_gasto').val() > 0)
 	{

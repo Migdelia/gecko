@@ -809,7 +809,7 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
                                }
 
                               ?></td>
-                              <td class="left-align tdInvisible"><a id="ver_rendicao" class="btn btn-sm" target="_blank" title="Ver"><i class="fa fa-eye"></i></a></td>
+                              <td class="left-align tdInvisible"><a id="ver_rendicao" class="btn btn-sm" target="_blank" title="Ver">Ver</a></td>
                             </tr>
                             <tr>
                               <td class="left-align"><?php echo date("d-m-Y", strtotime($res_fechamento['data_fechamento']));?></td>
@@ -823,7 +823,7 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
                                }
 
                                ?></td>
-                              <td class="left-align tdInvisible"><a id="ver_comissao" class="btn btn-sm" target="_blank" title="Ver"><i class="fa fa-eye"></i></a></td>
+                              <td class="left-align tdInvisible"><a id="ver_comissao" class="btn btn-sm" target="_blank" title="Ver">Ver</a></td>
                             </tr> 
                             
                             
@@ -929,16 +929,7 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
                         </tfoot>
                       </table>
                       
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-            
-            
+  
             
 					<?php
                     
@@ -1764,6 +1755,7 @@ $res_gastos_fecha=@mysql_fetch_assoc($query_gastos_fecha);
 	//
 	$('#ver_rendicao').click( function() 
 	{
+
 		//
 		if($(this).text() == 'Ver')
 		{

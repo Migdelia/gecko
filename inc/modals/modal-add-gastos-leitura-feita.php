@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h5><?php echo _('Agregar Nuevo ') . $modal_item ?></h5>
+        <h5><i class="fa fa-plus"></i> <?php echo _('Agregar Nuevo ') . $modal_item ?></h5>
       </div>
       <div class="modal-body">
         <p>&nbsp;</p>
@@ -52,7 +52,7 @@
               </div>
               <div class="row form">
                 <label for="input_codigo<?php echo $modal_item ?>" class="control-label"><?php echo _('Valor del gasto') ?></label>
-                <input type="text" class="form-control" id="input_valor_<?php echo $modal_item ?>" name="input_valor_<?php echo $modal_item ?>" placeholder="<?php echo _('Valor del gasto') ?>" value="">
+                <input type="text" class="form-control" id="input_valor_<?php echo $modal_item ?>" name="input_valor_<?php echo $modal_item ?>" placeholder="<?php echo _('Valor del gasto') ?>" value="" onkeyup="formataValor(this);">
               </div>
             </div>
             <div class="col-xs-12 col-md-6">
@@ -86,7 +86,8 @@
 		var numDoc = $('#input_numDoc_gasto').val(); //vl
 		var op = <?php echo $_SESSION['id_login']; ?>;
 
-		
+		 vlGasto = vlGasto.replace('.', '');
+     vlGasto = vlGasto.replace('.', '');
 		//inseri no banco de dados
 		jQuery.ajax(
 		{

@@ -52,7 +52,8 @@
               </div>
               <div class="row form">
                 <label for="input_codigo<?php echo $modal_item ?>" class="control-label"><?php echo _('Valor del gasto') ?></label>
-                <input type="text" class="form-control" id="input_valor_<?php echo $modal_item ?>" name="input_valor_<?php echo $modal_item ?>" placeholder="<?php echo _('Valor del gasto') ?>" value="">
+                <input type="text" class="form-control" id="input_valor_<?php echo $modal_item ?>" name="input_valor_<?php echo $modal_item ?>" placeholder="<?php echo number_format('Valor del gasto') ?>" value="" onkeyup="formataValor(this);">
+
               </div>
             </div>
             <div class="col-xs-12 col-md-6">
@@ -85,8 +86,9 @@
 		var vlGasto = $('#input_valor_gasto').val(); //vl
 		var numDoc = $('#input_numDoc_gasto').val(); //vl
 		var op = <?php echo $_SESSION['id_login']; ?>;
-
-		
+   
+     vlGasto = vlGasto.replace('.', '');
+     vlGasto = vlGasto.replace('.', '');
 		//inseri no banco de dados
 		jQuery.ajax(
 		{
@@ -104,26 +106,37 @@
 				totalGastoAtual = totalGastoAtual.replace('.', '');
 				totalGastoAtual = totalGastoAtual.replace('.', '');						
 				
-				
+        
 				//
 				novoTotalGasto = eval(totalGastoAtual) + eval(vlGasto);
 
+         vlGasto = vlGasto.replace('.', '');
+         vlGasto = vlGasto.replace('.', ''); 
+      
 				//
 				novoTotalGasto = eval(novoTotalGasto).formatNumber(2,',','.');
-				novoTotalGasto = novoTotalGasto.replace(',00', '');				
+				novoTotalGasto = novoTotalGasto.replace(',00', '');	
+
+        //alert(novoTotalGasto);
+        $('#total_gastos').css('color','red');
 				$('#total_gastos').text(novoTotalGasto);
-		
+		   
+      
 				//
 				vlGasto = eval(vlGasto).formatNumber(2,',','.');
 				vlGasto = vlGasto.replace(',00', '');
 				
 				//
-				$("#tableGastos tbody").prepend("<tr id='ln_gasto_"+idGasto+"'><td class='left-align'>"+descricao+"</td><td class='left-align'>"+tpDoc+"</td><td class='left-align'>$ "+vlGasto+"</td><td class='left-align'><a id='gasto_"+idGasto+"' class='btn btn-sm' target='new' onClick='excluiGasto(this);'> Excluir </a></td></tr>");
+				$("#tableGastos tbody").prepend("<tr id='ln_gasto_"+idGasto+"'><td class='left-align'>"+descricao+"</td><td class='left-align'>"+tpDoc+"</td><td class='left-align'>$ <b style='color:red;'>"+vlGasto+"</b></td><td class='left-align'><a id='gasto_"+idGasto+"' class='btn btn-sm' target='new' onClick='excluiGasto(this);'> Excluir </a></td></tr>");
 				
 
 			}
-		});		
+		}); 
+    
+    // setear los valores
+    $(":text").val("");
+    $("#tipoGasto").val("0").change();
+    $("#tpDoc").val("0").change();
 
-	               
 	});
 </script>

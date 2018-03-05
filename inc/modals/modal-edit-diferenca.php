@@ -62,7 +62,7 @@
           </div>
           <div class="row form-group">
             <button id="btnGuardar" name="btnGuardar" type="button" class="btn btn-sm btn-raised col-xs-12 col-md-5 right" data-dismiss="modal"><?php echo _('Guardar ') ?></button>
-            <!--- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>--->
+            <!--- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
           </div>
         </form>
       </div>
@@ -82,17 +82,22 @@ $('#btnGuardar').click( function (){
 	var motDif = $('#edit_mot_diferenca').val();
 	var maqDif =  $('#maq_dif').val();	
 	var tipoSelect = jQuery("input[name=tipo_operacao_dif]:checked").val();
+
+	vlDifNeg = vlDifNeg.replace('.', '');
+	vlDifNeg = vlDifNeg.replace('.', '');
 	
+	valor_nuevo= vlDifNeg;
 	
 	//
 	if(tipoSelect == 0)
 	{
+
+
 		//pega a dif negativa antes de trocar
 		var difNegAtu = $('#tot_dif_neg').text();
-		
-		//
-		$('#tot_dif_neg').text(vlDifNeg);		
-		
+
+
+
 		//calcula o novo saldo
 		var novoSaldoDif = $('#tot_vl_dif').text();
 		
@@ -104,26 +109,45 @@ $('#btnGuardar').click( function (){
 		novoSaldoDif = novoSaldoDif.replace('.', '');
 		
 		difNegAtu = difNegAtu.replace('.', '');
-		difNegAtu = difNegAtu.replace('.', '');		
-		
-		//
-		novoSaldoAtual = (eval(novoSaldoDif) - eval(difNegAtu)) + eval(vlDifNeg);
-		
+		difNegAtu = difNegAtu.replace('.', '');	
 
-		//
+		vlDifNeg = (eval(vlDifNeg) + eval(difNegAtu));
+		
+		vlDifNeg = eval(vlDifNeg).formatNumber(2,',','.');
+		vlDifNeg = vlDifNeg.replace(',00', '');
+
+		$('#tot_dif_neg').text(vlDifNeg);	
+
+
+		vlDifNeg = vlDifNeg.replace('.', '');
+		vlDifNeg = vlDifNeg.replace('.', '');	
+
+		
+		//alert(novoSaldoDif);
+		novoSaldoAtual = (eval(novoSaldoDif) - eval(difNegAtu)) + eval(vlDifNeg);
+
+		
+			//alert(vlDifNeg);
+		///*
 		jQuery.ajax(
 		{
 			type: "POST", // Defino o método de envio POST / GET
 			url: 'add_diferenca.php', // Informo a URL que será pesquisada.
-			data: 'id_maq='+maqDif+'&valorDif='+vlDifNeg+'&motivo='+motDif,
+			data: 'id_maq='+maqDif+'&valorDif='+valor_nuevo+'&motivo='+motDif,
 			//data: "cent_cust=cc&valor=vl&descricao=dc&tipo_doc=td&numero_doc=nd",
 			success: function(html)
 			{
+
+
 				var resul=html.split("/");
 				var ult_id_ins = resul[1];
+
 				if(resul[0] == "true")
 				{
-					alert("funfo");
+					//adicionar linha
+					//alert(maqDif);
+					$("<tr id='ln_dif_"+maqDif+"'><td><strong>Diferencia maq:</strong></td><td>Descripcion:</td><td colspan='3'>"+motDif+"</td><td colspan='2'><strong>$ "+valor_nuevo+"</strong></td><td><a id='dif_"+ult_id_ins+"' class='btn btn-raised btn-sm' title='"+maqDif+"' data-target='#edit-modal-diferenca' onclick='excluiDif(this);'>Excluir</a></td></tr>").insertAfter($('#ln_'+maqDif).closest('tr'));
+					
 				}
 	
 				else
@@ -135,7 +159,8 @@ $('#btnGuardar').click( function (){
 		
 		//atualiza o saldo
 		novoSaldoAtual = eval(novoSaldoAtual).formatNumber(2,',','.');
-		novoSaldoAtual = novoSaldoAtual.replace(',00', '');		
+		novoSaldoAtual = novoSaldoAtual.replace(',00', '');	
+		//alert(novoSaldoAtual);	
 		
 		$('#tot_vl_dif').text(novoSaldoAtual);
 		
@@ -150,11 +175,13 @@ $('#btnGuardar').click( function (){
 		//
 		vlDif = $('#tot_dif_pos').text();
 	}
-	
-	//adicionar linha
-	$("<tr id='ln_dif_"+maqDif+"'><td><strong>Diferencia maq:</strong></td><td>Descripcion:</td><td colspan='3'>"+motDif+"</td><td colspan='2'><strong>$ "+vlDif+"</strong></td><td><a class='btn btn-raised btn-sm' title='"+maqDif+"' data-target='#edit-modal-diferenca' onclick='excluiDif(this);'>Excluir</a></td></tr>").insertAfter($('#ln_'+maqDif).closest('tr'));
-	
-	//recalcular valores dessa maquina	
+
+
+	//resetear los valores
+	$(":text").val("");
+	$("#maq_dif").val("0").change();
+
+
 
 });
 
